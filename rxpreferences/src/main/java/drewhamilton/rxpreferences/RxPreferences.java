@@ -247,7 +247,7 @@ public final class RxPreferences {
   }
 
   private static <T> void registerRxPreferenceListener(SharedPreferences preferences,
-                                                       RxPreferenceListener<T> listener, ObservableEmitter<T> emitter) {
+      RxPreferenceListener<T> listener, ObservableEmitter<T> emitter) {
     emitter.setCancellable(() -> preferences.unregisterOnSharedPreferenceChangeListener(listener));
     preferences.registerOnSharedPreferenceChangeListener(listener);
   }
