@@ -3,8 +3,22 @@ An RxJava wrapper for Android's SharedPreferences.
 
 Written in Java, with Kotlin extensions added in the `ktx` module.
 
+## Download
+RxPreferences is available in JCenter.
+
+To use RxPreferences in your application, include the following in your app's `build.gradle`:
+```groovy
+implementation 'drewhamilton.rxpreferences:rxpreferences:0.1'
+```
+
+To use RxPreferences along with Kotlin extensions, add "-ktx":
+```groovy
+implementation 'drewhamilton.rxpreferences:rxpreferences-ktx:0.1'
+```
+
 ## To-do
-* Release to maven or something
+* Demonstrate usage in README
+* Expand Javadoc/KDocs
 * More tests
 * Demonstrate usage in test app
 
