@@ -30,6 +30,7 @@ public final class RxPreferences {
 
   /**
    * Retrieve all values from the preferences.
+   * <p/>
    * Note that you must not modify the collection returned by this method, or alter any of its contents. The consistency
    * of your stored data is not guaranteed if you do.
    * @return a map containing a list of pairs key/value representing the preferences.
@@ -69,6 +70,7 @@ public final class RxPreferences {
 
   /**
    * Retrieve a set of String values from the preferences.
+   * <p/>
    * Note that you must not modify the set instance returned by this call. The consistency of the stored data is not
    * guaranteed if you do, nor is your ability to modify the instance at all.
    * @param key The name of the preference to retrieve.
@@ -239,8 +241,9 @@ public final class RxPreferences {
   /**
    * Create a new Editor for these preferences, through which you can make modifications to the data in the preferences
    * and atomically commit those changes back to the SharedPreferences object.
-   * Note that you must call {@link SharedPreferences.Editor#commit} to have any changes you perform in the
-   * {@link Editor} actually show up in the preferences.
+   * <p/>
+   * Note that you must call {@link Editor#commit} to have any changes you perform in the actually show up in the
+   * preferences.
    * @return a new instance of {@link SharedPreferences.Editor}.
    */
   @NonNull
@@ -259,11 +262,18 @@ public final class RxPreferences {
   }
 
   private static <T> void registerRxPreferenceListener(SharedPreferences preferences,
-                                                       RxPreferenceListener<T> listener, ObservableEmitter<T> emitter) {
+      RxPreferenceListener<T> listener, ObservableEmitter<T> emitter) {
     emitter.setCancellable(() -> preferences.unregisterOnSharedPreferenceChangeListener(listener));
     preferences.registerOnSharedPreferenceChangeListener(listener);
   }
 
+  /**
+   * A wrapper for {@link SharedPreferences.Editor} that converts all methods into RxJava. For each {@code #put} method,
+   * {@link Editor} pushes the passed value to the wrapped {@link SharedPreferences.Editor} and returns itself. Note
+   * that you must call {@link #commit()} for any changes to actually show up in the preferences.
+   * Unlike {@link SharedPreferences.Editor}, an {@code #apply()} method is not provided because it does not map to
+   * RxJava well.
+   */
   public static final class Editor {
 
     @NonNull private final SharedPreferences.Editor preferencesEditor;
@@ -273,16 +283,11 @@ public final class RxPreferences {
     }
 
     /**
-     * Set a String value in the preferences editor, to be written back once
-     * {@link #commit} is called.
-     *
+     * Set a string value in the preferences editor, to be written back once {@link #commit} is called.
      * @param key The name of the preference to modify.
-     * @param value The new value for the preference.  Passing {@code null}
-     *    for this argument is equivalent to calling {@link #remove(String)} with
-     *    this key.
-     *
-     * @return Returns a reference to the same Editor object, so you can
-     * chain put calls together.
+     * @param value The new value for the preference.  Passing null for this argument is equivalent to calling
+     * {@link #remove(String)} with the same key.
+     * @return a reference to the same {@link Editor} object, so you can chain calls together.
      */
     @NonNull
     public Editor putString(@NonNull String key, @NonNull String value) {
@@ -291,15 +296,11 @@ public final class RxPreferences {
     }
 
     /**
-     * Set a set of String values in the preferences editor, to be written
-     * back once {@link #commit} is called.
-     *
+     * Set a set of string values in the preferences editor, to be written back once {@link #commit} is called.
      * @param key The name of the preference to modify.
-     * @param values The set of new values for the preference.  Passing {@code null}
-     *    for this argument is equivalent to calling {@link #remove(String)} with
-     *    this key.
-     * @return Returns a reference to the same Editor object, so you can
-     * chain put calls together.
+     * @param values The new set of values for the preference. Passing null for this argument is equivalent to calling
+     * {@link #remove(String)} with the same key.
+     * @return a reference to the same {@link Editor} object, so you can chain calls together.
      */
     @NonNull
     public Editor putStringSet(@NonNull String key, @NonNull Set<String> values) {
@@ -308,14 +309,11 @@ public final class RxPreferences {
     }
 
     /**
-     * Set an int value in the preferences editor, to be written back once
-     * {@link #commit} is called.
-     *
+     * Set an int value in the preferences editor, to be written back once {@link #commit} is called.
      * @param key The name of the preference to modify.
-     * @param value The new value for the preference.
-     *
-     * @return Returns a reference to the same Editor object, so you can
-     * chain put calls together.
+     * @param value The new value for the preference.  Passing null for this argument is equivalent to calling
+     * {@link #remove(String)} with the same key.
+     * @return a reference to the same {@link Editor} object, so you can chain calls together.
      */
     @NonNull
     public Editor putInt(@NonNull String key, int value) {
@@ -324,14 +322,11 @@ public final class RxPreferences {
     }
 
     /**
-     * Set a long value in the preferences editor, to be written back once
-     * {@link #commit} is called.
-     *
+     * Set a long value in the preferences editor, to be written back once {@link #commit} is called.
      * @param key The name of the preference to modify.
-     * @param value The new value for the preference.
-     *
-     * @return Returns a reference to the same Editor object, so you can
-     * chain put calls together.
+     * @param value The new value for the preference.  Passing null for this argument is equivalent to calling
+     * {@link #remove(String)} with the same key.
+     * @return a reference to the same {@link Editor} object, so you can chain calls together.
      */
     @NonNull
     public Editor putLong(@NonNull String key, long value) {
@@ -340,14 +335,11 @@ public final class RxPreferences {
     }
 
     /**
-     * Set a float value in the preferences editor, to be written back once
-     * {@link #commit} is called.
-     *
+     * Set a float value in the preferences editor, to be written back once {@link #commit} is called.
      * @param key The name of the preference to modify.
-     * @param value The new value for the preference.
-     *
-     * @return Returns a reference to the same Editor object, so you can
-     * chain put calls together.
+     * @param value The new value for the preference.  Passing null for this argument is equivalent to calling
+     * {@link #remove(String)} with the same key.
+     * @return a reference to the same {@link Editor} object, so you can chain calls together.
      */
     @NonNull
     public Editor putFloat(@NonNull String key, float value) {
@@ -356,14 +348,11 @@ public final class RxPreferences {
     }
 
     /**
-     * Set a boolean value in the preferences editor, to be written back
-     * once {@link #commit} is called.
-     *
+     * Set a boolean value in the preferences editor, to be written back once {@link #commit} is called.
      * @param key The name of the preference to modify.
-     * @param value The new value for the preference.
-     *
-     * @return Returns a reference to the same Editor object, so you can
-     * chain put calls together.
+     * @param value The new value for the preference.  Passing null for this argument is equivalent to calling
+     * {@link #remove(String)} with the same key.
+     * @return a reference to the same {@link Editor} object, so you can chain calls together.
      */
     @NonNull
     public Editor putBoolean(@NonNull String key, boolean value) {
@@ -372,18 +361,13 @@ public final class RxPreferences {
     }
 
     /**
-     * Mark in the editor that a preference value should be removed, which
-     * will be done in the actual preferences once {@link #commit} is
-     * called.
-     *
-     * <p>Note that when committing back to the preferences, all removals
-     * are done first, regardless of whether you called remove before
-     * or after put methods on this editor.
-     *
+     * Mark in the editor that a preference value should be removed, which will be done in the actual preferences once
+     * {@link #commit} is called.
+     * <p/>
+     * Note that when committing back to the preferences, all removals are done first, regardless of whether you called
+     * {@code #remove} before or after {@code #put} methods on this editor.
      * @param key The name of the preference to remove.
-     *
-     * @return Returns a reference to the same Editor object, so you can
-     * chain put calls together.
+     * @return a reference to the same {@link Editor} object, so you can chain calls together.
      */
     @NonNull
     public Editor remove(@NonNull String key) {
@@ -392,16 +376,12 @@ public final class RxPreferences {
     }
 
     /**
-     * Mark in the editor to remove <em>all</em> values from the
-     * preferences.  Once commit is called, the only remaining preferences
-     * will be any that you have defined in this editor.
-     *
-     * <p>Note that when committing back to the preferences, the clear
-     * is done first, regardless of whether you called clear before
-     * or after put methods on this editor.
-     *
-     * @return Returns a reference to the same Editor object, so you can
-     * chain put calls together.
+     * Mark in the editor to remove all values from the preferences. Once {@link #commit()} is called, the only
+     * remaining preferences will be any that you have defined in this editor.
+     * <p/>
+     * Note that when committing back to the preferences, the clear is done first, regardless of whether you called
+     * {@code #clear} before or after {@code #put} methods on this editor.
+     * @return a reference to the same {@link Editor} object, so you can chain calls together.
      */
     @NonNull
     public Editor clear() {
@@ -410,15 +390,11 @@ public final class RxPreferences {
     }
 
     /**
-     * Commit your preferences changes back from this Editor to the
-     * {@link SharedPreferences} object it is editing.  This atomically
-     * performs the requested modifications, replacing whatever is currently
-     * in the SharedPreferences.
-     *
-     * <p>Note that when two editors are modifying preferences at the same
-     * time, the last one to call commit wins.
-     *
-     * @return a {@link Completable} that commits the changes when subscribed to.
+     * Commit your preferences changes back from this {@link Editor} to the {@link RxPreferences} object it is editing.
+     * This atomically performs the requested modifications, replacing whatever is currently in the preferences.
+     * <p/>
+     * Note that when two editors are modifying preferences at the same time, the last one to call commit wins.
+     * @return a {@link Completable} that commits the changes upon subscription.
      */
     @NonNull
     public Completable commit() {
@@ -430,6 +406,9 @@ public final class RxPreferences {
       });
     }
 
+    /**
+     * An exception thrown if {@link #commit()} fails.
+     */
     public static final class CommitException extends RuntimeException {
       CommitException() {
         super("Failed to commit the desired preference changes");
