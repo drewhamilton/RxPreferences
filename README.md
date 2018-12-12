@@ -18,7 +18,6 @@ implementation 'drewhamilton.rxpreferences:rxpreferences-ktx:0.1'
 
 ## To-do
 * Demonstrate usage in README
-* Expand Javadoc/KDocs
 * More tests
 * Demonstrate usage in test app
 
