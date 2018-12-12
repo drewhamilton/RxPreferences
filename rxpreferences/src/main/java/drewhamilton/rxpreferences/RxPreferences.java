@@ -10,23 +10,29 @@ import io.reactivex.annotations.NonNull;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * A wrapper for {@link SharedPreferences} that converts all methods into RxJava. For each getter provided by
+ * {@link SharedPreferences}, {@link RxPreferences} provides two options: one returning a {@link Single} and another
+ * returning an {@link Observable}. The {@link Observable} version emits the current value of the preference on
+ * subscription, and then emits an update any time that value is edited.
+ */
 public final class RxPreferences {
 
   @NonNull private final SharedPreferences preferences;
 
+  /**
+   * Construct an instance of {@link RxPreferences} wrapping the provided instance of {@link SharedPreferences}.
+   * @param preferences the {@link SharedPreferences} instance to wrap.
+   */
   public RxPreferences(@NonNull SharedPreferences preferences) {
     this.preferences = preferences;
   }
 
   /**
    * Retrieve all values from the preferences.
-   *
-   * <p>Note that you <em>must not</em> modify the collection returned
-   * by this method, or alter any of its contents.  The consistency of your
-   * stored data is not guaranteed if you do.
-   *
-   * @return Returns a map containing a list of pairs key/value representing
-   * the preferences.
+   * Note that you must not modify the collection returned by this method, or alter any of its contents. The consistency
+   * of your stored data is not guaranteed if you do.
+   * @return a map containing a list of pairs key/value representing the preferences.
    */
   @NonNull
   public Single<Map<String, ?>> getAll() {
@@ -34,14 +40,11 @@ public final class RxPreferences {
   }
 
   /**
-   * Retrieve a String value from the preferences.
-   *
+   * Retrieve a string value from the preferences.
    * @param key The name of the preference to retrieve.
    * @param defaultValue Value to return if this preference does not exist.
-   *
-   * @return Returns the preference value if it exists, or {@param defaultValue}.  Throws
-   * ClassCastException if there is a preference with this name that is not
-   * a String.
+   * @return the preference value if it exists, otherwise the given default value.
+   * @throws ClassCastException if there is a preference with this name that is not a String.
    */
   @NonNull
   public Single<String> getString(@NonNull String key, @NonNull String defaultValue) {
@@ -49,8 +52,13 @@ public final class RxPreferences {
   }
 
   /**
-   * @return An {@link Observable} for the string stored with the given {@param key}. If the
-   * string is null or is later set to {@code null}, {@param defaultValue} is emitted.
+   * Observe a string value from the preferences.
+   * @param key The name of the preference to retrieve.
+   * @param defaultValue Value to emit if this preference does not exist.
+   * @return An {@link Observable} for the string stored with the given name. Emits the current value upon subscription,
+   * and emits the new value each time it is updated. If the value is null or is later set to null or cleared, the
+   * provided default value is emitted.
+   * @throws ClassCastException if there is a preference with this name that is not a String.
    */
   @NonNull
   public Observable<String> observeString(@NonNull String key, @NonNull String defaultValue) {
@@ -61,17 +69,12 @@ public final class RxPreferences {
 
   /**
    * Retrieve a set of String values from the preferences.
-   *
-   * <p>Note that you <em>must not</em> modify the set instance returned
-   * by this call.  The consistency of the stored data is not guaranteed
-   * if you do, nor is your ability to modify the instance at all.
-   *
+   * Note that you must not modify the set instance returned by this call. The consistency of the stored data is not
+   * guaranteed if you do, nor is your ability to modify the instance at all.
    * @param key The name of the preference to retrieve.
    * @param defaultValues Values to return if this preference does not exist.
-   *
-   * @return Returns the preference values if they exist, or {@param defaultValues}.
-   * Throws ClassCastException if there is a preference with this name
-   * that is not a Set.
+   * @return the preference value if it exists, otherwise the given default value.
+   * @throws ClassCastException if there is a preference with this name that is not a {@link Set}.
    */
   @NonNull
   public Single<Set<String>> getStringSet(@NonNull String key, @NonNull Set<String> defaultValues) {
@@ -79,8 +82,13 @@ public final class RxPreferences {
   }
 
   /**
-   * @return An {@link Observable} for the string set stored with the given {@param key}. If the
-   * string set is null or is later set to {@code null}, {@param defaultValue} is emitted.
+   * Observe a string value from the preferences.
+   * @param key The name of the preference to retrieve.
+   * @param defaultValue Value to emit if this preference does not exist.
+   * @return An {@link Observable} for the set stored with the given name. Emits the current value upon subscription,
+   * and emits the new value each time it is updated. If the value is null or is later set to null or cleared, the
+   * provided default value is emitted.
+   * @throws ClassCastException if there is a preference with this name that is not a {@link Set}.
    */
   @NonNull
   public Observable<Set<String>> observeStringSet(@NonNull String key, @NonNull Set<String> defaultValue) {
@@ -91,13 +99,10 @@ public final class RxPreferences {
 
   /**
    * Retrieve an int value from the preferences.
-   *
    * @param key The name of the preference to retrieve.
    * @param defaultValue Value to return if this preference does not exist.
-   *
-   * @return Returns the preference value if it exists, or {@param defaultValue}. Throws
-   * ClassCastException if there is a preference with this name that is not
-   * an int.
+   * @return the preference value if it exists, otherwise the given default value.
+   * @throws ClassCastException if there is a preference with this name that is not an int.
    */
   @NonNull
   public Single<Integer> getInt(@NonNull String key, int defaultValue) {
@@ -105,8 +110,13 @@ public final class RxPreferences {
   }
 
   /**
-   * @return An {@link Observable} for the int stored with the given {@param key}. If the
-   * int is not saved or later cleared, {@param defaultValue} is emitted.
+   * Observe an int value from the preferences.
+   * @param key The name of the preference to retrieve.
+   * @param defaultValue Value to emit if this preference does not exist.
+   * @return An {@link Observable} for the int stored with the given name. Emits the current value upon subscription,
+   * and emits the new value each time it is updated. If the value is null or is later set to null or cleared, the
+   * provided default value is emitted.
+   * @throws ClassCastException if there is a preference with this name that is not an int.
    */
   @NonNull
   public Observable<Integer> observeInt(@NonNull String key, int defaultValue) {
@@ -117,13 +127,10 @@ public final class RxPreferences {
 
   /**
    * Retrieve a long value from the preferences.
-   *
    * @param key The name of the preference to retrieve.
    * @param defaultValue Value to return if this preference does not exist.
-   *
-   * @return Returns the preference value if it exists, or {@param defaultValue}.  Throws
-   * ClassCastException if there is a preference with this name that is not
-   * a long.
+   * @return the preference value if it exists, otherwise the given default value.
+   * @throws ClassCastException if there is a preference with this name that is not a long.
    */
   @NonNull
   public Single<Long> getLong(@NonNull String key, long defaultValue) {
@@ -131,8 +138,13 @@ public final class RxPreferences {
   }
 
   /**
-   * @return An {@link Observable} for the long stored with the given {@param key}. If the
-   * long is not saved or later cleared, {@param defaultValue} is emitted.
+   * Observe a long value from the preferences.
+   * @param key The name of the preference to retrieve.
+   * @param defaultValue Value to emit if this preference does not exist.
+   * @return An {@link Observable} for the long stored with the given name. Emits the current value upon subscription,
+   * and emits the new value each time it is updated. If the value is null or is later set to null or cleared, the
+   * provided default value is emitted.
+   * @throws ClassCastException if there is a preference with this name that is not a long.
    */
   @NonNull
   public Observable<Long> observeLong(@NonNull String key, long defaultValue) {
@@ -143,13 +155,10 @@ public final class RxPreferences {
 
   /**
    * Retrieve a float value from the preferences.
-   *
    * @param key The name of the preference to retrieve.
    * @param defaultValue Value to return if this preference does not exist.
-   *
-   * @return Returns the preference value if it exists, or {@param defaultValue}.  Throws
-   * ClassCastException if there is a preference with this name that is not
-   * a float.
+   * @return the preference value if it exists, otherwise the given default value.
+   * @throws ClassCastException if there is a preference with this name that is not a float.
    */
   @NonNull
   public Single<Float> getFloat(@NonNull String key, float defaultValue) {
@@ -157,8 +166,13 @@ public final class RxPreferences {
   }
 
   /**
-   * @return An {@link Observable} for the float stored with the given {@param key}. If the
-   * float is not saved or later cleared, {@param defaultValue} is emitted.
+   * Observe a float value from the preferences.
+   * @param key The name of the preference to retrieve.
+   * @param defaultValue Value to emit if this preference does not exist.
+   * @return An {@link Observable} for the float stored with the given name. Emits the current value upon subscription,
+   * and emits the new value each time it is updated. If the value is null or is later set to null or cleared, the
+   * provided default value is emitted.
+   * @throws ClassCastException if there is a preference with this name that is not a float.
    */
   @NonNull
   public Observable<Float> observeFloat(@NonNull String key, float defaultValue) {
@@ -169,13 +183,10 @@ public final class RxPreferences {
 
   /**
    * Retrieve a boolean value from the preferences.
-   *
    * @param key The name of the preference to retrieve.
    * @param defaultValue Value to return if this preference does not exist.
-   *
-   * @return Returns the preference value if it exists, or {@param defaultValue}.  Throws
-   * ClassCastException if there is a preference with this name that is not
-   * a boolean.
+   * @return the preference value if it exists, otherwise the given default value.
+   * @throws ClassCastException if there is a preference with this name that is not a boolean.
    */
   @NonNull
   public Single<Boolean> getBoolean(@NonNull String key, boolean defaultValue) {
@@ -183,8 +194,13 @@ public final class RxPreferences {
   }
 
   /**
-   * @return An {@link Observable} for the boolean stored with the given {@param key}. If the
-   * boolean is not saved or later cleared, {@param defaultValue} is emitted.
+   * Observe a boolean value from the preferences.
+   * @param key The name of the preference to retrieve.
+   * @param defaultValue Value to emit if this preference does not exist.
+   * @return An {@link Observable} for the boolean stored with the given name. Emits the current value upon
+   * subscription, and emits the new value each time it is updated. If the value is null or is later set to null or
+   * cleared, the provided default value is emitted.
+   * @throws ClassCastException if there is a preference with this name that is not a boolean.
    */
   @NonNull
   public Observable<Boolean> observeBoolean(@NonNull String key, boolean defaultValue) {
@@ -194,11 +210,9 @@ public final class RxPreferences {
   }
 
   /**
-   * Checks whether the preferences contains a preference.
-   *
+   * Check whether the preferences contains a preference.
    * @param key The name of the preference to check.
-   * @return Returns true if the preference exists in the preferences,
-   *         otherwise false.
+   * @return {@link true} if the preference exists in the preferences, otherwise {@link false}.
    */
   @NonNull
   public Single<Boolean> contains(@NonNull String key) {
@@ -206,8 +220,11 @@ public final class RxPreferences {
   }
 
   /**
-   * @return An {@link Observable} for the int stored with the given {@param key}. If the
-   * int is not saved or later cleared, {@param defaultValue} is emitted.
+   * Observe whether the preferences contains a preference.
+   * @param key The name of the preference to check.
+   * @return An {@link Observable} that emits whether the preference with the given name exists. Emits upon subscription
+   * as well as each time the preference is changed.
+   * @throws ClassCastException if there is a preference with this name that is not a long.
    */
   @NonNull
   public Observable<Boolean> observeContains(@NonNull String key) {
@@ -220,16 +237,11 @@ public final class RxPreferences {
   }
 
   /**
-   * Create a new Editor for these preferences, through which you can make
-   * modifications to the data in the preferences and atomically commit those
-   * changes back to the SharedPreferences object.
-   *
-   * <p>Note that you <em>must</em> call {@link SharedPreferences.Editor#commit} to have any
-   * changes you perform in the Editor actually show up in the
-   * SharedPreferences.
-   *
-   * @return Returns a new instance of the {@link SharedPreferences.Editor} interface, allowing
-   * you to modify the values in this SharedPreferences object.
+   * Create a new Editor for these preferences, through which you can make modifications to the data in the preferences
+   * and atomically commit those changes back to the SharedPreferences object.
+   * Note that you must call {@link SharedPreferences.Editor#commit} to have any changes you perform in the
+   * {@link Editor} actually show up in the preferences.
+   * @return a new instance of {@link SharedPreferences.Editor}.
    */
   @NonNull
   public Editor edit() {
