@@ -1,3 +1,17 @@
 <resources>
   <string name="app_name">RxPreferences demo</string>
+
+  <string name="observed_values">Observed values</string>
+  <string name="edit_values">Edit values</string>
+
+  <string name="string">String</string>
+  <string name="integer">Integer</string>
+
+  <string name="empty_in_brackets">[empty]</string>
+
+  <string name="put">Put</string>
+  <string name="remove">Remove</string>
+
+  <string name="string_preference">String preference</string>
+  <string name="int_preference">Integer preference</string>
 </resources>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:paddingLeft="@dimen/spacing_large"
+    android:paddingRight="@dimen/spacing_large"
+    android:paddingTop="@dimen/spacing_small"
+    android:paddingBottom="@dimen/spacing_small">
+
+  <TextView
+      android:id="@+id/stringLabel"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      android:paddingTop="@dimen/spacing_small"
+      android:text="@string/string"
+      android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toTopOf="@+id/string" />
+
+  <EditText
+      android:id="@+id/string"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      android:hint="@string/string_preference"
+      android:inputType="text|textCapSentences"
+      android:paddingBottom="@dimen/spacing_small"
+
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/stringLabel"
+      app:layout_constraintBottom_toTopOf="@+id/putString"
+
+      tools:text="Fairly long test string spanning multiple lines" />
+
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/putString"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/spacing_button"
+
+      style="@style/Widget.MaterialComponents.Button"
+
+      android:text="@string/put"
+
+      app:layout_constraintEnd_toEndOf="@+id/string"
+      app:layout_constraintTop_toBottomOf="@+id/string"
+      app:layout_constraintBottom_toTopOf="@+id/integerLabel" />
+
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/removeString"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/spacing_button"
+
+      style="@style/Widget.MaterialComponents.Button.TextButton"
+
+      android:text="@string/remove"
+
+      app:layout_constraintEnd_toStartOf="@+id/putString"
+      app:layout_constraintTop_toTopOf="@+id/putString"
+      app:layout_constraintBottom_toBottomOf="@+id/putString"/>
+
+  <TextView
+      android:id="@+id/integerLabel"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      android:text="@string/integer"
+      android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/putString"
+      app:layout_constraintBottom_toTopOf="@+id/integer" />
+
+  <EditText
+      android:id="@+id/integer"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      android:hint="@string/int_preference"
+      android:inputType="number"
+      android:paddingBottom="@dimen/spacing_small"
+
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/integerLabel"
+      app:layout_constraintBottom_toTopOf="@+id/putInteger"
+
+      tools:text="123" />
+
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/putInteger"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/spacing_button"
+
+      style="@style/Widget.MaterialComponents.Button"
+
+      android:text="@string/put"
+
+      app:layout_constraintEnd_toEndOf="@+id/integer"
+      app:layout_constraintTop_toBottomOf="@+id/integer"
+      app:layout_constraintBottom_toBottomOf="parent" />
+
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/removeInteger"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/spacing_button"
+
+      style="@style/Widget.MaterialComponents.Button.TextButton"
+
+      android:text="@string/remove"
+
+      app:layout_constraintEnd_toStartOf="@id/putString"
+      app:layout_constraintTop_toTopOf="@+id/putInteger"
+      app:layout_constraintBottom_toBottomOf="@+id/putInteger" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
