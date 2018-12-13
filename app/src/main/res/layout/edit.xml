@@ -48,7 +48,7 @@
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/spacing_button"
 
-      style="@style/Widget.MaterialComponents.Button"
+      style="@style/PrimaryButton"
 
       android:text="@string/put"
 
@@ -62,7 +62,7 @@
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/spacing_button"
 
-      style="@style/Widget.MaterialComponents.Button.TextButton"
+      style="@style/SecondaryButton"
 
       android:text="@string/remove"
 
@@ -105,7 +105,7 @@
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/spacing_button"
 
-      style="@style/Widget.MaterialComponents.Button"
+      style="@style/PrimaryButton"
 
       android:text="@string/put"
 
@@ -119,7 +119,7 @@
       android:layout_height="wrap_content"
       android:layout_margin="@dimen/spacing_button"
 
-      style="@style/Widget.MaterialComponents.Button.TextButton"
+      style="@style/SecondaryButton"
 
       android:text="@string/remove"
 
