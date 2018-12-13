@@ -27,9 +27,9 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
 
-      android:paddingLeft="@dimen/spacing_small"
-      android:paddingRight="@dimen/spacing_small"
-      android:paddingTop="@dimen/spacing_small"
+      android:paddingLeft="@dimen/spacing_large"
+      android:paddingRight="@dimen/spacing_large"
+      android:paddingTop="@dimen/spacing_large"
       android:text="@string/string"
       android:textAppearance="@style/TextAppearance.AppCompat.Caption"
 
@@ -45,8 +45,8 @@
       android:layout_height="wrap_content"
 
       android:hint="@string/empty_in_brackets"
-      android:paddingLeft="@dimen/spacing_small"
-      android:paddingRight="@dimen/spacing_small"
+      android:paddingLeft="@dimen/spacing_large"
+      android:paddingRight="@dimen/spacing_large"
       android:paddingBottom="@dimen/spacing_small"
       android:textAppearance="@style/TextAppearance.AppCompat.Large"
 
@@ -62,8 +62,8 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
 
-      android:paddingLeft="@dimen/spacing_small"
-      android:paddingRight="@dimen/spacing_small"
+      android:paddingLeft="@dimen/spacing_large"
+      android:paddingRight="@dimen/spacing_large"
       android:paddingTop="@dimen/spacing_small"
       android:text="@string/integer"
       android:textAppearance="@style/TextAppearance.AppCompat.Caption"
@@ -79,9 +79,9 @@
       android:layout_height="wrap_content"
 
       android:hint="@string/empty_in_brackets"
-      android:paddingLeft="@dimen/spacing_small"
-      android:paddingRight="@dimen/spacing_small"
-      android:paddingBottom="@dimen/spacing_small"
+      android:paddingLeft="@dimen/spacing_large"
+      android:paddingRight="@dimen/spacing_large"
+      android:paddingBottom="@dimen/spacing_large"
       android:textAppearance="@style/TextAppearance.AppCompat.Large"
 
       app:layout_constraintStart_toStartOf="@+id/background"
