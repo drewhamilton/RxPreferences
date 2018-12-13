@@ -1,9 +1,11 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
   <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
     <item name="colorPrimary">@color/primary</item>
     <item name="colorPrimaryDark">@color/primaryDark</item>
-    <item name="colorSecondary">@color/secondary</item>
+    <item name="colorSecondary">@color/secondaryLight</item>
+    <item name="android:windowBackground">?attr/colorPrimaryDark</item>
+    <item name="android:navigationBarColor" tools:targetApi="lollipop">?attr/colorPrimaryDark</item>
   </style>
 
 </resources>
