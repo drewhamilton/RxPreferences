@@ -5,7 +5,7 @@ import io.reactivex.schedulers.Schedulers
 
 open class ExampleRepository(protected val preferences: RxPreferences) {
 
-  private val scheduler
+  protected val scheduler
     get() = Schedulers.single()
 
   fun getExampleString() = preferences.getString(Keys.EXAMPLE_STRING, Defaults.STRING)

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.get
 import drewhamilton.rxpreferences.example.R
 import drewhamilton.rxpreferences.example.base.ui.RxFragment
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.observe.*
 
 class ObservationFragment : RxFragment() {
@@ -21,9 +22,11 @@ class ObservationFragment : RxFragment() {
     val observationViewModel = ViewModelProviders.of(this).get<ObservationViewModel>()
 
     observationViewModel.observeExampleString()
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe { string.text = it }
         .trackUntilDestroyView()
     observationViewModel.observeExampleInt()
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe { integer.text = it.toString() }
         .trackUntilDestroyView()
   }
