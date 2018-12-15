@@ -54,70 +54,70 @@ public final class RxPreferencesTest {
   @Test
   public void putString_putsAndCommitsWhenExpected() {
     final String testValue = "Test value";
-    testPutMethod(PutType.STRING, testValue);
+    testPutMethod(PreferenceType.STRING, testValue);
   }
 
   @Test
   public void putStringSet_putsAndCommitsWhenExpected() {
     final Set<String> testValue = Collections.singleton("Test value");
-    testPutMethod(PutType.STRING_SET, testValue);
+    testPutMethod(PreferenceType.STRING_SET, testValue);
   }
 
   @Test
   public void putInt_putsAndCommitsWhenExpected() {
     final int testValue = 87245;
-    testPutMethod(PutType.INT, testValue);
+    testPutMethod(PreferenceType.INT, testValue);
   }
 
   @Test
   public void putLong_putsAndCommitsWhenExpected() {
     final long testValue = 3141235425L;
-    testPutMethod(PutType.LONG, testValue);
+    testPutMethod(PreferenceType.LONG, testValue);
   }
 
   @Test
   public void putFloat_putsAndCommitsWhenExpected() {
     final float testValue = 141.1341f;
-    testPutMethod(PutType.FLOAT, testValue);
+    testPutMethod(PreferenceType.FLOAT, testValue);
   }
 
   @Test
   public void putBoolean_putsAndCommitsWhenExpected() {
     final boolean testValue = true;
-    testPutMethod(PutType.BOOLEAN, testValue);
+    testPutMethod(PreferenceType.BOOLEAN, testValue);
   }
 
-  private void testPutMethod(PutType putType, Object value) {
-    assertNotNull(putType);
+  private void testPutMethod(PreferenceType type, Object value) {
+    assertNotNull(type);
     assertNotNull(value);
-    final String valueTypeFailureMessage = "verifyPut with type " + putType + " requires a value of type "
-        + putType.valueClass.getSimpleName() + ", but the provided value was of type "
+    final String valueTypeFailureMessage = "verifyPut with type " + type + " requires a value of type "
+        + type.valueClass.getSimpleName() + ", but the provided value was of type "
         + value.getClass().getSimpleName();
-    assertTrue(valueTypeFailureMessage, putType.valueClass.isAssignableFrom(value.getClass()));
+    assertTrue(valueTypeFailureMessage, type.valueClass.isAssignableFrom(value.getClass()));
 
-    final String testKey = "Test " + putType + " key";
+    final String testKey = "Test " + type + " key";
 
-    final Disposable subscription = putOnTestScheduler(putType, testKey, value);
+    final Disposable subscription = putOnTestScheduler(type, testKey, value);
     subscriptions.add(subscription);
 
-    verifyPutBeforeSubscribe(putType, testKey, value, subscription);
+    verifyPutBeforeSubscribe(type, testKey, value, subscription);
 
     advanceScheduler();
     verifyCommitAfterSubscribe(subscription);
   }
 
-  private Disposable putOnTestScheduler(PutType putType, String key, Object value) {
-    return put(rxPreferences.edit(), putType, key, value)
+  private Disposable putOnTestScheduler(PreferenceType type, String key, Object value) {
+    return put(rxPreferences.edit(), type, key, value)
         .commit()
         .subscribeOn(testScheduler)
         .subscribe();
   }
 
-  private void verifyPutBeforeSubscribe(PutType putType, String key, Object value, Disposable subscription) {
+  private void verifyPutBeforeSubscribe(PreferenceType type, String key, Object value, Disposable subscription) {
     // Before subscribing, edits are pushed to the internal editor, but not committed:
     verify(mockSharedPreferences).edit();
     verifyNoMoreInteractions(mockSharedPreferences);
-    verifyPut(mockSharedPreferencesEditor, putType, key, value);
+    verifyPut(mockSharedPreferencesEditor, type, key, value);
     verifyNoMoreInteractions(mockSharedPreferencesEditor);
     assertFalse(subscription.isDisposed());
   }
@@ -130,8 +130,8 @@ public final class RxPreferencesTest {
     assertTrue(subscription.isDisposed());
   }
 
-  private static RxPreferences.Editor put(RxPreferences.Editor editor, PutType putType, String key, Object value) {
-    switch (putType) {
+  private static RxPreferences.Editor put(RxPreferences.Editor editor, PreferenceType type, String key, Object value) {
+    switch (type) {
       case STRING:
         return editor.putString(key, (String) value);
       case STRING_SET:
@@ -146,14 +146,14 @@ public final class RxPreferencesTest {
       case BOOLEAN:
         return editor.putBoolean(key, (boolean) value);
       default:
-        fail("Unknown PutType: " + putType);
+        fail("Unknown preference type: " + type);
         throw new UnsupportedOperationException();
     }
   }
 
-  private static void verifyPut(SharedPreferences.Editor mockSharedPreferencesEditor, PutType putType, String key,
+  private static void verifyPut(SharedPreferences.Editor mockSharedPreferencesEditor, PreferenceType type, String key,
       Object value) {
-    switch (putType) {
+    switch (type) {
       case STRING:
         verify(mockSharedPreferencesEditor).putString(key, (String) value);
         break;

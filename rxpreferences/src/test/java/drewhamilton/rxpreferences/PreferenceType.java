@@ -2,7 +2,7 @@ package drewhamilton.rxpreferences;
 
 import java.util.Set;
 
-enum PutType {
+enum PreferenceType {
   STRING(String.class),
   STRING_SET(Set.class),
   INT(Integer.class),
@@ -12,7 +12,7 @@ enum PutType {
 
   final Class<?> valueClass;
 
-  PutType(Class<?> valueClass) {
+  PreferenceType(Class<?> valueClass) {
     this.valueClass = valueClass;
   }
 }
