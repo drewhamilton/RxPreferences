@@ -255,8 +255,8 @@ public final class RxPreferences {
   private static <T> Observable<T> createPreferenceObservable(@NonNull SharedPreferences preferences,
       @NonNull String key, @NonNull T defaultValue, @NonNull GetPreference<T> getPreference) {
     return Observable.create(emitter -> {
-      RxPreferenceChangeListener<T> listener =
-          new RxPreferenceChangeListener<T>(key, emitter, defaultValue, getPreference);
+      final RxPreferenceChangeListener<T> listener =
+          new RxPreferenceChangeListener<>(key, emitter, defaultValue, getPreference);
       registerRxPreferenceListener(preferences, listener, emitter);
     });
   }
