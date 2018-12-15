@@ -10,13 +10,9 @@ class EditingViewModel(private val exampleRepository: MutableExampleRepository) 
 
   fun getExampleString() = exampleRepository.getExampleString()
 
-  fun setExampleString(value: String) = exampleRepository.changeExampleString(value)
-
-  fun removeExampleString() = exampleRepository.removeExampleString()
-
   fun getExampleInteger() = exampleRepository.getExampleInt()
 
-  fun setExampleInteger(value: Int) = exampleRepository.changeExampleInt(value)
+  fun setExampleValues(string: String, int: Int) = exampleRepository.changeExampleValues(string, int)
 
-  fun removeExampleInteger() = exampleRepository.removeExampleInt()
+  fun removeExampleValues() = exampleRepository.removeExampleValues()
 }
