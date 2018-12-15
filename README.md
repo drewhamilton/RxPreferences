@@ -8,12 +8,12 @@ RxPreferences is available in JCenter.
 
 To use RxPreferences in your application, include the following in your app's `build.gradle`:
 ```groovy
-implementation 'drewhamilton.rxpreferences:rxpreferences:0.1'
+implementation 'drewhamilton.rxpreferences:rxpreferences:0.2'
 ```
 
 To use RxPreferences along with Kotlin extensions, add "-ktx":
 ```groovy
-implementation 'drewhamilton.rxpreferences:rxpreferences-ktx:0.1'
+implementation 'drewhamilton.rxpreferences:rxpreferences-ktx:0.2'
 ```
 
 ## Usage

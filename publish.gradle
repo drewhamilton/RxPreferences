@@ -1,6 +1,5 @@
 ext {
-  bintrayRepo = 'maven'
-  bintrayName = 'RxPreferences'
+  bintrayRepo = 'RxPreferences'
 
   publishedGroupId = 'drewhamilton.rxpreferences'
 

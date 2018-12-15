@@ -1,4 +1,5 @@
 ext {
+  bintrayName = 'RxPreferences-KTX'
   libraryName = 'RxPreferences-KTX'
   artifact = 'rxpreferences-ktx'
 
