@@ -244,7 +244,7 @@ public final class RxPreferences {
    * <p/>
    * Note that you must call {@link Editor#commit} to have any changes you perform in the actually show up in the
    * preferences.
-   * @return a new instance of {@link SharedPreferences.Editor}.
+   * @return a new instance of {@link Editor}.
    */
   @NonNull
   public Editor edit() {
@@ -255,8 +255,8 @@ public final class RxPreferences {
   private static <T> Observable<T> createPreferenceObservable(@NonNull SharedPreferences preferences,
       @NonNull String key, @NonNull T defaultValue, @NonNull GetPreference<T> getPreference) {
     return Observable.create(emitter -> {
-      RxPreferenceChangeListener<T> listener =
-          new RxPreferenceChangeListener<T>(key, emitter, defaultValue, getPreference);
+      final RxPreferenceChangeListener<T> listener =
+          new RxPreferenceChangeListener<>(key, emitter, defaultValue, getPreference);
       registerRxPreferenceListener(preferences, listener, emitter);
     });
   }

@@ -36,11 +36,11 @@
       app:layout_constraintStart_toStartOf="@+id/background"
       app:layout_constraintEnd_toEndOf="@+id/background"
       app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintBottom_toTopOf="@+id/string"
+      app:layout_constraintBottom_toTopOf="@+id/stringValue"
       app:layout_constraintVertical_chainStyle="packed" />
 
   <TextView
-      android:id="@+id/string"
+      android:id="@+id/stringValue"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
 
@@ -70,11 +70,11 @@
 
       app:layout_constraintStart_toStartOf="@+id/background"
       app:layout_constraintEnd_toEndOf="@+id/background"
-      app:layout_constraintTop_toBottomOf="@+id/string"
-      app:layout_constraintBottom_toTopOf="@+id/integer" />
+      app:layout_constraintTop_toBottomOf="@+id/stringValue"
+      app:layout_constraintBottom_toTopOf="@+id/integerValue" />
 
   <TextView
-      android:id="@+id/integer"
+      android:id="@+id/integerValue"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
 

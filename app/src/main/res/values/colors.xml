@@ -10,4 +10,9 @@
   <color name="secondaryLight">#bfffff</color>
 
   <color name="white">#ffffff</color>
+  <color name="white_30_percent">#4dffffff</color>
+
+  <color name="black">#000000</color>
+  <color name="black_87_percent">#de000000</color>
+  <color name="black_38_percent">#61000000</color>
 </resources>

@@ -57,7 +57,8 @@ rxPreferences.edit {
 ```
 
 ## To-do
-* More tests
+* Automate release process
+* More extensions
 
 ## License
 ```

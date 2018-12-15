@@ -23,11 +23,11 @@ class ObservationFragment : RxFragment() {
 
     observationViewModel.observeExampleString()
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe { string.text = it }
+        .subscribe { stringValue.text = it }
         .trackUntilDestroyView()
     observationViewModel.observeExampleInt()
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe { integer.text = it.toString() }
+        .subscribe { integerValue.text = it.toString() }
         .trackUntilDestroyView()
   }
 }
