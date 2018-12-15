@@ -30,7 +30,7 @@ public final class RxPreferences {
 
   /**
    * Retrieve all values from the preferences.
-   * <p/>
+   * <p>
    * Note that you must not modify the collection returned by this method, or alter any of its contents. The consistency
    * of your stored data is not guaranteed if you do.
    * @return a map containing a list of pairs key/value representing the preferences.
@@ -70,7 +70,7 @@ public final class RxPreferences {
 
   /**
    * Retrieve a set of String values from the preferences.
-   * <p/>
+   * <p>
    * Note that you must not modify the set instance returned by this call. The consistency of the stored data is not
    * guaranteed if you do, nor is your ability to modify the instance at all.
    * @param key The name of the preference to retrieve.
@@ -214,7 +214,7 @@ public final class RxPreferences {
   /**
    * Check whether the preferences contains a preference.
    * @param key The name of the preference to check.
-   * @return {@link true} if the preference exists in the preferences, otherwise {@link false}.
+   * @return true if the preference exists in the preferences, otherwise false.
    */
   @NonNull
   public Single<Boolean> contains(@NonNull String key) {
@@ -241,7 +241,7 @@ public final class RxPreferences {
   /**
    * Create a new Editor for these preferences, through which you can make modifications to the data in the preferences
    * and atomically commit those changes back to the SharedPreferences object.
-   * <p/>
+   * <p>
    * Note that you must call {@link Editor#commit} to have any changes you perform in the actually show up in the
    * preferences.
    * @return a new instance of {@link Editor}.
@@ -363,7 +363,7 @@ public final class RxPreferences {
     /**
      * Mark in the editor that a preference value should be removed, which will be done in the actual preferences once
      * {@link #commit} is called.
-     * <p/>
+     * <p>
      * Note that when committing back to the preferences, all removals are done first, regardless of whether you called
      * {@code #remove} before or after {@code #put} methods on this editor.
      * @param key The name of the preference to remove.
@@ -378,7 +378,7 @@ public final class RxPreferences {
     /**
      * Mark in the editor to remove all values from the preferences. Once {@link #commit()} is called, the only
      * remaining preferences will be any that you have defined in this editor.
-     * <p/>
+     * <p>
      * Note that when committing back to the preferences, the clear is done first, regardless of whether you called
      * {@code #clear} before or after {@code #put} methods on this editor.
      * @return a reference to the same {@link Editor} object, so you can chain calls together.
@@ -392,7 +392,7 @@ public final class RxPreferences {
     /**
      * Commit your preferences changes back from this {@link Editor} to the {@link RxPreferences} object it is editing.
      * This atomically performs the requested modifications, replacing whatever is currently in the preferences.
-     * <p/>
+     * <p>
      * Note that when two editors are modifying preferences at the same time, the last one to call commit wins.
      * @return a {@link Completable} that commits the changes upon subscription.
      */
