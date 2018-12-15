@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
+apply from: '../publish.gradle'
 
 android {
   compileSdkVersion 28
@@ -8,8 +9,8 @@ android {
   defaultConfig {
     minSdkVersion 14
     targetSdkVersion 28
-    versionCode 1
-    versionName "0.1"
+    versionCode libraryVersionCode
+    versionName libraryVersion
 
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
@@ -45,4 +46,11 @@ dependencies {
 
   testImplementation 'junit:junit:4.12'
   testImplementation 'org.mockito:mockito-inline:2.18.0'
+}
+
+ext {
+  libraryName = 'RxPreferences'
+  artifact = 'rxpreferences'
+
+  libraryDescription = 'An RxJava wrapper for Android\'s SharedPreferences.'
 }

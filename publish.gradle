@@ -1,0 +1,20 @@
+ext {
+  bintrayRepo = 'maven'
+  bintrayName = 'rxpreferences'
+
+  publishedGroupId = 'drewhamilton.rxpreferences'
+
+  siteUrl = 'https://github.com/drewhamilton/rxpreferences'
+  gitUrl = 'https://github.com/drewhamilton/rxpreferences'
+
+  libraryVersion = '0.2'
+  libraryVersionCode = 2
+
+  developerId = 'drewhamilton'
+  developerName = 'Drew Hamilton'
+  developerEmail = 'drew.hamilton.0+android@gmail.com'
+
+  licenseName = 'The Apache Software License, Version 2.0'
+  licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+  allLicenses = ["Apache-2.0"]
+}
