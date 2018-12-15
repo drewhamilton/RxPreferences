@@ -37,6 +37,8 @@ android {
 
 }
 
+apply from: 'publish.gradle'
+
 dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
@@ -49,11 +51,4 @@ dependencies {
   testImplementation 'org.mockito:mockito-inline:2.18.0'
   testImplementation 'org.amshove.kluent:kluent:1.34'
   testImplementation 'com.nhaarman:mockito-kotlin:1.5.0'
-}
-
-ext {
-  libraryName = 'RxPreferences-KTX'
-  artifact = 'rxpreferences-ktx'
-
-  libraryDescription = 'Kotlin extensions for RxPreferences.'
 }

@@ -27,3 +27,8 @@ allprojects {
 task clean(type: Delete) {
   delete rootProject.buildDir
 }
+
+ext {
+  libraryVersionCode = 1
+  libraryVersion = '0.1'
+}
