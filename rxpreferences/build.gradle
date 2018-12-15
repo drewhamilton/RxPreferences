@@ -1,4 +1,7 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+apply from: '../publish.gradle'
 
 android {
   compileSdkVersion 28
@@ -6,8 +9,8 @@ android {
   defaultConfig {
     minSdkVersion 14
     targetSdkVersion 28
-    versionCode 1
-    versionName "0.1"
+    versionCode libraryVersionCode
+    versionName libraryVersion
 
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
@@ -34,6 +37,8 @@ android {
     targetCompatibility JavaVersion.VERSION_1_8
   }
 }
+
+apply from: 'publish.gradle'
 
 dependencies {
   api 'io.reactivex.rxjava2:rxjava:2.2.2'
