@@ -1,6 +1,7 @@
 package drewhamilton.rxpreferences;
 
 import android.content.SharedPreferences;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -10,13 +11,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
@@ -296,6 +296,208 @@ public final class RxPreferencesTest {
 
     //noinspection unchecked: the caller needs to use the correct type
     return preferenceSingle;
+  }
+  //endregion
+
+  //region observe preference
+  @Test
+  public void observeString_emitsOnListenerUpdate() {
+    testObserve_emitsOnListenerUpdate(PreferenceType.STRING, "String value", "Default string");
+  }
+
+  @Test
+  public void observeString_emitsCurrentValueOnSubscribe() {
+    testObserve_emitsCurrentValueOnSubscribe(PreferenceType.STRING, "Current value", "Default value");
+  }
+
+  @Test
+  public void observeString_unregistersListenerOnUnsubscribe() {
+    testObserve_unregistersListenerOnUnsubscribe(PreferenceType.STRING, "Dummy value", "Default value");
+  }
+
+  @Test
+  public void observeStringSet_emitsOnListenerUpdate() {
+    testObserve_emitsOnListenerUpdate(PreferenceType.STRING_SET, Collections.singleton("String value"),
+        Collections.singleton("Default string"));
+  }
+
+  @Test
+  public void observeStringSet_emitsCurrentValueOnSubscribe() {
+    testObserve_emitsCurrentValueOnSubscribe(PreferenceType.STRING_SET, Collections.singleton("Current value"),
+        Collections.singleton("Default value"));
+  }
+
+  @Test
+  public void observeStringSet_unregistersListenerOnUnsubscribe() {
+    testObserve_unregistersListenerOnUnsubscribe(PreferenceType.STRING_SET, Collections.singleton("Dummy value"),
+        Collections.singleton("Default value"));
+  }
+
+  @Test
+  public void observeInt_emitsOnListenerUpdate() {
+    testObserve_emitsOnListenerUpdate(PreferenceType.INT, 123, -321);
+  }
+
+  @Test
+  public void observeInt_emitsCurrentValueOnSubscribe() {
+    testObserve_emitsCurrentValueOnSubscribe(PreferenceType.INT, 123, -321);
+  }
+
+  @Test
+  public void observeInt_unregistersListenerOnUnsubscribe() {
+    testObserve_unregistersListenerOnUnsubscribe(PreferenceType.INT, 123, -321);
+  }
+
+  @Test
+  public void observeLong_emitsOnListenerUpdate() {
+    testObserve_emitsOnListenerUpdate(PreferenceType.LONG, 12345678900L, -9876543210L);
+  }
+
+  @Test
+  public void observeLong_emitsCurrentValueOnSubscribe() {
+    testObserve_emitsCurrentValueOnSubscribe(PreferenceType.LONG, 12345678900L, -9876543210L);
+  }
+
+  @Test
+  public void observeLong_unregistersListenerOnUnsubscribe() {
+    testObserve_unregistersListenerOnUnsubscribe(PreferenceType.LONG, 12345678900L, -9876543210L);
+  }
+
+  @Test
+  public void observeFloat_emitsOnListenerUpdate() {
+    testObserve_emitsOnListenerUpdate(PreferenceType.FLOAT, 123.456f, -321.987f);
+  }
+
+  @Test
+  public void observeFloat_emitsCurrentValueOnSubscribe() {
+    testObserve_emitsCurrentValueOnSubscribe(PreferenceType.FLOAT, 123.456f, -321.987f);
+  }
+
+  @Test
+  public void observeFloat_unregistersListenerOnUnsubscribe() {
+    testObserve_unregistersListenerOnUnsubscribe(PreferenceType.FLOAT, 123.456f, -321.987f);
+  }
+
+  @Test
+  public void observeBoolean_emitsOnListenerUpdate() {
+    testObserve_emitsOnListenerUpdate(PreferenceType.BOOLEAN, true, false);
+  }
+
+  @Test
+  public void observeBoolean_emitsCurrentValueOnSubscribe() {
+    testObserve_emitsCurrentValueOnSubscribe(PreferenceType.BOOLEAN, true, false);
+  }
+
+  @Test
+  public void observeBoolean_unregistersListenerOnUnsubscribe() {
+    testObserve_unregistersListenerOnUnsubscribe(PreferenceType.BOOLEAN, true, false);
+  }
+
+  private void testObserve_emitsOnListenerUpdate(PreferenceType type, Object returnedValue, Object defaultValue) {
+    final String testKey = "Test " + type + " key";
+    mockGet(type, testKey, returnedValue);
+
+    final TestObserver<Object> subscription = observe(rxPreferences, type, testKey, defaultValue).test();
+    subscriptions.add(subscription);
+
+    subscription
+        .assertNotComplete()
+        .assertValueCount(1)
+        .assertValue(returnedValue);
+
+    final ArgumentCaptor<SharedPreferences.OnSharedPreferenceChangeListener> listenerCaptor =
+        ArgumentCaptor.forClass(SharedPreferences.OnSharedPreferenceChangeListener.class);
+    verify(mockSharedPreferences).registerOnSharedPreferenceChangeListener(listenerCaptor.capture());
+
+    final SharedPreferences.OnSharedPreferenceChangeListener listener = listenerCaptor.getValue();
+    listener.onSharedPreferenceChanged(mockSharedPreferences, testKey);
+
+    subscription
+        .assertNotComplete()
+        .assertValueCount(2)
+        .assertValues(returnedValue, returnedValue);
+  }
+
+  private void testObserve_emitsCurrentValueOnSubscribe(PreferenceType type, Object returnedValue,
+      Object defaultValue) {
+    final String testKey = "Test " + type + " key";
+    mockGet(type, testKey, returnedValue);
+
+    final Disposable subscription = observe(rxPreferences, type, testKey, defaultValue)
+        .subscribeOn(testScheduler)
+        .subscribe();
+    subscriptions.add(subscription);
+
+    verifyObserveBeforeSubscribe(subscription);
+
+    advanceScheduler();
+    verifyObserveAfterSubscribe(type, testKey, defaultValue, subscription);
+  }
+
+  private void testObserve_unregistersListenerOnUnsubscribe(PreferenceType type, Object returnedValue,
+      Object defaultValue) {
+    final String testKey = "Test " + type + " key";
+    mockGet(type, testKey, returnedValue);
+
+    final TestObserver<Object> subscription = observe(rxPreferences, type, testKey, defaultValue).test();
+    subscriptions.add(subscription);
+
+    final ArgumentCaptor<SharedPreferences.OnSharedPreferenceChangeListener> listenerCaptor =
+        ArgumentCaptor.forClass(SharedPreferences.OnSharedPreferenceChangeListener.class);
+    verify(mockSharedPreferences).registerOnSharedPreferenceChangeListener(listenerCaptor.capture());
+
+    final SharedPreferences.OnSharedPreferenceChangeListener listener = listenerCaptor.getValue();
+
+    verify(mockSharedPreferences, never()).unregisterOnSharedPreferenceChangeListener(any());
+    subscription.dispose();
+
+    verify(mockSharedPreferences).unregisterOnSharedPreferenceChangeListener(listener);
+  }
+
+  private void verifyObserveBeforeSubscribe(Disposable subscription) {
+    verifyGetBeforeSubscribe(subscription);
+  }
+
+  private void verifyObserveAfterSubscribe(PreferenceType type, String key, Object defaultValue,
+      Disposable subscription) {
+    verifyNoMoreInteractions(mockSharedPreferencesEditor);
+
+    // After subscribing, the preference is retrieved from the internal preferences:
+    verifyGet(type, key, defaultValue);
+    verify(mockSharedPreferences).registerOnSharedPreferenceChangeListener(isA(RxPreferenceChangeListener.class));
+    verifyNoMoreInteractions(mockSharedPreferences);
+    assertFalse(subscription.isDisposed());
+  }
+
+  private static <T> Observable<T> observe(RxPreferences rxPreferences, PreferenceType type, String key, Object defaultValue) {
+    final Observable preferenceObservable;
+    switch (type) {
+      case STRING:
+        preferenceObservable = rxPreferences.observeString(key, (String) defaultValue);
+        break;
+      case STRING_SET:
+        //noinspection unchecked
+        preferenceObservable = rxPreferences.observeStringSet(key, (Set<String>) defaultValue);
+        break;
+      case INT:
+        preferenceObservable = rxPreferences.observeInt(key, (int) defaultValue);
+        break;
+      case LONG:
+        preferenceObservable = rxPreferences.observeLong(key, (long) defaultValue);
+        break;
+      case FLOAT:
+        preferenceObservable = rxPreferences.observeFloat(key, (float) defaultValue);
+        break;
+      case BOOLEAN:
+        preferenceObservable = rxPreferences.observeBoolean(key, (boolean) defaultValue);
+        break;
+      default:
+        fail("Unknown preference type: " + type);
+        throw new UnsupportedOperationException();
+    }
+
+    //noinspection unchecked: the caller needs to use the correct type
+    return preferenceObservable;
   }
   //endregion
 
