@@ -52,7 +52,7 @@ public final class RxPreferencesTest {
   }
 
   //region RxPreferences
-  //region getAll
+  //region all preferences
   @Test
   public void getAll_emitsMapFromInternalPreferences() {
     final Map<String, ?> testMap = Collections.singletonMap("Made up map key", 23498);
@@ -532,6 +532,72 @@ public final class RxPreferencesTest {
     advanceScheduler();
     verify(mockSharedPreferences).contains(testKey);
     verifyNoMoreInteractions(mockSharedPreferences);
+  }
+
+  @Test
+  public void observeContains_emitsOnListenerUpdate() {
+    final String testKey = "Test contains key";
+    when(mockSharedPreferences.contains(testKey)).thenReturn(true);
+
+    final TestObserver<Boolean> subscription = rxPreferences.observeContains(testKey).test();
+    subscriptions.add(subscription);
+
+    subscription
+        .assertNotComplete()
+        .assertValueCount(1)
+        .assertValue(true);
+
+    final ArgumentCaptor<SharedPreferences.OnSharedPreferenceChangeListener> listenerCaptor =
+        ArgumentCaptor.forClass(SharedPreferences.OnSharedPreferenceChangeListener.class);
+    verify(mockSharedPreferences).registerOnSharedPreferenceChangeListener(listenerCaptor.capture());
+
+    final SharedPreferences.OnSharedPreferenceChangeListener listener = listenerCaptor.getValue();
+    listener.onSharedPreferenceChanged(mockSharedPreferences, testKey);
+
+    subscription
+        .assertNotComplete()
+        .assertValueCount(2)
+        .assertValues(true, true);
+  }
+
+  @Test
+  public void observeContains_emitsCurrentValueOnSubscribe() {
+    final String testKey = "Test contains key";
+    when(mockSharedPreferences.contains(testKey)).thenReturn(true);
+
+    final Disposable subscription = rxPreferences.observeContains(testKey)
+        .subscribeOn(testScheduler)
+        .subscribe();
+    subscriptions.add(subscription);
+
+    verifyObserveBeforeSubscribe(subscription);
+
+    advanceScheduler();
+    // After subscribing, the value is retrieved from the internal preferences:
+    verify(mockSharedPreferences).contains(testKey);
+    verify(mockSharedPreferences).registerOnSharedPreferenceChangeListener(isA(RxPreferenceContainsListener.class));
+    verifyNoMoreInteractions(mockSharedPreferences);
+    assertFalse(subscription.isDisposed());
+  }
+
+  @Test
+  public void observeContains_unregistersListenerOnUnsubscribe() {
+    final String testKey = "Test contains key";
+    when(mockSharedPreferences.contains(testKey)).thenReturn(true);
+
+    final TestObserver<Boolean> subscription = rxPreferences.observeContains(testKey).test();
+    subscriptions.add(subscription);
+
+    final ArgumentCaptor<SharedPreferences.OnSharedPreferenceChangeListener> listenerCaptor =
+        ArgumentCaptor.forClass(SharedPreferences.OnSharedPreferenceChangeListener.class);
+    verify(mockSharedPreferences).registerOnSharedPreferenceChangeListener(listenerCaptor.capture());
+
+    final SharedPreferences.OnSharedPreferenceChangeListener listener = listenerCaptor.getValue();
+
+    verify(mockSharedPreferences, never()).unregisterOnSharedPreferenceChangeListener(any());
+    subscription.dispose();
+
+    verify(mockSharedPreferences).unregisterOnSharedPreferenceChangeListener(listener);
   }
   //endregion
 
