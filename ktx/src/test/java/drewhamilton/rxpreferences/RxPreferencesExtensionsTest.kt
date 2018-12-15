@@ -1,6 +1,7 @@
 package drewhamilton.rxpreferences
 
 import android.content.SharedPreferences
+import com.nhaarman.mockito_kotlin.inOrder
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyNoMoreInteractions
 import com.nhaarman.mockito_kotlin.whenever
@@ -17,7 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner
 import java.util.concurrent.TimeUnit
 
 @RunWith(MockitoJUnitRunner::class)
-class RxPreferencesKtxTest {
+class RxPreferencesExtensionsTest {
 
   @Mock private lateinit var mockSharedPreferences: SharedPreferences
   @Mock private lateinit var mockSharedPreferencesEditor: SharedPreferences.Editor
@@ -42,7 +43,7 @@ class RxPreferencesKtxTest {
   }
 
   @Test
-  fun putString_callsExpectedMethods() {
+  fun edit_commitsAllChangesInOrder() {
     val testStringKey = "Test string key"
     val testStringValue = "Test string value"
     val testIntKey = "Test int key"
@@ -55,16 +56,18 @@ class RxPreferencesKtxTest {
         .subscribe()
         .trackUntilTearDown()
 
+    val editingOrder = inOrder(mockSharedPreferencesEditor)
+
     verify(mockSharedPreferences).edit()
     verifyNoMoreInteractions(mockSharedPreferences)
-    verify(mockSharedPreferencesEditor).putString(testStringKey, testStringValue)
-    verify(mockSharedPreferencesEditor).putInt(testIntKey, testIntValue)
-    verifyNoMoreInteractions(mockSharedPreferencesEditor)
+    editingOrder.verify(mockSharedPreferencesEditor).putString(testStringKey, testStringValue)
+    editingOrder.verify(mockSharedPreferencesEditor).putInt(testIntKey, testIntValue)
+    editingOrder.verifyNoMoreInteractions()
 
     testScheduler.advanceTimeBy(1, TimeUnit.MILLISECONDS)
     verifyNoMoreInteractions(mockSharedPreferences)
-    verify(mockSharedPreferencesEditor).commit()
-    verifyNoMoreInteractions(mockSharedPreferencesEditor)
+    editingOrder.verify(mockSharedPreferencesEditor).commit()
+    editingOrder.verifyNoMoreInteractions()
   }
 
   private fun Disposable.trackUntilTearDown() = disposable.add(this)
