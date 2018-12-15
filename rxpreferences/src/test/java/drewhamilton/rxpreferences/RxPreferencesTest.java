@@ -1,6 +1,7 @@
 package drewhamilton.rxpreferences;
 
 import android.content.SharedPreferences;
+import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.TestObserver;
@@ -14,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -48,6 +50,253 @@ public final class RxPreferencesTest {
   private void advanceScheduler() {
     testScheduler.advanceTimeBy(1, TimeUnit.MILLISECONDS);
   }
+
+  //region RxPreferences
+  //region get
+  @Test
+  public void getAll_emitsMapFromInternalPreferences() {
+    final Map<String, ?> testMap = Collections.singletonMap("Made up map key", 23498);
+
+    //noinspection unchecked: Not sure why this cast is needed but it works
+    when(mockSharedPreferences.getAll()).thenReturn((Map) testMap);
+
+    final TestObserver<Map<String, ?>> subscription = rxPreferences.getAll()
+        .test();
+    subscriptions.add(subscription);
+
+    subscription
+        .assertComplete()
+        .assertValueCount(1)
+        .assertValue(testMap);
+  }
+
+  @Test
+  public void getAll_getsAfterSubscribe() {
+    final Map<String, ?> testMap = Collections.singletonMap("Made up map key", 234234);
+    //noinspection unchecked: Not sure why this cast is needed but it works
+    when(mockSharedPreferences.getAll()).thenReturn((Map) testMap);
+
+    final Disposable subscription = rxPreferences.getAll()
+        .subscribeOn(testScheduler)
+        .subscribe();
+    subscriptions.add(subscription);
+
+    verifyNoMoreInteractions(mockSharedPreferences);
+
+    advanceScheduler();
+    verify(mockSharedPreferences).getAll();
+    verifyNoMoreInteractions(mockSharedPreferences);
+  }
+
+  @Test
+  public void getString_emitsFromInternalPreferences() {
+    testGetMethod_emitsFromInternalPreferences(PreferenceType.STRING, "Test value", "Test default");
+  }
+
+  @Test
+  public void getString_getsAfterSubscribe() {
+    testGetMethod_getsAfterSubscribe(PreferenceType.STRING, "Test value", "Test default");
+  }
+
+  @Test
+  public void getStringSet_emitsFromInternalPreferences() {
+    testGetMethod_emitsFromInternalPreferences(PreferenceType.STRING_SET, Collections.singleton("Test value"),
+        Collections.singleton("Test default"));
+  }
+
+  @Test
+  public void getStringSet_getsAfterSubscribe() {
+    testGetMethod_getsAfterSubscribe(PreferenceType.STRING_SET, Collections.singleton("Test value"),
+        Collections.singleton("Test default"));
+  }
+
+  @Test
+  public void getInt_emitsFromInternalPreferences() {
+    testGetMethod_emitsFromInternalPreferences(PreferenceType.INT, 2332, -987);
+  }
+
+  @Test
+  public void getInt_getsAfterSubscribe() {
+    testGetMethod_getsAfterSubscribe(PreferenceType.INT, 2332, -987);
+  }
+
+  @Test
+  public void getLong_emitsFromInternalPreferences() {
+    testGetMethod_emitsFromInternalPreferences(PreferenceType.LONG, 342342342343L, -38948985934859L);
+  }
+
+  @Test
+  public void getLong_getsAfterSubscribe() {
+    testGetMethod_getsAfterSubscribe(PreferenceType.LONG, 342342342343L, -38948985934859L);
+  }
+
+  @Test
+  public void getFloat_emitsFromInternalPreferences() {
+    testGetMethod_emitsFromInternalPreferences(PreferenceType.FLOAT, 234.432f, -987.654f);
+  }
+
+  @Test
+  public void getFloat_getsAfterSubscribe() {
+    testGetMethod_getsAfterSubscribe(PreferenceType.FLOAT, 234.432f, -987.654f);
+  }
+
+  @Test
+  public void getBoolean_emitsFromInternalPreferences() {
+    testGetMethod_emitsFromInternalPreferences(PreferenceType.BOOLEAN, true, false);
+  }
+
+  @Test
+  public void getBoolean_getsAfterSubscribe() {
+    testGetMethod_getsAfterSubscribe(PreferenceType.BOOLEAN, true, false);
+  }
+
+  private void testGetMethod_emitsFromInternalPreferences(PreferenceType type, Object returnedValue,
+      Object defaultValue) {
+    assertNotNull(type);
+    assertNotNull(returnedValue);
+    assertNotNull(defaultValue);
+    final String valueTypeFailureMessage = "Testing #get method of type " + type + " requires a value of type "
+        + type.valueClass.getSimpleName() + ", but the provided value was of type "
+        + returnedValue.getClass().getSimpleName();
+    assertTrue(valueTypeFailureMessage, type.valueClass.isAssignableFrom(returnedValue.getClass()));
+
+    final String testKey = "Test " + type + " key";
+    mockGet(type, testKey, returnedValue);
+
+    final TestObserver<Object> subscription = get(rxPreferences, type, testKey, defaultValue)
+        .test();
+    subscriptions.add(subscription);
+
+    subscription
+        .assertComplete()
+        .assertValueCount(1)
+        .assertValue(returnedValue);
+  }
+
+  private void testGetMethod_getsAfterSubscribe(PreferenceType type, Object returnedValue, Object defaultValue) {
+    assertNotNull(type);
+    assertNotNull(returnedValue);
+    assertNotNull(defaultValue);
+    final String valueTypeFailureMessage = "Testing #get method of type " + type + " requires a value of type "
+        + type.valueClass.getSimpleName() + ", but the provided value was of type "
+        + returnedValue.getClass().getSimpleName();
+    assertTrue(valueTypeFailureMessage, type.valueClass.isAssignableFrom(returnedValue.getClass()));
+
+    final String testKey = "Test " + type + " key";
+    mockGet(type, testKey, returnedValue);
+
+    final Disposable subscription = getOnTestScheduler(type, testKey, defaultValue);
+    subscriptions.add(subscription);
+
+    verifyGetBeforeSubscribe(subscription);
+
+    advanceScheduler();
+    verifyGetAfterSubscribe(type, testKey, defaultValue, subscription);
+  }
+
+  private Disposable getOnTestScheduler(PreferenceType type, String key, Object defaultValue) {
+    return get(rxPreferences, type, key, defaultValue)
+        .subscribeOn(testScheduler)
+        .subscribe();
+  }
+
+  private void verifyGetBeforeSubscribe(Disposable subscription) {
+    // Before subscribing, there are no interactions with the internal preferences:
+    verifyNoMoreInteractions(mockSharedPreferences);
+    verifyNoMoreInteractions(mockSharedPreferencesEditor);
+    assertFalse(subscription.isDisposed());
+  }
+
+  private void verifyGetAfterSubscribe(PreferenceType type, String key, Object defaultValue,
+      Disposable subscription) {
+    verifyNoMoreInteractions(mockSharedPreferencesEditor);
+
+    // After subscribing, the preference is retrieved from the internal preferences:
+    verifyGet(type, key, defaultValue);
+    verifyNoMoreInteractions(mockSharedPreferences);
+    assertTrue(subscription.isDisposed());
+  }
+
+  private void mockGet(PreferenceType type, String key, Object returnedValue) {
+    switch (type) {
+      case STRING:
+        when(mockSharedPreferences.getString(eq(key), anyString())).thenReturn((String) returnedValue);
+        break;
+      case STRING_SET:
+        //noinspection unchecked
+        when(mockSharedPreferences.getStringSet(eq(key), anySet())).thenReturn((Set<String>) returnedValue);
+        break;
+      case INT:
+        when(mockSharedPreferences.getInt(eq(key), anyInt())).thenReturn((int) returnedValue);
+        break;
+      case LONG:
+        when(mockSharedPreferences.getLong(eq(key), anyLong())).thenReturn((long) returnedValue);
+        break;
+      case FLOAT:
+        when(mockSharedPreferences.getFloat(eq(key), anyFloat())).thenReturn((float) returnedValue);
+        break;
+      case BOOLEAN:
+        when(mockSharedPreferences.getBoolean(eq(key), anyBoolean())).thenReturn((boolean) returnedValue);
+        break;
+    }
+  }
+
+  private void verifyGet(PreferenceType type, String key, Object defaultValue) {
+    switch (type) {
+      case STRING:
+        verify(mockSharedPreferences).getString(key, (String) defaultValue);
+        break;
+      case STRING_SET:
+        //noinspection unchecked
+        verify(mockSharedPreferences).getStringSet(key, (Set<String>) defaultValue);
+        break;
+      case INT:
+        verify(mockSharedPreferences).getInt(key, (int) defaultValue);
+        break;
+      case LONG:
+        verify(mockSharedPreferences).getLong(key, (long) defaultValue);
+        break;
+      case FLOAT:
+        verify(mockSharedPreferences).getFloat(key, (float) defaultValue);
+        break;
+      case BOOLEAN:
+        verify(mockSharedPreferences).getBoolean(key, (boolean) defaultValue);
+        break;
+    }
+  }
+
+  private static <T> Single<T> get(RxPreferences rxPreferences, PreferenceType type, String key, Object defaultValue) {
+    final Single preferenceSingle;
+    switch (type) {
+      case STRING:
+        preferenceSingle = rxPreferences.getString(key, (String) defaultValue);
+        break;
+      case STRING_SET:
+        //noinspection unchecked
+        preferenceSingle = rxPreferences.getStringSet(key, (Set<String>) defaultValue);
+        break;
+      case INT:
+        preferenceSingle = rxPreferences.getInt(key, (int) defaultValue);
+        break;
+      case LONG:
+        preferenceSingle = rxPreferences.getLong(key, (long) defaultValue);
+        break;
+      case FLOAT:
+        preferenceSingle = rxPreferences.getFloat(key, (float) defaultValue);
+        break;
+      case BOOLEAN:
+        preferenceSingle = rxPreferences.getBoolean(key, (boolean) defaultValue);
+        break;
+      default:
+        fail("Unknown preference type: " + type);
+        throw new UnsupportedOperationException();
+    }
+
+    //noinspection unchecked: the caller needs to use the correct type
+    return preferenceSingle;
+  }
+  //endregion
+  //endregion
 
   //region Editor
   //region put
@@ -90,9 +339,8 @@ public final class RxPreferencesTest {
   private void testPutMethod(PreferenceType type, Object value) {
     assertNotNull(type);
     assertNotNull(value);
-    final String valueTypeFailureMessage = "verifyPut with type " + type + " requires a value of type "
-        + type.valueClass.getSimpleName() + ", but the provided value was of type "
-        + value.getClass().getSimpleName();
+    final String valueTypeFailureMessage = "Testing #put method with type " + type + " requires a value of type "
+        + type.valueClass.getSimpleName() + ", but the provided value was of type " + value.getClass().getSimpleName();
     assertTrue(valueTypeFailureMessage, type.valueClass.isAssignableFrom(value.getClass()));
 
     final String testKey = "Test " + type + " key";
