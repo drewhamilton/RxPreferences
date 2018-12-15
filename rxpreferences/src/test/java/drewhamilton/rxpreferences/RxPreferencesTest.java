@@ -52,7 +52,7 @@ public final class RxPreferencesTest {
   }
 
   //region RxPreferences
-  //region get
+  //region getAll
   @Test
   public void getAll_emitsMapFromInternalPreferences() {
     final Map<String, ?> testMap = Collections.singletonMap("Made up map key", 23498);
@@ -87,7 +87,9 @@ public final class RxPreferencesTest {
     verify(mockSharedPreferences).getAll();
     verifyNoMoreInteractions(mockSharedPreferences);
   }
+  //endregion
 
+  //region get preference
   @Test
   public void getString_emitsFromInternalPreferences() {
     testGetMethod_emitsFromInternalPreferences(PreferenceType.STRING, "Test value", "Test default");
@@ -294,6 +296,47 @@ public final class RxPreferencesTest {
 
     //noinspection unchecked: the caller needs to use the correct type
     return preferenceSingle;
+  }
+  //endregion
+
+  //region contains
+  @Test
+  public void contains_emitsFromInternalPreferences() {
+    final String testKey = "Test key";
+    when(mockSharedPreferences.contains(testKey)).thenReturn(true);
+
+    final TestObserver<Boolean> subscription = rxPreferences.contains(testKey)
+        .test();
+    subscriptions.add(subscription);
+
+    subscription
+        .assertComplete()
+        .assertValueCount(1)
+        .assertValue(true);
+  }
+
+  @Test
+  public void contains_getsAfterSubscribe() {
+    final String testKey = "Test key";
+    when(mockSharedPreferences.contains(testKey)).thenReturn(true);
+
+    final Disposable subscription = rxPreferences.contains(testKey)
+        .subscribeOn(testScheduler)
+        .subscribe();
+    subscriptions.add(subscription);
+
+    verifyNoMoreInteractions(mockSharedPreferences);
+
+    advanceScheduler();
+    verify(mockSharedPreferences).contains(testKey);
+    verifyNoMoreInteractions(mockSharedPreferences);
+  }
+  //endregion
+
+  //region edit
+  @Test
+  public void edit_returnsNewInstance() {
+    assertNotEquals(rxPreferences.edit(), rxPreferences.edit());
   }
   //endregion
   //endregion

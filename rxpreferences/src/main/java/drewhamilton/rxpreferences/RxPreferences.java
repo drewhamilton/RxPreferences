@@ -244,7 +244,7 @@ public final class RxPreferences {
    * <p/>
    * Note that you must call {@link Editor#commit} to have any changes you perform in the actually show up in the
    * preferences.
-   * @return a new instance of {@link SharedPreferences.Editor}.
+   * @return a new instance of {@link Editor}.
    */
   @NonNull
   public Editor edit() {
