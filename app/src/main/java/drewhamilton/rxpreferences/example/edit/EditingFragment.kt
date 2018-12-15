@@ -23,7 +23,7 @@ class EditingFragment : RxFragment() {
     super.onViewCreated(view, savedInstanceState)
     val editingViewModel = ViewModelProviders.of(this).get<EditingViewModel>()
 
-    integer.addTextChangedListener(object : TextWatcher {
+    integerValue.addTextChangedListener(object : TextWatcher {
       override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
       override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
@@ -34,22 +34,22 @@ class EditingFragment : RxFragment() {
 
     editingViewModel.getExampleString()
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe { it -> string.setText(it) }
+        .subscribe { it -> stringValue.setText(it) }
         .trackUntilDestroyView()
     editingViewModel.getExampleInteger()
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe { it -> integer.setText(it.toString()) }
+        .subscribe { it -> integerValue.setText(it.toString()) }
         .trackUntilDestroyView()
 
     putButton.setOnClickListener {
-      editingViewModel.setExampleValues(string.text.toString(), integer.text.toString().toInt())
+      editingViewModel.setExampleValues(stringValue.text.toString(), integerValue.text.toString().toInt())
           .subscribe()
           .trackUntilDestroyView()
     }
     removeButton.setOnClickListener {
       editingViewModel.removeExampleValues()
           .observeOn(AndroidSchedulers.mainThread())
-          .subscribe { integer.text = null }
+          .subscribe { integerValue.text = null }
           .trackUntilDestroyView()
     }
   }

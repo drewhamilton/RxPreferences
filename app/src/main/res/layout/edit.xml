@@ -24,10 +24,10 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintBottom_toTopOf="@+id/string" />
+      app:layout_constraintBottom_toTopOf="@+id/stringValue" />
 
   <EditText
-      android:id="@+id/string"
+      android:id="@+id/stringValue"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
 
@@ -52,11 +52,11 @@
 
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/string"
-      app:layout_constraintBottom_toTopOf="@+id/integer" />
+      app:layout_constraintTop_toBottomOf="@+id/stringValue"
+      app:layout_constraintBottom_toTopOf="@+id/integerValue" />
 
   <EditText
-      android:id="@+id/integer"
+      android:id="@+id/integerValue"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
 
@@ -82,8 +82,8 @@
       android:enabled="false"
       android:text="@string/put"
 
-      app:layout_constraintEnd_toEndOf="@+id/integer"
-      app:layout_constraintTop_toBottomOf="@+id/integer"
+      app:layout_constraintEnd_toEndOf="@+id/integerValue"
+      app:layout_constraintTop_toBottomOf="@+id/integerValue"
       app:layout_constraintBottom_toBottomOf="parent" />
 
   <com.google.android.material.button.MaterialButton
