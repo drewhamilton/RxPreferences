@@ -49,7 +49,10 @@ class EditingFragment : RxFragment() {
     removeButton.setOnClickListener {
       editingViewModel.removeExampleValues()
           .observeOn(AndroidSchedulers.mainThread())
-          .subscribe { integerValue.text = null }
+          .subscribe {
+            stringValue.text = null
+            integerValue.text = null
+          }
           .trackUntilDestroyView()
     }
   }
