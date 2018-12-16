@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:paddingLeft="@dimen/spacing_large"
+    android:paddingRight="@dimen/spacing_large"
+    android:paddingTop="@dimen/spacing_small"
+    android:paddingBottom="@dimen/spacing_small">
+
+  <TextView
+      android:id="@+id/stringLabel"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/spacing_small"
+
+      android:text="@string/string"
+      android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toTopOf="@+id/stringValue" />
+
+  <EditText
+      android:id="@+id/stringValue"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      android:hint="@string/string_preference"
+      android:inputType="text|textCapSentences"
+
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/stringLabel"
+      app:layout_constraintBottom_toTopOf="@+id/integerLabel"
+
+      tools:text="Fairly long test string spanning multiple lines" />
+
+  <TextView
+      android:id="@+id/integerLabel"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/spacing_small"
+
+      android:text="@string/integer"
+      android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/stringValue"
+      app:layout_constraintBottom_toTopOf="@+id/integerValue" />
+
+  <EditText
+      android:id="@+id/integerValue"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      android:hint="@string/int_preference"
+      android:inputType="number"
+
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/integerLabel"
+      app:layout_constraintBottom_toTopOf="@+id/putButton"
+
+      tools:text="123" />
+
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/putButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/spacing_button"
+
+      style="@style/PrimaryButton"
+
+      android:enabled="false"
+      android:text="@string/put"
+
+      app:layout_constraintEnd_toEndOf="@+id/integerValue"
+      app:layout_constraintTop_toBottomOf="@+id/integerValue"
+      app:layout_constraintBottom_toBottomOf="parent"
+
+      tools:enabled="true" />
+
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/removeButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/spacing_button"
+
+      style="@style/SecondaryButton"
+
+      android:text="@string/remove"
+
+      app:layout_constraintEnd_toStartOf="@id/putButton"
+      app:layout_constraintTop_toTopOf="@+id/putButton"
+      app:layout_constraintBottom_toBottomOf="@+id/putButton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

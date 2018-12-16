@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+
+    tools:context=".MainActivity">
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/spacing_large"
+
+      android:text="@string/app_name"
+      android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+  <fragment
+      android:id="@+id/observation"
+      android:name="drewhamilton.rxpreferences.example.observe.ObservationFragment"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      tools:layout="@layout/observe" />
+
+  <Space
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1" />
+
+  <fragment
+      android:id="@+id/editing"
+      android:name="drewhamilton.rxpreferences.example.edit.EditingFragment"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      tools:layout="@layout/edit" />
+
+</LinearLayout>

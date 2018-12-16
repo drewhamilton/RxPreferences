@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:padding="@dimen/spacing_small"
+    android:theme="@style/LightTheme">
+
+  <View
+      android:id="@+id/background"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+
+      android:background="@drawable/background_observe"
+
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent" />
+
+  <TextView
+      android:id="@+id/stringLabel"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      android:paddingLeft="@dimen/spacing_large"
+      android:paddingRight="@dimen/spacing_large"
+      android:paddingTop="@dimen/spacing_large"
+      android:text="@string/string"
+      android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+
+      app:layout_constraintStart_toStartOf="@+id/background"
+      app:layout_constraintEnd_toEndOf="@+id/background"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintBottom_toTopOf="@+id/stringValue"
+      app:layout_constraintVertical_chainStyle="packed" />
+
+  <TextView
+      android:id="@+id/stringValue"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      android:hint="@string/empty_in_brackets"
+      android:paddingLeft="@dimen/spacing_large"
+      android:paddingRight="@dimen/spacing_large"
+      android:paddingBottom="@dimen/spacing_small"
+      android:textAppearance="@style/TextAppearance.AppCompat.Large"
+
+      app:layout_constraintStart_toStartOf="@+id/background"
+      app:layout_constraintEnd_toEndOf="@+id/background"
+      app:layout_constraintTop_toBottomOf="@+id/stringLabel"
+      app:layout_constraintBottom_toTopOf="@+id/integerLabel"
+
+      tools:text="Test string" />
+
+  <TextView
+      android:id="@+id/integerLabel"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      android:paddingLeft="@dimen/spacing_large"
+      android:paddingRight="@dimen/spacing_large"
+      android:paddingTop="@dimen/spacing_small"
+      android:text="@string/integer"
+      android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+
+      app:layout_constraintStart_toStartOf="@+id/background"
+      app:layout_constraintEnd_toEndOf="@+id/background"
+      app:layout_constraintTop_toBottomOf="@+id/stringValue"
+      app:layout_constraintBottom_toTopOf="@+id/integerValue" />
+
+  <TextView
+      android:id="@+id/integerValue"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      android:hint="@string/empty_in_brackets"
+      android:paddingLeft="@dimen/spacing_large"
+      android:paddingRight="@dimen/spacing_large"
+      android:paddingBottom="@dimen/spacing_large"
+      android:textAppearance="@style/TextAppearance.AppCompat.Large"
+
+      app:layout_constraintStart_toStartOf="@+id/background"
+      app:layout_constraintEnd_toEndOf="@+id/background"
+      app:layout_constraintTop_toBottomOf="@+id/integerLabel"
+      app:layout_constraintBottom_toBottomOf="parent"
+
+      tools:text="123" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

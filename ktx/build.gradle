@@ -2,6 +2,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'org.jetbrains.dokka-android'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+apply from: '../publish.gradle'
 
 android {
   compileSdkVersion 28
@@ -9,8 +12,8 @@ android {
   defaultConfig {
     minSdkVersion 14
     targetSdkVersion 28
-    versionCode 1
-    versionName "0.1"
+    versionCode libraryVersionCode
+    versionName libraryVersion
 
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
@@ -33,6 +36,8 @@ android {
   }
 
 }
+
+apply from: 'publish.gradle'
 
 dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"

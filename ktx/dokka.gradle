@@ -1,4 +1,0 @@
-dokka {
-  outputFormat = 'javadocJar'
-  outputDirectory = "$buildDir/javadoc"
-}
