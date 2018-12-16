@@ -51,6 +51,7 @@ class RxPreferencesExtensionsTest {
   }
 
   //region RxPreferences
+  //region get preference
   @Test
   fun `getEnum emits from internal preferences`() {
     val testKey = "Test PreferenceType key"
@@ -95,6 +96,50 @@ class RxPreferencesExtensionsTest {
     assertTrue(subscription.isDisposed)
   }
 
+  @Test
+  fun `getEnumByOrdinal emits from internal preferences`() {
+    val testKey = "Test PreferenceType ordinal key"
+    val testValue = PreferenceType.FLOAT
+    val testDefault = PreferenceType.STRING
+    mockGet(PreferenceType.INT, testKey, testValue.ordinal)
+
+    val subscription = rxPreferences.getEnumByOrdinal(testKey, testDefault)
+        .test()
+        .trackUntilTearDown()
+
+    subscription
+        .assertComplete()
+        .assertValueCount(1)
+        .assertValue(testValue)
+  }
+
+  @Test
+  fun `getEnumByOrdinal gets after subscribe`() {
+    val testKey = "Test PreferenceType ordinal key"
+    val testValue = PreferenceType.FLOAT
+    val testDefault = PreferenceType.STRING
+    mockGet(PreferenceType.INT, testKey, testValue.ordinal)
+
+    val subscription = rxPreferences.getEnumByOrdinal(testKey, testDefault)
+        .subscribeOn(testScheduler)
+        .subscribe()
+        .trackUntilTearDown()
+
+    // Before subscribing, there are no interactions with the internal preferences:
+    verifyNoMoreInteractions(mockSharedPreferences)
+    verifyNoMoreInteractions(mockSharedPreferencesEditor)
+    assertFalse(subscription.isDisposed)
+
+    advanceScheduler()
+
+    verifyNoMoreInteractions(mockSharedPreferencesEditor)
+
+    // After subscribing, the preference is retrieved from the internal preferences:
+    verifyGet(PreferenceType.INT, testKey, testDefault.ordinal)
+    verifyNoMoreInteractions(mockSharedPreferences)
+    assertTrue(subscription.isDisposed)
+  }
+
   private fun mockGet(type: PreferenceType, key: String, returnedValue: Any) {
     when (type) {
       PreferenceType.STRING ->
@@ -123,6 +168,7 @@ class RxPreferencesExtensionsTest {
       PreferenceType.BOOLEAN -> verify(mockSharedPreferences).getBoolean(key, defaultValue as Boolean)
     }
   }
+  //endregion
   //endregion
 
   //region Editor

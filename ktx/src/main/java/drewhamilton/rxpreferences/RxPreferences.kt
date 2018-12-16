@@ -1,7 +1,6 @@
 package drewhamilton.rxpreferences
 
 import io.reactivex.Observable
-import io.reactivex.Single
 
 /**
  * Retrieve an enum value from the preferences that was saved with [putEnum].
@@ -13,10 +12,9 @@ import io.reactivex.Single
  * @throws [IllegalArgumentException] if the stored string does not resolve to a valid
  * name for a value of type [E].
  */
-inline fun <reified E : Enum<E>> RxPreferences.getEnum(key: String, defaultValue: E): Single<E> {
-  return getString(key, defaultValue.name)
-      .map { enumValueOf(it) as E }
-}
+inline fun <reified E : Enum<E>> RxPreferences.getEnum(key: String, defaultValue: E) =
+    getString(key, defaultValue.name)
+        .map { enumValueOf<E>(it) }!!
 
 /**
  * Observe an enum value from the preferences that was saved with [putEnum].
@@ -30,10 +28,9 @@ inline fun <reified E : Enum<E>> RxPreferences.getEnum(key: String, defaultValue
  * @throws [IllegalArgumentException] if the stored string does not resolve to a valid
  * name for a value of type [E].
  */
-inline fun <reified E : Enum<E>> RxPreferences.observeEnum(key: String, defaultValue: E): Observable<E> {
-  return observeString(key, defaultValue.name)
-      .map { enumValueOf(it) as E }
-}
+inline fun <reified E : Enum<E>> RxPreferences.observeEnum(key: String, defaultValue: E) =
+    observeString(key, defaultValue.name)
+        .map { enumValueOf<E>(it) }!!
 
 /**
  * Retrieve an enum value from the preferences that was saved with [putEnumByOrdinal].
@@ -45,14 +42,9 @@ inline fun <reified E : Enum<E>> RxPreferences.observeEnum(key: String, defaultV
  * @throws [IndexOutOfBoundsException] if the stored int does not resolve to a valid
  * ordinal for a value of type [E].
  */
-inline fun <reified E : Enum<E>> RxPreferences.getEnumByOrdinal(key: String, defaultValue: E): Single<E> {
-  val defaultEnumInt = -1
-  return getInt(key, defaultEnumInt)
-      .map {
-        if (it == defaultEnumInt) defaultValue
-        else enumValues<E>()[it]
-      }
-}
+inline fun <reified E : Enum<E>> RxPreferences.getEnumByOrdinal(key: String, defaultValue: E) =
+    getInt(key, defaultValue.ordinal)
+        .map { enumValues<E>()[it] }!!
 
 /**
  * Observe an enum value from the preferences that was saved with [putEnumByOrdinal].
@@ -65,14 +57,9 @@ inline fun <reified E : Enum<E>> RxPreferences.getEnumByOrdinal(key: String, def
  * @throws [IndexOutOfBoundsException] if the stored int does not resolve to a valid
  * ordinal for a value of type [E].
  */
-inline fun <reified E : Enum<E>> RxPreferences.observeEnumByOrdinal(key: String, defaultValue: E): Observable<E> {
-  val defaultEnumInt = -1
-  return observeInt(key, defaultEnumInt)
-      .map {
-        if (it == defaultEnumInt) defaultValue
-        else enumValues<E>()[it]
-      }
-}
+inline fun <reified E : Enum<E>> RxPreferences.observeEnumByOrdinal(key: String, defaultValue: E) =
+    observeInt(key, defaultValue.ordinal)
+        .map { enumValues<E>()[it] }!!
 
 /**
  * Apply a series of edits to [this] and then commit them.
