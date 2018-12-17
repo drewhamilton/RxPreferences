@@ -11,6 +11,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentCaptor
+import org.mockito.ArgumentMatchers
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
@@ -167,6 +169,166 @@ class RxPreferencesExtensionsTest {
       PreferenceType.FLOAT -> verify(mockSharedPreferences).getFloat(key, defaultValue as Float)
       PreferenceType.BOOLEAN -> verify(mockSharedPreferences).getBoolean(key, defaultValue as Boolean)
     }
+  }
+  //endregion
+
+  //region observe preference
+  @Test
+  fun `observeEnum emits on listener update`() {
+    val testKey = "Test PreferenceType key"
+    val testValue = PreferenceType.INT
+    val testDefault = PreferenceType.BOOLEAN
+    mockGet(PreferenceType.STRING, testKey, testValue.name)
+
+    val subscription = rxPreferences.observeEnum(testKey, testDefault)
+        .test()
+        .trackUntilTearDown()
+
+    subscription
+        .assertNotComplete()
+        .assertValueCount(1)
+        .assertValue(testValue)
+
+    val listenerCaptor = ArgumentCaptor.forClass(SharedPreferences.OnSharedPreferenceChangeListener::class.java)
+    verify(mockSharedPreferences).registerOnSharedPreferenceChangeListener(listenerCaptor.capture())
+
+    val listener = listenerCaptor.value
+    listener.onSharedPreferenceChanged(mockSharedPreferences, testKey)
+
+    subscription
+        .assertNotComplete()
+        .assertValueCount(2)
+        .assertValues(testValue, testValue)
+  }
+
+  @Test
+  fun `observeEnum emits current value on subscribe`() {
+    val testKey = "Test PreferenceType key"
+    val testValue = PreferenceType.INT
+    val testDefault = PreferenceType.BOOLEAN
+    mockGet(PreferenceType.STRING, testKey, testValue.name)
+
+    val subscription = rxPreferences.observeEnum(testKey, testDefault)
+        .subscribeOn(testScheduler)
+        .subscribe()
+        .trackUntilTearDown()
+
+    verifyObserveBeforeSubscribe(subscription)
+
+    advanceScheduler()
+    verifyObserveAfterSubscribe(PreferenceType.STRING, testKey, testDefault.name, subscription)
+  }
+
+  @Test
+  fun `observeEnum unregisters listener on unsubscribe`() {
+    val testKey = "Test PreferenceType key"
+    val testValue = PreferenceType.INT
+    val testDefault = PreferenceType.BOOLEAN
+    mockGet(PreferenceType.STRING, testKey, testValue.name)
+
+    val subscription = rxPreferences.observeEnum(testKey, testDefault)
+        .test()
+        .trackUntilTearDown()
+
+    val listenerCaptor = ArgumentCaptor.forClass(SharedPreferences.OnSharedPreferenceChangeListener::class.java)
+    verify(mockSharedPreferences).registerOnSharedPreferenceChangeListener(listenerCaptor.capture())
+
+    val listener = listenerCaptor.value
+
+    verify(mockSharedPreferences, never()).unregisterOnSharedPreferenceChangeListener(ArgumentMatchers.any())
+    subscription.dispose()
+
+    verify(mockSharedPreferences).unregisterOnSharedPreferenceChangeListener(listener)
+  }
+
+  @Test
+  fun `observeEnumByOrdinal emits on listener update`() {
+    val testKey = "Test PreferenceType key"
+    val testValue = PreferenceType.STRING
+    val testDefault = PreferenceType.LONG
+    mockGet(PreferenceType.INT, testKey, testValue.ordinal)
+
+    val subscription = rxPreferences.observeEnumByOrdinal(testKey, testDefault)
+        .test()
+        .trackUntilTearDown()
+
+    subscription
+        .assertNotComplete()
+        .assertValueCount(1)
+        .assertValue(testValue)
+
+    val listenerCaptor = ArgumentCaptor.forClass(SharedPreferences.OnSharedPreferenceChangeListener::class.java)
+    verify(mockSharedPreferences).registerOnSharedPreferenceChangeListener(listenerCaptor.capture())
+
+    val listener = listenerCaptor.value
+    listener.onSharedPreferenceChanged(mockSharedPreferences, testKey)
+
+    subscription
+        .assertNotComplete()
+        .assertValueCount(2)
+        .assertValues(testValue, testValue)
+  }
+
+  @Test
+  fun `observeEnumByOrdinal emits current value on subscribe`() {
+    val testKey = "Test PreferenceType key"
+    val testValue = PreferenceType.STRING
+    val testDefault = PreferenceType.BOOLEAN
+    mockGet(PreferenceType.INT, testKey, testValue.ordinal)
+
+    val subscription = rxPreferences.observeEnumByOrdinal(testKey, testDefault)
+        .subscribeOn(testScheduler)
+        .subscribe()
+        .trackUntilTearDown()
+
+    verifyObserveBeforeSubscribe(subscription)
+
+    advanceScheduler()
+    verifyObserveAfterSubscribe(PreferenceType.INT, testKey, testDefault.ordinal, subscription)
+  }
+
+  @Test
+  fun `observeEnumByOrdinal unregisters listener on unsubscribe`() {
+    val testKey = "Test PreferenceType key"
+    val testValue = PreferenceType.FLOAT
+    val testDefault = PreferenceType.STRING
+    mockGet(PreferenceType.INT, testKey, testValue.ordinal)
+
+    val subscription = rxPreferences.observeEnumByOrdinal(testKey, testDefault)
+        .test()
+        .trackUntilTearDown()
+
+    val listenerCaptor = ArgumentCaptor.forClass(SharedPreferences.OnSharedPreferenceChangeListener::class.java)
+    verify(mockSharedPreferences).registerOnSharedPreferenceChangeListener(listenerCaptor.capture())
+
+    val listener = listenerCaptor.value
+
+    verify(mockSharedPreferences, never()).unregisterOnSharedPreferenceChangeListener(ArgumentMatchers.any())
+    subscription.dispose()
+
+    verify(mockSharedPreferences).unregisterOnSharedPreferenceChangeListener(listener)
+  }
+
+  private fun verifyObserveBeforeSubscribe(subscription: Disposable) {
+    // Before subscribing, there are no interactions with the internal preferences:
+    verifyNoMoreInteractions(mockSharedPreferences)
+    verifyNoMoreInteractions(mockSharedPreferencesEditor)
+    assertFalse(subscription.isDisposed)
+  }
+
+  private fun verifyObserveAfterSubscribe(
+      type: PreferenceType,
+      key: String,
+      defaultValue: Any,
+      subscription: Disposable
+  ) {
+    verifyNoMoreInteractions(mockSharedPreferencesEditor)
+
+    // After subscribing, the preference is retrieved from the internal preferences:
+    verifyGet(type, key, defaultValue)
+    verify(mockSharedPreferences).registerOnSharedPreferenceChangeListener(isA<RxPreferenceChangeListener<*>>())
+    verifyNoMoreInteractions(mockSharedPreferences)
+    assertFalse(subscription.isDisposed)
   }
   //endregion
   //endregion
