@@ -5,6 +5,7 @@ Written in Java, with Kotlin extensions added in the `ktx` module.
 
 ## Download
 [ ![Download](https://api.bintray.com/packages/drewhamilton/RxPreferences/RxPreferences/images/download.svg) ](https://bintray.com/drewhamilton/RxPreferences)
+
 RxPreferences is available in JCenter.
 
 To use RxPreferences in your application, include the following in your app's `build.gradle`:
