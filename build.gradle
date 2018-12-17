@@ -29,6 +29,6 @@ task clean(type: Delete) {
 }
 
 ext {
-  libraryVersionCode = 2
-  libraryVersion = '0.2'
+  libraryVersionCode = 3
+  libraryVersion = '0.3'
 }
