@@ -16,13 +16,17 @@ abstract class RxPreferenceListener<T> implements SharedPreferences.OnSharedPref
 
   @Override
   public final void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-    if (this.key.equals(key)) {
+    if (shouldEmit(key)) {
       try {
         emitter.onNext(getCurrentValue(preferences));
       } catch (Throwable error) {
         emitter.onError(error);
       }
     }
+  }
+
+  boolean shouldEmit(String key) {
+    return this.key.equals(key);
   }
 
   abstract T getCurrentValue(SharedPreferences preferences);

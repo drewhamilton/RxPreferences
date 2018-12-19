@@ -41,6 +41,24 @@ public final class RxPreferences {
   }
 
   /**
+   * Observe all values from the preferences.
+   * <p>
+   * Note that you must not modify the collection returned by this method, or alter any of its contents. The consistency
+   * of your stored data is not guaranteed if you do.
+   * @return an {@link Observable} that emits a map containing a list of pairs key/value representing the preferences
+   * each time any of the preferences change.
+   */
+  @NonNull
+  public Observable<Map<String, ?>> observeAll() {
+    return getAll()
+        .toObservable()
+        .mergeWith(Observable.create(emitter -> {
+          RxAllPreferencesListener listener = new RxAllPreferencesListener(emitter);
+          registerRxPreferenceListener(listener, emitter);
+        }));
+  }
+
+  /**
    * Retrieve a string value from the preferences.
    * @param key The name of the preference to retrieve.
    * @param defaultValue Value to return if this preference does not exist.
