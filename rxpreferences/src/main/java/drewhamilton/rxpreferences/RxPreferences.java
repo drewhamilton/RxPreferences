@@ -41,6 +41,24 @@ public final class RxPreferences {
   }
 
   /**
+   * Observe all values from the preferences.
+   * <p>
+   * Note that you must not modify the collection returned by this method, or alter any of its contents. The consistency
+   * of your stored data is not guaranteed if you do.
+   * @return an {@link Observable} that emits a map containing a list of pairs key/value representing the preferences
+   * each time any of the preferences change.
+   */
+  @NonNull
+  public Observable<Map<String, ?>> observeAll() {
+    return getAll()
+        .toObservable()
+        .mergeWith(Observable.create(emitter -> {
+          RxAllPreferencesListener listener = new RxAllPreferencesListener(emitter);
+          registerRxPreferenceListener(listener, emitter);
+        }));
+  }
+
+  /**
    * Retrieve a string value from the preferences.
    * @param key The name of the preference to retrieve.
    * @param defaultValue Value to return if this preference does not exist.
@@ -65,7 +83,7 @@ public final class RxPreferences {
   public Observable<String> observeString(@NonNull String key, @NonNull String defaultValue) {
     return getString(key, defaultValue)
         .toObservable()
-        .mergeWith(createPreferenceObservable(preferences, key, defaultValue, SharedPreferences::getString));
+        .mergeWith(createPreferenceObservable(key, defaultValue, SharedPreferences::getString));
   }
 
   /**
@@ -96,7 +114,7 @@ public final class RxPreferences {
   public Observable<Set<String>> observeStringSet(@NonNull String key, @NonNull Set<String> defaultValue) {
     return getStringSet(key, defaultValue)
         .toObservable()
-        .mergeWith(createPreferenceObservable(preferences, key, defaultValue, SharedPreferences::getStringSet));
+        .mergeWith(createPreferenceObservable(key, defaultValue, SharedPreferences::getStringSet));
   }
 
   /**
@@ -124,7 +142,7 @@ public final class RxPreferences {
   public Observable<Integer> observeInt(@NonNull String key, int defaultValue) {
     return getInt(key, defaultValue)
         .toObservable()
-        .mergeWith(createPreferenceObservable(preferences, key, defaultValue, SharedPreferences::getInt));
+        .mergeWith(createPreferenceObservable(key, defaultValue, SharedPreferences::getInt));
   }
 
   /**
@@ -152,7 +170,7 @@ public final class RxPreferences {
   public Observable<Long> observeLong(@NonNull String key, long defaultValue) {
     return getLong(key, defaultValue)
         .toObservable()
-        .mergeWith(createPreferenceObservable(preferences, key, defaultValue, SharedPreferences::getLong));
+        .mergeWith(createPreferenceObservable(key, defaultValue, SharedPreferences::getLong));
   }
 
   /**
@@ -180,7 +198,7 @@ public final class RxPreferences {
   public Observable<Float> observeFloat(@NonNull String key, float defaultValue) {
     return getFloat(key, defaultValue)
         .toObservable()
-        .mergeWith(createPreferenceObservable(preferences, key, defaultValue, SharedPreferences::getFloat));
+        .mergeWith(createPreferenceObservable(key, defaultValue, SharedPreferences::getFloat));
   }
 
   /**
@@ -208,7 +226,7 @@ public final class RxPreferences {
   public Observable<Boolean> observeBoolean(@NonNull String key, boolean defaultValue) {
     return getBoolean(key, defaultValue)
         .toObservable()
-        .mergeWith(createPreferenceObservable(preferences, key, defaultValue, SharedPreferences::getBoolean));
+        .mergeWith(createPreferenceObservable(key, defaultValue, SharedPreferences::getBoolean));
   }
 
   /**
@@ -234,7 +252,7 @@ public final class RxPreferences {
         .toObservable()
         .mergeWith(Observable.create(emitter -> {
           RxPreferenceContainsListener listener = new RxPreferenceContainsListener(key, emitter);
-          registerRxPreferenceListener(preferences, listener, emitter);
+          registerRxPreferenceListener(listener, emitter);
         }));
   }
 
@@ -252,17 +270,17 @@ public final class RxPreferences {
   }
 
   @NonNull
-  private static <T> Observable<T> createPreferenceObservable(@NonNull SharedPreferences preferences,
-      @NonNull String key, @NonNull T defaultValue, @NonNull GetPreference<T> getPreference) {
+  private <T> Observable<T> createPreferenceObservable(@NonNull String key, @NonNull T defaultValue,
+      @NonNull GetPreference<T> getPreference) {
     return Observable.create(emitter -> {
       final RxPreferenceChangeListener<T> listener =
           new RxPreferenceChangeListener<>(key, emitter, defaultValue, getPreference);
-      registerRxPreferenceListener(preferences, listener, emitter);
+      registerRxPreferenceListener(listener, emitter);
     });
   }
 
-  private static <T> void registerRxPreferenceListener(SharedPreferences preferences,
-      RxPreferenceListener<T> listener, ObservableEmitter<T> emitter) {
+  private <T> void registerRxPreferenceListener(@NonNull RxPreferenceListener<T> listener,
+      @NonNull ObservableEmitter<T> emitter) {
     emitter.setCancellable(() -> preferences.unregisterOnSharedPreferenceChangeListener(listener));
     preferences.registerOnSharedPreferenceChangeListener(listener);
   }

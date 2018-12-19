@@ -87,6 +87,77 @@ public final class RxPreferencesTest {
     verify(mockSharedPreferences).getAll();
     verifyNoMoreInteractions(mockSharedPreferences);
   }
+
+  @Test
+  public void observeAll_emitsOnListenerUpdate() {
+    final Map<String, ?> returnedMap = Collections.singletonMap("Test dummy key", 234);
+    //noinspection unchecked
+    when(mockSharedPreferences.getAll()).thenReturn((Map) returnedMap);
+
+    final TestObserver<Map<String, ?>> subscription = rxPreferences.observeAll().test();
+    subscriptions.add(subscription);
+
+    subscription
+        .assertNotComplete()
+        .assertValueCount(1)
+        .assertValue(returnedMap);
+
+    final ArgumentCaptor<SharedPreferences.OnSharedPreferenceChangeListener> listenerCaptor =
+        ArgumentCaptor.forClass(SharedPreferences.OnSharedPreferenceChangeListener.class);
+    verify(mockSharedPreferences).registerOnSharedPreferenceChangeListener(listenerCaptor.capture());
+
+    final SharedPreferences.OnSharedPreferenceChangeListener listener = listenerCaptor.getValue();
+    listener.onSharedPreferenceChanged(mockSharedPreferences, "Another key");
+
+    //noinspection unchecked
+    subscription
+        .assertNotComplete()
+        .assertValueCount(2)
+        .assertValues(returnedMap, returnedMap);
+  }
+
+  @Test
+  public void observeAll_emitsCurrentValueOnSubscribe() {
+    final Map<String, ?> returnedMap = Collections.singletonMap("Test dummy long key", 23453534523L);
+    //noinspection unchecked
+    when(mockSharedPreferences.getAll()).thenReturn((Map) returnedMap);
+
+    final Disposable subscription = rxPreferences.observeAll()
+        .subscribeOn(testScheduler)
+        .subscribe();
+    subscriptions.add(subscription);
+
+    verifyObserveBeforeSubscribe(subscription);
+
+    advanceScheduler();
+
+    verifyNoMoreInteractions(mockSharedPreferencesEditor);
+    verify(mockSharedPreferences).getAll();
+    verify(mockSharedPreferences).registerOnSharedPreferenceChangeListener(isA(RxAllPreferencesListener.class));
+    verifyNoMoreInteractions(mockSharedPreferences);
+    assertFalse(subscription.isDisposed());
+  }
+
+  @Test
+  public void observeAll_unregistersListenerOnUnsubscribe() {
+    final Map<String, ?> returnedMap = Collections.singletonMap("Test dummy long key", 23453534523L);
+    //noinspection unchecked
+    when(mockSharedPreferences.getAll()).thenReturn((Map) returnedMap);
+
+    final TestObserver<Map<String, ?>> subscription = rxPreferences.observeAll().test();
+    subscriptions.add(subscription);
+
+    final ArgumentCaptor<SharedPreferences.OnSharedPreferenceChangeListener> listenerCaptor =
+        ArgumentCaptor.forClass(SharedPreferences.OnSharedPreferenceChangeListener.class);
+    verify(mockSharedPreferences).registerOnSharedPreferenceChangeListener(listenerCaptor.capture());
+
+    final SharedPreferences.OnSharedPreferenceChangeListener listener = listenerCaptor.getValue();
+
+    verify(mockSharedPreferences, never()).unregisterOnSharedPreferenceChangeListener(any());
+    subscription.dispose();
+
+    verify(mockSharedPreferences).unregisterOnSharedPreferenceChangeListener(listener);
+  }
   //endregion
 
   //region get preference
