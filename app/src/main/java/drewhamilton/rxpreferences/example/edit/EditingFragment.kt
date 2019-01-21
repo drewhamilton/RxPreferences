@@ -6,14 +6,15 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.get
 import drewhamilton.rxpreferences.example.R
 import drewhamilton.rxpreferences.example.base.ui.RxFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.edit.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditingFragment : RxFragment() {
+
+  private val editingViewModel: EditingViewModel by viewModel()
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     return inflater.inflate(R.layout.edit, container)
@@ -21,7 +22,6 @@ class EditingFragment : RxFragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    val editingViewModel = ViewModelProviders.of(this).get<EditingViewModel>()
 
     integerValue.addTextChangedListener(object : TextWatcher {
       override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
