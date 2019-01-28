@@ -11,14 +11,14 @@ import org.koin.dsl.module.module
 
 object Modules {
 
-  lateinit var application: ExampleApplication
+  private lateinit var application: ExampleApplication
 
   val applicationModule = module {
     single { application }
   }
 
   val persistenceModule = module {
-    single { RxPreferences(get<Context>().getSharedPreferences()) }
+    single { RxPreferences(get<Context>().sharedPreferences) }
   }
 
   val observeModule = module {
@@ -33,6 +33,6 @@ object Modules {
 
   private const val sharedPreferencesName = "drewhamilton.rxpreferences.example.SharedPreferences"
 
-  private fun Context.getSharedPreferences() =
-      getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+  private val Context.sharedPreferences
+    get() = getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 }
