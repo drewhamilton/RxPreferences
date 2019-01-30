@@ -59,7 +59,6 @@ rxPreferences.edit {
 ```
 
 ## To-do
-* More extensions
 * Reduce duplication in release scripts
 
 ## License
