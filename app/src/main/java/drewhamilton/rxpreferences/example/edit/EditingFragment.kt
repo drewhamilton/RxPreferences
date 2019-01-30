@@ -6,17 +6,19 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import drewhamilton.rxpreferences.example.ExampleApplication
 import drewhamilton.rxpreferences.example.R
 import drewhamilton.rxpreferences.example.base.ui.RxFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.edit.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
 class EditingFragment : RxFragment() {
 
-  private val editingViewModel: EditingViewModel by viewModel()
+  @Inject protected lateinit var editingViewModel: EditingViewModel
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    ExampleApplication.applicationComponent.inject(this)
     return inflater.inflate(R.layout.edit, container)
   }
 

@@ -2,8 +2,9 @@ package drewhamilton.rxpreferences.example.observe
 
 import drewhamilton.rxpreferences.RxPreferences
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-open class ExampleRepository(protected val preferences: RxPreferences) {
+open class ExampleRepository @Inject constructor(protected val preferences: RxPreferences) {
 
   protected val scheduler
     get() = Schedulers.single()

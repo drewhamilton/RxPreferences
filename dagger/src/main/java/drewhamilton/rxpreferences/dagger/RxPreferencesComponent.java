@@ -12,13 +12,21 @@ public interface RxPreferencesComponent {
 
   @Component.Builder
   interface Builder {
+
     @BindsInstance
     Builder sharedPreferences(SharedPreferences sharedPreferences);
 
     RxPreferencesComponent build();
   }
 
-  static Builder builder() {
-    return DaggerRxPreferencesComponent.builder();
+  final class Companion {
+
+    public static Builder builder() {
+      return DaggerRxPreferencesComponent.builder();
+    }
+
+    private Companion() {
+      throw new UnsupportedOperationException();
+    }
   }
 }

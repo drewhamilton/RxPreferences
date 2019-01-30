@@ -1,17 +1,22 @@
 package drewhamilton.rxpreferences.example
 
 import android.app.Application
-import org.koin.android.ext.android.startKoin
 
 class ExampleApplication : Application() {
 
   override fun onCreate() {
     super.onCreate()
-    startKoin(this, listOf(
-        Modules.applicationModule,
-        Modules.persistenceModule,
-        Modules.observeModule,
-        Modules.editModule
-    ))
+
+    _applicationComponent = ApplicationComponent.builder()
+        .application(this)
+        .build()
+  }
+
+  companion object {
+    val applicationComponent: ApplicationComponent
+      get() = _applicationComponent
+
+    @Suppress("ObjectPropertyName")
+    private lateinit var _applicationComponent: ApplicationComponent
   }
 }
