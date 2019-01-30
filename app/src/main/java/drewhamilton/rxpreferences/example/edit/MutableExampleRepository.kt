@@ -3,8 +3,9 @@ package drewhamilton.rxpreferences.example.edit
 import drewhamilton.rxpreferences.RxPreferences
 import drewhamilton.rxpreferences.edit
 import drewhamilton.rxpreferences.example.observe.ExampleRepository
+import javax.inject.Inject
 
-class MutableExampleRepository(preferences: RxPreferences) : ExampleRepository(preferences) {
+class MutableExampleRepository @Inject constructor(preferences: RxPreferences) : ExampleRepository(preferences) {
 
   fun changeExampleValues(string: String, int: Int) = preferences.edit {
     putString(Keys.EXAMPLE_STRING, string)

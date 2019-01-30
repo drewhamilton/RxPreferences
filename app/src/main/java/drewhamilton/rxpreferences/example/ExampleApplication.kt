@@ -6,6 +6,17 @@ class ExampleApplication : Application() {
 
   override fun onCreate() {
     super.onCreate()
-    GlobalProvider.initialize(this)
+
+    _applicationComponent = ApplicationComponent.builder()
+        .application(this)
+        .build()
+  }
+
+  companion object {
+    val applicationComponent: ApplicationComponent
+      get() = _applicationComponent
+
+    @Suppress("ObjectPropertyName")
+    private lateinit var _applicationComponent: ApplicationComponent
   }
 }

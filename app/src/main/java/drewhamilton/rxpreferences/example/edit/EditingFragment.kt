@@ -8,20 +8,32 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.get
+import drewhamilton.rxpreferences.example.ExampleApplication
 import drewhamilton.rxpreferences.example.R
+import drewhamilton.rxpreferences.example.base.ui.GenericViewModelFactory
 import drewhamilton.rxpreferences.example.base.ui.RxFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.edit.*
+import javax.inject.Inject
 
 class EditingFragment : RxFragment() {
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-    return inflater.inflate(R.layout.edit, container)
+  @Suppress("ProtectedInFinal")
+  @Inject protected lateinit var viewModelFactory: GenericViewModelFactory<EditingViewModel>
+
+  private lateinit var editingViewModel: EditingViewModel
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    ExampleApplication.applicationComponent.inject(this)
+    editingViewModel = ViewModelProviders.of(this, viewModelFactory).get()
+    super.onCreate(savedInstanceState)
   }
+
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
+      inflater.inflate(R.layout.edit, container)!!
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    val editingViewModel = ViewModelProviders.of(this).get<EditingViewModel>()
 
     integerValue.addTextChangedListener(object : TextWatcher {
       override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

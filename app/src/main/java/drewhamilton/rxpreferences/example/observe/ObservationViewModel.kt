@@ -1,12 +1,9 @@
 package drewhamilton.rxpreferences.example.observe
 
 import androidx.lifecycle.ViewModel
-import drewhamilton.rxpreferences.example.GlobalProvider
+import javax.inject.Inject
 
-class ObservationViewModel(private val exampleRepository: ExampleRepository) : ViewModel() {
-
-  // Required for default ViewModelProvider:
-  constructor() : this(GlobalProvider.instance.exampleRepository)
+class ObservationViewModel @Inject constructor(private val exampleRepository: ExampleRepository) : ViewModel() {
 
   fun observeExampleString() = exampleRepository.observeExampleString()
 

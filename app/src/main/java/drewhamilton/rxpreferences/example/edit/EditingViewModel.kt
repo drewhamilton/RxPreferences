@@ -1,12 +1,9 @@
 package drewhamilton.rxpreferences.example.edit
 
 import androidx.lifecycle.ViewModel
-import drewhamilton.rxpreferences.example.GlobalProvider
+import javax.inject.Inject
 
-class EditingViewModel(private val exampleRepository: MutableExampleRepository) : ViewModel() {
-
-  // Required for default ViewModelProvider:
-  constructor() : this(GlobalProvider.instance.mutableExampleRepository)
+class EditingViewModel @Inject constructor(private val exampleRepository: MutableExampleRepository) : ViewModel() {
 
   fun getExampleString() = exampleRepository.getExampleString()
 
