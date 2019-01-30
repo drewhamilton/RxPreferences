@@ -1,3 +1,5 @@
+apply from: '../publish.gradle'
+
 ext {
   bintrayName = 'RxPreferences-KTX'
   libraryName = 'RxPreferences-KTX'
@@ -43,6 +45,7 @@ install {
   }
 }
 
+apply plugin: 'org.jetbrains.dokka-android'
 task sourcesJar(type: Jar) {
   classifier = 'sources'
   from android.sourceSets.main.java.srcDirs

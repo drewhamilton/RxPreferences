@@ -13,7 +13,7 @@ RxPreferences is available in JCenter.
 implementation "drewhamilton.rxpreferences:rxpreferences:$version"
 // With Kotlin extensions:
 implementation "drewhamilton.rxpreferences:rxpreferences-ktx:$version"
-//Dagger component (coming soon):
+// Dagger component:
 implementation "drewhamilton.rxpreferences:rxpreferences-dagger:$version"
 ```
 

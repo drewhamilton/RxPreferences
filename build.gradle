@@ -30,7 +30,7 @@ task clean(type: Delete) {
 
 ext {
   libraryVersionCode = 10
-  libraryVersion = '1.0.0-alpha1'
+  libraryVersion = '1.0.0-alpha2'
 
   rxJavaVersion = '2.2.6'
 }
