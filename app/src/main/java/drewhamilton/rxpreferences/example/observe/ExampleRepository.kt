@@ -10,13 +10,13 @@ open class ExampleRepository @Inject constructor(protected val preferences: RxPr
     get() = Schedulers.single()
 
   fun getExampleString() = preferences.getString(Keys.EXAMPLE_STRING, Defaults.STRING)
-      .subscribeOn(scheduler)!!
+      .subscribeOn(scheduler)
 
   fun observeExampleString() = preferences.observeString(Keys.EXAMPLE_STRING, Defaults.STRING)
       .subscribeOn(scheduler)!!
 
   fun getExampleInt() = preferences.getInt(Keys.EXAMPLE_INT, Defaults.INT)
-      .subscribeOn(scheduler)!!
+      .subscribeOn(scheduler)
 
   fun observeExampleInt() = preferences.observeInt(Keys.EXAMPLE_INT, Defaults.INT)
       .subscribeOn(scheduler)!!

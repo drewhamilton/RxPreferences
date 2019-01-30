@@ -8,14 +8,13 @@ Written in Java, with Kotlin extensions added in the `ktx` module.
 
 RxPreferences is available in JCenter.
 
-To use RxPreferences in your application, include the following in your app's `build.gradle`:
 ```groovy
+// RxPreferences:
 implementation "drewhamilton.rxpreferences:rxpreferences:$version"
-```
-
-To use RxPreferences along with Kotlin extensions, add "-ktx":
-```groovy
+// With Kotlin extensions:
 implementation "drewhamilton.rxpreferences:rxpreferences-ktx:$version"
+//Dagger component (coming soon):
+implementation "drewhamilton.rxpreferences:rxpreferences-dagger:$version"
 ```
 
 ## Usage

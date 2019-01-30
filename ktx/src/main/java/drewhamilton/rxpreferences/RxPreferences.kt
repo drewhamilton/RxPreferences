@@ -14,7 +14,7 @@ import io.reactivex.Observable
  */
 inline fun <reified E : Enum<E>> RxPreferences.getEnum(key: String, defaultValue: E) =
     getString(key, defaultValue.name)
-        .map { enumValueOf<E>(it) }!!
+        .map { enumValueOf<E>(it) }
 
 /**
  * Observe an enum value from the preferences that was saved with [putEnum].
@@ -44,7 +44,7 @@ inline fun <reified E : Enum<E>> RxPreferences.observeEnum(key: String, defaultV
  */
 inline fun <reified E : Enum<E>> RxPreferences.getEnumByOrdinal(key: String, defaultValue: E) =
     getInt(key, defaultValue.ordinal)
-        .map { enumValues<E>()[it] }!!
+        .map { enumValues<E>()[it] }
 
 /**
  * Observe an enum value from the preferences that was saved with [putEnumByOrdinal].

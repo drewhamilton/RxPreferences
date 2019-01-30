@@ -29,8 +29,8 @@ task clean(type: Delete) {
 }
 
 ext {
-  libraryVersionCode = 4
-  libraryVersion = '0.4'
+  libraryVersionCode = 10
+  libraryVersion = '1.0.0-alpha1'
 
   rxJavaVersion = '2.2.6'
 }

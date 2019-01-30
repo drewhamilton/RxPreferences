@@ -18,7 +18,7 @@ public final class RxPreferencesComponentTest {
 
   @Test
   public void builder_withSharedPreferences_createsExpectedRxPreferencesInstance() {
-    final RxPreferencesComponent component = RxPreferencesComponent.builder()
+    final RxPreferencesComponent component = RxPreferencesComponent.Companion.builder()
         .sharedPreferences(mockSharedPreferences)
         .build();
     final RxPreferences rxPreferences = component.rxPreferences();
@@ -33,7 +33,7 @@ public final class RxPreferencesComponentTest {
 
   @Test(expected = IllegalStateException.class)
   public void builder_withoutSharedPreferences_throwsExceptionOnBuild() {
-    final RxPreferencesComponent component = RxPreferencesComponent.builder()
+    RxPreferencesComponent.Companion.builder()
         .build();
   }
 }

@@ -10,10 +10,10 @@ class MutableExampleRepository @Inject constructor(preferences: RxPreferences) :
   fun changeExampleValues(string: String, int: Int) = preferences.edit {
     putString(Keys.EXAMPLE_STRING, string)
     putInt(Keys.EXAMPLE_INT, int)
-  }.subscribeOn(scheduler)!!
+  }.subscribeOn(scheduler)
 
   fun removeExampleValues() = preferences.edit {
     remove(Keys.EXAMPLE_STRING)
     remove(Keys.EXAMPLE_INT)
-  }.subscribeOn(scheduler)!!
+  }.subscribeOn(scheduler)
 }
