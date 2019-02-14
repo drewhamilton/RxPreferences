@@ -44,7 +44,7 @@ dependencies {
   androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
   testImplementation 'junit:junit:4.12'
-  testImplementation 'org.mockito:mockito-inline:2.18.0'
-  testImplementation 'com.nhaarman:mockito-kotlin:1.5.0'
+  testImplementation 'org.mockito:mockito-inline:2.23.0'
+  testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0'
   testImplementation 'org.amshove.kluent:kluent:1.34'
 }

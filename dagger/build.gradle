@@ -44,7 +44,7 @@ dependencies {
   annotationProcessor 'com.google.dagger:dagger-compiler:2.21'
 
   testImplementation 'junit:junit:4.12'
-  testImplementation 'org.mockito:mockito-inline:2.18.0'
+  testImplementation 'org.mockito:mockito-inline:2.23.0'
 
   androidTestImplementation 'androidx.test:runner:1.1.1'
   androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
