@@ -13,7 +13,7 @@ android {
     versionCode libraryVersionCode
     versionName libraryVersion
 
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
 
   signingConfigs {
