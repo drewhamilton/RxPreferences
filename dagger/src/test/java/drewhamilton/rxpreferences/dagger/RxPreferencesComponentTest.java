@@ -13,8 +13,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 @RunWith(MockitoJUnitRunner.class)
 public final class RxPreferencesComponentTest {
 
-  @Mock
-  private SharedPreferences mockSharedPreferences;
+  @Mock private SharedPreferences mockSharedPreferences;
 
   @Test
   public void builder_withSharedPreferences_createsExpectedRxPreferencesInstance() {

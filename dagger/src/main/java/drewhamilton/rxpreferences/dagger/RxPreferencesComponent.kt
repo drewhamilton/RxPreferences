@@ -26,8 +26,7 @@ interface RxPreferencesComponent {
      * @param sharedPreferences The preferences to be wrapped by an [RxPreferences] instance.
      * @return this builder
      */
-    @BindsInstance
-    fun sharedPreferences(sharedPreferences: SharedPreferences): Builder
+    @BindsInstance fun sharedPreferences(sharedPreferences: SharedPreferences): Builder
 
     /**
      * @return a new [RxPreferencesComponent]
