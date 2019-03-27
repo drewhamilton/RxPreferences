@@ -10,6 +10,7 @@ ext {
 
 group = publishedGroupId
 version = libraryVersion
+def javadocDestinationDir = "$buildDir/docs/javadoc"
 
 install {
   repositories.mavenInstaller {
@@ -44,21 +45,21 @@ install {
   }
 }
 
+apply plugin: 'org.jetbrains.dokka-android'
 task sourcesJar(type: Jar) {
   classifier = 'sources'
   from android.sourceSets.main.java.srcDirs
 }
 
-task javadoc(type: Javadoc) {
-  source = android.sourceSets.main.java.srcDirs
-  classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-  // TODO DEPRECATED replace javaCompiler with javaCompileProvider
-  android.libraryVariants.all { variant -> classpath += variant.javaCompiler.classpath }
+task dokkaJavadoc(type: dokka.class) {
+  outputFormat = 'javadoc'
+  outputDirectory = javadocDestinationDir
+  inputs.dir 'src/main/java'
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
+task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
   classifier = 'javadoc'
-  from javadoc.destinationDir
+  from javadocDestinationDir
 }
 
 artifacts {
