@@ -18,7 +18,13 @@
         </value>
       </option>
     </AndroidXmlCodeStyleSettings>
+    <JavaCodeStyleSettings>
+      <option name="CLASS_COUNT_TO_USE_IMPORT_ON_DEMAND" value="999" />
+      <option name="NAMES_COUNT_TO_USE_IMPORT_ON_DEMAND" value="999" />
+    </JavaCodeStyleSettings>
     <JetCodeStyleSettings>
+      <option name="NAME_COUNT_TO_USE_STAR_IMPORT" value="2147483647" />
+      <option name="NAME_COUNT_TO_USE_STAR_IMPORT_FOR_MEMBERS" value="2147483647" />
       <option name="CONTINUATION_INDENT_IN_PARAMETER_LISTS" value="true" />
       <option name="CONTINUATION_INDENT_IN_ARGUMENT_LISTS" value="true" />
       <option name="CONTINUATION_INDENT_FOR_EXPRESSION_BODIES" value="true" />

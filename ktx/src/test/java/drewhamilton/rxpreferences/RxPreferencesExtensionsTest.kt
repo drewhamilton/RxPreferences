@@ -1,7 +1,14 @@
 package drewhamilton.rxpreferences
 
 import android.content.SharedPreferences
-import com.nhaarman.mockito_kotlin.*
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.eq
+import com.nhaarman.mockitokotlin2.inOrder
+import com.nhaarman.mockitokotlin2.isA
+import com.nhaarman.mockitokotlin2.never
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
+import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.TestScheduler
