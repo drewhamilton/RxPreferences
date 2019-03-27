@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
   compileSdkVersion 28
@@ -6,10 +8,10 @@ android {
   defaultConfig {
     minSdkVersion 14
     targetSdkVersion 28
-    versionCode 1
-    versionName "1.0"
+    versionCode libraryVersionCode
+    versionName libraryVersion
 
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
 
   signingConfigs {
@@ -38,10 +40,12 @@ android {
 apply from: 'publish.gradle'
 
 dependencies {
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
   api project(':rxpreferences')
 
   implementation 'com.google.dagger:dagger:2.21'
-  annotationProcessor 'com.google.dagger:dagger-compiler:2.21'
+  kapt 'com.google.dagger:dagger-compiler:2.21'
 
   testImplementation 'junit:junit:4.12'
   testImplementation 'org.mockito:mockito-inline:2.23.0'

@@ -18,7 +18,7 @@ object PersistenceModule {
   @JvmStatic
   @Provides
   fun preferencesComponent(application: ExampleApplication): RxPreferencesComponent =
-      RxPreferencesComponent.Companion.builder()
+      RxPreferencesComponent.builder()
           .sharedPreferences(application.sharedPreferences)
           .build()
 
