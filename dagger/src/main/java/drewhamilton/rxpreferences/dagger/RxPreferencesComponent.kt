@@ -36,9 +36,6 @@ interface RxPreferencesComponent {
     fun build(): RxPreferencesComponent
   }
 
-  /**
-   * Wrapper for the static [builder] method to remain callable from Java 6
-   */
   companion object {
 
     /**
