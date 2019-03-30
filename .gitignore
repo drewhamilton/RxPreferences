@@ -1,4 +1,3 @@
-
 # Created by https://www.gitignore.io/api/android,intellij,gradle,linux,osx,windows
 
 ### Android ###
@@ -53,24 +52,26 @@ gen-external-apklibs
 !.idea/misc.xml
 
 # User-specific stuff:
-# .idea/workspace.xml
-# .idea/tasks.xml
-# .idea/dictionaries
-# .idea/shelf
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/shelf
 
 # Sensitive or high-churn files:
-# .idea/dataSources.ids
-# .idea/dataSources.xml
-# .idea/sqlDataSources.xml
-# .idea/dynamic.xml
-# .idea/uiDesigner.xml
+.idea/dataSources.ids
+.idea/dataSources.xml
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
+.idea/assetWizardSettings.xml
+.idea/caches
 
 # Gradle:
-# .idea/gradle.xml
-# .idea/libraries
+.idea/gradle.xml
+.idea/libraries
 
 # Mongo Explorer plugin:
-# .idea/mongoSettings.xml
+.idea/mongoSettings.xml
 
 ## File-based project format:
 *.ipr
