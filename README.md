@@ -59,6 +59,7 @@ rxPreferences.edit {
 
 ## To-do
 * Reduce duplication in release scripts
+* Get JApiCmp working for all modules (in the meantime, need to manually verify compatibility of KTX and Dagger modules)
 
 ## License
 ```
