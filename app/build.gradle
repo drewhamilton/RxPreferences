@@ -5,6 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
   compileSdkVersion 28
+
   defaultConfig {
     applicationId "drewhamilton.rxpreferences.example"
     minSdkVersion 14
