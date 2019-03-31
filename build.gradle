@@ -32,12 +32,12 @@ task clean(type: Delete) {
 
 ext {
   libraryVersionCode = 12
-  libraryVersion = '1.0.0-alpha3'
+  libraryVersion = '1.0.0-beta1'
 
   // Version to compare compatibility with:
   compatibleVersion = '1.0.0-alpha3'
 
-  rxJavaVersion = '2.2.7'
+  rxJavaVersion = '2.2.8'
 
   keystore = project.hasProperty('personalKeystore') ?
       personalKeystore :
