@@ -6,7 +6,7 @@ configurations {
 }
 
 dependencies {
-  baseline('com.jakewharton.timber:timber:4.7.1') {
+  baseline('drewhamilton.rxpreferences:rxpreferences:1.0.0-alpha3') {
     transitive = false
     force = true
   }
@@ -31,6 +31,8 @@ task japicmp(type: JapicmpTask) {
   txtOutputFile = file("$buildDir/reports/japi.txt")
   ignoreMissingClasses = true
   includeSynthetic = true
+
+  dependsOn(':rxpreferences:assembleRelease')
 }
 
 def check = tasks.create('check')
