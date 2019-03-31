@@ -1,1 +1,4 @@
-include ':app', ':rxpreferences', ':rxpreferences:compatibility', ':ktx', ':dagger'
+include ':rxpreferences', ':rxpreferences:compatibility'
+include ':ktx', ':ktx:compatibility'
+include ':dagger', ':dagger:compatibility'
+include ':app'

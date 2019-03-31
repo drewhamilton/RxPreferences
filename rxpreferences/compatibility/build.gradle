@@ -5,12 +5,15 @@ configurations {
   latest
 }
 
+def module = ':rxpreferences'
+def artifact = 'rxpreferences'
+
 dependencies {
-  baseline('drewhamilton.rxpreferences:rxpreferences:1.0.0-alpha3') {
+  baseline("drewhamilton.rxpreferences:$artifact:$compatibleVersion") {
     transitive = false
     force = true
   }
-  latest project(path: ':rxpreferences', configuration: 'releaseRuntimeElements')
+  latest project(path: module, configuration: 'releaseRuntimeElements')
 }
 
 task japicmp(type: JapicmpTask) {
@@ -32,7 +35,7 @@ task japicmp(type: JapicmpTask) {
   ignoreMissingClasses = true
   includeSynthetic = true
 
-  dependsOn(':rxpreferences:assembleRelease')
+  dependsOn("$module:assembleRelease")
 }
 
 def check = tasks.create('check')

@@ -34,6 +34,9 @@ ext {
   libraryVersionCode = 12
   libraryVersion = '1.0.0-alpha3'
 
+  // Version to compare compatibility with:
+  compatibleVersion = '1.0.0-alpha3'
+
   rxJavaVersion = '2.2.7'
 
   keystore = project.hasProperty('personalKeystore') ?
