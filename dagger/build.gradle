@@ -16,10 +16,10 @@ android {
 
   signingConfigs {
     release {
-      storeFile file(personalKeystore)
-      storePassword personalKeystorePassword
-      keyAlias personalKeyAlias
-      keyPassword personalKeyPassword
+      storeFile file(keystore)
+      storePassword keystorePassword
+      keyAlias keyAlias
+      keyPassword keyPassword
     }
   }
 
