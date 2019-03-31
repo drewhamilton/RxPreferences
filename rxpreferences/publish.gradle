@@ -67,8 +67,8 @@ artifacts {
 }
 
 bintray {
-  user = personalBintrayUsername
-  key = personalBintrayApiKey
+  user = bintrayUser
+  key = bintrayKey
 
   configurations = ['archives']
   pkg {

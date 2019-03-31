@@ -3,6 +3,12 @@ apply plugin: 'com.jfrog.bintray'
 
 ext {
   bintrayRepo = 'RxPreferences'
+  bintrayUser = project.hasProperty('personalBintrayUsername') ?
+      personalBintrayUsername :
+      System.getenv('personalBintrayUsername')
+  bintrayKey = project.hasProperty('personalBintrayApiKey') ?
+      personalBintrayApiKey :
+      System.getenv('personalBintrayApiKey')
 
   publishedGroupId = 'drewhamilton.rxpreferences'
 
