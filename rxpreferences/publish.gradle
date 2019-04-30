@@ -53,8 +53,7 @@ task javadoc(type: Javadoc) {
   source = android.sourceSets.main.java.srcDirs
   classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
   android.libraryVariants.all { variant ->
-    // TODO DEPRECATED replace javaCompiler with javaCompileProvider
-    classpath += variant.javaCompiler.classpath
+    classpath += variant.javaCompileProvider.get().classpath
   }
 }
 
