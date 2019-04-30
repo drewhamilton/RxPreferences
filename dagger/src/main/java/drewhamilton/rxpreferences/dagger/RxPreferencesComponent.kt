@@ -12,36 +12,28 @@ import drewhamilton.rxpreferences.RxPreferences
 interface RxPreferencesComponent {
 
   /**
-   * @return an [RxPreferences] wrapping the [SharedPreferences] given to the [Builder]
+   * @return an [RxPreferences] wrapping the [SharedPreferences] instance given to the [Factory]
    */
   fun rxPreferences(): RxPreferences
 
   /**
-   * A builder for this component.
+   * A factory for this component.
    */
-  @Component.Builder
-  interface Builder {
-
-    /**
-     * @param sharedPreferences The preferences to be wrapped by an [RxPreferences] instance.
-     * @return this builder
-     */
-    @BindsInstance fun sharedPreferences(sharedPreferences: SharedPreferences): Builder
+  @Component.Factory interface Factory {
 
     /**
      * @return a new [RxPreferencesComponent]
-     * @throws IllegalStateException if [sharedPreferences] has not been set
      */
-    fun build(): RxPreferencesComponent
+    fun create(@BindsInstance sharedPreferences: SharedPreferences): RxPreferencesComponent
   }
 
   companion object {
 
     /**
-     * @return a concrete [Builder] instance
+     * @return a concrete [RxPreferencesComponent] instance
      */
-    fun builder(): Builder {
-      return DaggerRxPreferencesComponent.builder()
+    fun create(sharedPreferences: SharedPreferences): RxPreferencesComponent {
+      return DaggerRxPreferencesComponent.factory().create(sharedPreferences)
     }
   }
 }
