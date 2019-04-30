@@ -15,13 +15,13 @@ interface ApplicationComponent {
 
   fun inject(observationFragment: ObservationFragment)
 
-  @Component.Builder
-  interface Builder {
-    @BindsInstance fun application(application: ExampleApplication): Builder
-    fun build(): ApplicationComponent
+  @Component.Factory interface Factory {
+    fun create(@BindsInstance application: ExampleApplication): ApplicationComponent
   }
 
   companion object {
-    fun builder(): Builder = DaggerApplicationComponent.builder()
+    fun create(application: ExampleApplication): ApplicationComponent {
+      return DaggerApplicationComponent.factory().create(application)
+    }
   }
 }
