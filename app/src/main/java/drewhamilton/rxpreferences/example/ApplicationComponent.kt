@@ -20,8 +20,6 @@ interface ApplicationComponent {
   }
 
   companion object {
-    fun create(application: ExampleApplication): ApplicationComponent {
-      return DaggerApplicationComponent.factory().create(application)
-    }
+    fun create(application: ExampleApplication) = DaggerApplicationComponent.factory().create(application)
   }
 }
