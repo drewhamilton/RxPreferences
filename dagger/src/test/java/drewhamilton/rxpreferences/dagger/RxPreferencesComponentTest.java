@@ -16,23 +16,15 @@ public final class RxPreferencesComponentTest {
   @Mock private SharedPreferences mockSharedPreferences;
 
   @Test
-  public void builder_withSharedPreferences_createsExpectedRxPreferencesInstance() {
-    final RxPreferencesComponent component = RxPreferencesComponent.Companion.builder()
-        .sharedPreferences(mockSharedPreferences)
-        .build();
+  public void factory_createsExpectedRxPreferencesInstance() {
+    final RxPreferencesComponent component = RxPreferencesComponent.Companion.create(mockSharedPreferences);
     final RxPreferences rxPreferences = component.rxPreferences();
 
     final String testKey = "Test key";
-    //noinspection ResultOfMethodCallIgnored
+    //noinspection ResultOfMethodCallIgnored: function return values are tested in main module
     rxPreferences.contains(testKey).blockingGet();
 
     verify(mockSharedPreferences).contains(testKey);
     verifyNoMoreInteractions(mockSharedPreferences);
-  }
-
-  @Test(expected = IllegalStateException.class)
-  public void builder_withoutSharedPreferences_throwsExceptionOnBuild() {
-    RxPreferencesComponent.Companion.builder()
-        .build();
   }
 }
