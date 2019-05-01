@@ -7,9 +7,7 @@ class ExampleApplication : Application() {
   override fun onCreate() {
     super.onCreate()
 
-    _applicationComponent = ApplicationComponent.builder()
-        .application(this)
-        .build()
+    _applicationComponent = ApplicationComponent.create(this)
   }
 
   companion object {

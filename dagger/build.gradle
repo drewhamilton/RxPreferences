@@ -44,8 +44,8 @@ dependencies {
 
   api project(':rxpreferences')
 
-  implementation 'com.google.dagger:dagger:2.21'
-  kapt 'com.google.dagger:dagger-compiler:2.21'
+  implementation 'com.google.dagger:dagger:2.22.1'
+  kapt 'com.google.dagger:dagger-compiler:2.22.1'
 
   testImplementation 'junit:junit:4.12'
   testImplementation 'org.mockito:mockito-inline:2.23.0'
