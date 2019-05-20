@@ -21,27 +21,13 @@ open class ExampleRepository @Inject constructor(protected val preferences: RxPr
   fun observeExampleInt() = preferences.observeInt(Keys.EXAMPLE_INT, Defaults.INT)
       .subscribeOn(scheduler)!!
 
-  protected class Keys private constructor() {
-
-    companion object {
-      const val EXAMPLE_STRING = "Example string"
-      const val EXAMPLE_INT = "Example int"
-    }
-
-    init {
-      throw UnsupportedOperationException()
-    }
+  protected object Keys {
+    const val EXAMPLE_STRING = "Example string"
+    const val EXAMPLE_INT = "Example int"
   }
 
-  protected class Defaults private constructor() {
-
-    companion object {
-      const val STRING = ""
-      const val INT = 0
-    }
-
-    init {
-      throw UnsupportedOperationException()
-    }
+  protected object Defaults {
+    const val STRING = ""
+    const val INT = 0
   }
 }

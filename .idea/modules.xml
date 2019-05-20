@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RxPreferences-android.iml" filepath="$PROJECT_DIR$/RxPreferences-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RxPreferences.iml" filepath="$PROJECT_DIR$/RxPreferences.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/dagger/dagger.iml" filepath="$PROJECT_DIR$/dagger/dagger.iml" />
       <module fileurl="file://$PROJECT_DIR$/dagger/compatibility/dagger-compatibility.iml" filepath="$PROJECT_DIR$/dagger/compatibility/dagger-compatibility.iml" />
