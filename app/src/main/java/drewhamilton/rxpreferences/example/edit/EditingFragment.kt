@@ -44,11 +44,11 @@ class EditingFragment : RxFragment() {
       }
     })
 
-    editingViewModel.getExampleString()
+    editingViewModel.getExampleStringOnce()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { string -> stringValue.setText(string) }
         .trackUntilDestroyView()
-    editingViewModel.getExampleInteger()
+    editingViewModel.getExampleIntegerOnce()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { integer -> integerValue.setText(integer.toString()) }
         .trackUntilDestroyView()

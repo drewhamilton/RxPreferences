@@ -36,7 +36,7 @@ public final class RxPreferences {
    * @return a map containing a list of pairs key/value representing the preferences.
    */
   @NonNull
-  public Single<Map<String, ?>> getAll() {
+  public Single<Map<String, ?>> getAllOnce() {
     return Single.fromCallable(preferences::getAll);
   }
 
@@ -49,8 +49,8 @@ public final class RxPreferences {
    * each time any of the preferences change.
    */
   @NonNull
-  public Observable<Map<String, ?>> observeAll() {
-    return getAll()
+  public Observable<Map<String, ?>> getAllStream() {
+    return getAllOnce()
         .toObservable()
         .mergeWith(Observable.create(emitter -> {
           RxAllPreferencesListener listener = new RxAllPreferencesListener(emitter);
@@ -66,7 +66,7 @@ public final class RxPreferences {
    * @throws ClassCastException if there is a preference with this name that is not a String.
    */
   @NonNull
-  public Single<String> getString(@NonNull String key, @NonNull String defaultValue) {
+  public Single<String> getStringOnce(@NonNull String key, @NonNull String defaultValue) {
     return Single.fromCallable(() -> preferences.getString(key, defaultValue));
   }
 
@@ -80,8 +80,8 @@ public final class RxPreferences {
    * @throws ClassCastException if there is a preference with this name that is not a String.
    */
   @NonNull
-  public Observable<String> observeString(@NonNull String key, @NonNull String defaultValue) {
-    return getString(key, defaultValue)
+  public Observable<String> getStringStream(@NonNull String key, @NonNull String defaultValue) {
+    return getStringOnce(key, defaultValue)
         .toObservable()
         .mergeWith(createPreferenceObservable(key, defaultValue, SharedPreferences::getString));
   }
@@ -97,7 +97,7 @@ public final class RxPreferences {
    * @throws ClassCastException if there is a preference with this name that is not a {@link Set}.
    */
   @NonNull
-  public Single<Set<String>> getStringSet(@NonNull String key, @NonNull Set<String> defaultValues) {
+  public Single<Set<String>> getStringSetOnce(@NonNull String key, @NonNull Set<String> defaultValues) {
     return Single.fromCallable(() -> preferences.getStringSet(key, defaultValues));
   }
 
@@ -111,8 +111,8 @@ public final class RxPreferences {
    * @throws ClassCastException if there is a preference with this name that is not a {@link Set}.
    */
   @NonNull
-  public Observable<Set<String>> observeStringSet(@NonNull String key, @NonNull Set<String> defaultValue) {
-    return getStringSet(key, defaultValue)
+  public Observable<Set<String>> getStringSetStream(@NonNull String key, @NonNull Set<String> defaultValue) {
+    return getStringSetOnce(key, defaultValue)
         .toObservable()
         .mergeWith(createPreferenceObservable(key, defaultValue, SharedPreferences::getStringSet));
   }
@@ -125,7 +125,7 @@ public final class RxPreferences {
    * @throws ClassCastException if there is a preference with this name that is not an int.
    */
   @NonNull
-  public Single<Integer> getInt(@NonNull String key, int defaultValue) {
+  public Single<Integer> getIntOnce(@NonNull String key, int defaultValue) {
     return Single.fromCallable(() -> preferences.getInt(key, defaultValue));
   }
 
@@ -139,8 +139,8 @@ public final class RxPreferences {
    * @throws ClassCastException if there is a preference with this name that is not an int.
    */
   @NonNull
-  public Observable<Integer> observeInt(@NonNull String key, int defaultValue) {
-    return getInt(key, defaultValue)
+  public Observable<Integer> getIntStream(@NonNull String key, int defaultValue) {
+    return getIntOnce(key, defaultValue)
         .toObservable()
         .mergeWith(createPreferenceObservable(key, defaultValue, SharedPreferences::getInt));
   }
@@ -153,7 +153,7 @@ public final class RxPreferences {
    * @throws ClassCastException if there is a preference with this name that is not a long.
    */
   @NonNull
-  public Single<Long> getLong(@NonNull String key, long defaultValue) {
+  public Single<Long> getLongOnce(@NonNull String key, long defaultValue) {
     return Single.fromCallable(() -> preferences.getLong(key, defaultValue));
   }
 
@@ -167,8 +167,8 @@ public final class RxPreferences {
    * @throws ClassCastException if there is a preference with this name that is not a long.
    */
   @NonNull
-  public Observable<Long> observeLong(@NonNull String key, long defaultValue) {
-    return getLong(key, defaultValue)
+  public Observable<Long> getLongStream(@NonNull String key, long defaultValue) {
+    return getLongOnce(key, defaultValue)
         .toObservable()
         .mergeWith(createPreferenceObservable(key, defaultValue, SharedPreferences::getLong));
   }
@@ -181,7 +181,7 @@ public final class RxPreferences {
    * @throws ClassCastException if there is a preference with this name that is not a float.
    */
   @NonNull
-  public Single<Float> getFloat(@NonNull String key, float defaultValue) {
+  public Single<Float> getFloatOnce(@NonNull String key, float defaultValue) {
     return Single.fromCallable(() -> preferences.getFloat(key, defaultValue));
   }
 
@@ -195,8 +195,8 @@ public final class RxPreferences {
    * @throws ClassCastException if there is a preference with this name that is not a float.
    */
   @NonNull
-  public Observable<Float> observeFloat(@NonNull String key, float defaultValue) {
-    return getFloat(key, defaultValue)
+  public Observable<Float> getFloatStream(@NonNull String key, float defaultValue) {
+    return getFloatOnce(key, defaultValue)
         .toObservable()
         .mergeWith(createPreferenceObservable(key, defaultValue, SharedPreferences::getFloat));
   }
@@ -209,7 +209,7 @@ public final class RxPreferences {
    * @throws ClassCastException if there is a preference with this name that is not a boolean.
    */
   @NonNull
-  public Single<Boolean> getBoolean(@NonNull String key, boolean defaultValue) {
+  public Single<Boolean> getBooleanOnce(@NonNull String key, boolean defaultValue) {
     return Single.fromCallable(() -> preferences.getBoolean(key, defaultValue));
   }
 
@@ -223,8 +223,8 @@ public final class RxPreferences {
    * @throws ClassCastException if there is a preference with this name that is not a boolean.
    */
   @NonNull
-  public Observable<Boolean> observeBoolean(@NonNull String key, boolean defaultValue) {
-    return getBoolean(key, defaultValue)
+  public Observable<Boolean> getBooleanStream(@NonNull String key, boolean defaultValue) {
+    return getBooleanOnce(key, defaultValue)
         .toObservable()
         .mergeWith(createPreferenceObservable(key, defaultValue, SharedPreferences::getBoolean));
   }
@@ -235,7 +235,7 @@ public final class RxPreferences {
    * @return true if the preference exists in the preferences, otherwise false.
    */
   @NonNull
-  public Single<Boolean> contains(@NonNull String key) {
+  public Single<Boolean> containsOnce(@NonNull String key) {
     return Single.fromCallable(() -> preferences.contains(key));
   }
 
@@ -247,8 +247,8 @@ public final class RxPreferences {
    * @throws ClassCastException if there is a preference with this name that is not a long.
    */
   @NonNull
-  public Observable<Boolean> observeContains(@NonNull String key) {
-    return contains(key)
+  public Observable<Boolean> containsStream(@NonNull String key) {
+    return containsOnce(key)
         .toObservable()
         .mergeWith(Observable.create(emitter -> {
           RxPreferenceContainsListener listener = new RxPreferenceContainsListener(key, emitter);

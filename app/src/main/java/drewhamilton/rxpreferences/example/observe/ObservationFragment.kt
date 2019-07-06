@@ -33,11 +33,11 @@ class ObservationFragment : RxFragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    observationViewModel.observeExampleString()
+    observationViewModel.getExampleStringStream()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { stringValue.text = it }
         .trackUntilDestroyView()
-    observationViewModel.observeExampleInt()
+    observationViewModel.getExampleIntStream()
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe { integerValue.text = it.toString() }
         .trackUntilDestroyView()

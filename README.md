@@ -20,7 +20,7 @@ implementation "drewhamilton.rxpreferences:rxpreferences-dagger:$version"
 ## Usage
 Get the current value of any preference:
 ```java
-rxPreferences.getInt("Number of examples", 0)
+rxPreferences.getIntOnce("Number of examples", 0)
     .subscribeOn(Schedulers.single())
     .map(size -> newListOfExamples(size))
     .observeOn(AndroidSchedulers.mainThread())
@@ -29,7 +29,7 @@ rxPreferences.getInt("Number of examples", 0)
 
 Observe the initial value plus any changes to a preference:
 ```java
-rxPreferences.observeString("Type of second example", "Float")
+rxPreferences.getStringStream("Type of second example", "Float")
     .subscribeOn(Schedulers.single())
     .map(type -> toActualExample(type))
     .observeOn(AndroidSchedulers.mainThread())

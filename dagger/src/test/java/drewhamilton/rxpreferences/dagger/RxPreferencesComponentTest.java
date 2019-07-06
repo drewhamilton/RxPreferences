@@ -22,7 +22,7 @@ public final class RxPreferencesComponentTest {
 
     final String testKey = "Test key";
     //noinspection ResultOfMethodCallIgnored: function return values are tested in main module
-    rxPreferences.contains(testKey).blockingGet();
+    rxPreferences.containsOnce(testKey).blockingGet();
 
     verify(mockSharedPreferences).contains(testKey);
     verifyNoMoreInteractions(mockSharedPreferences);

@@ -12,8 +12,8 @@ import io.reactivex.Observable
  * @throws [IllegalArgumentException] if the stored string does not resolve to a valid
  * name for a value of type [E].
  */
-inline fun <reified E : Enum<E>> RxPreferences.getEnum(key: String, defaultValue: E) =
-    getString(key, defaultValue.name)
+inline fun <reified E : Enum<E>> RxPreferences.getEnumOnce(key: String, defaultValue: E) =
+    getStringOnce(key, defaultValue.name)
         .map { enumValueOf<E>(it) }
 
 /**
@@ -28,8 +28,8 @@ inline fun <reified E : Enum<E>> RxPreferences.getEnum(key: String, defaultValue
  * @throws [IllegalArgumentException] if the stored string does not resolve to a valid
  * name for a value of type [E].
  */
-inline fun <reified E : Enum<E>> RxPreferences.observeEnum(key: String, defaultValue: E) =
-    observeString(key, defaultValue.name)
+inline fun <reified E : Enum<E>> RxPreferences.getEnumStream(key: String, defaultValue: E) =
+    getStringStream(key, defaultValue.name)
         .map { enumValueOf<E>(it) }!!
 
 /**
@@ -42,8 +42,8 @@ inline fun <reified E : Enum<E>> RxPreferences.observeEnum(key: String, defaultV
  * @throws [IndexOutOfBoundsException] if the stored int does not resolve to a valid
  * ordinal for a value of type [E].
  */
-inline fun <reified E : Enum<E>> RxPreferences.getEnumByOrdinal(key: String, defaultValue: E) =
-    getInt(key, defaultValue.ordinal)
+inline fun <reified E : Enum<E>> RxPreferences.getEnumByOrdinalOnce(key: String, defaultValue: E) =
+    getIntOnce(key, defaultValue.ordinal)
         .map { enumValues<E>()[it] }
 
 /**
@@ -57,8 +57,8 @@ inline fun <reified E : Enum<E>> RxPreferences.getEnumByOrdinal(key: String, def
  * @throws [IndexOutOfBoundsException] if the stored int does not resolve to a valid
  * ordinal for a value of type [E].
  */
-inline fun <reified E : Enum<E>> RxPreferences.observeEnumByOrdinal(key: String, defaultValue: E) =
-    observeInt(key, defaultValue.ordinal)
+inline fun <reified E : Enum<E>> RxPreferences.getEnumByOrdinalStream(key: String, defaultValue: E) =
+    getIntStream(key, defaultValue.ordinal)
         .map { enumValues<E>()[it] }!!
 
 /**
