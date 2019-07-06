@@ -8,7 +8,7 @@ import drewhamilton.rxpreferences.RxPreferences
 @Module
 internal object RxPreferencesModule {
 
-  @JvmStatic
-  @Provides
-  internal fun rxPreferences(sharedPreferences: SharedPreferences) = RxPreferences(sharedPreferences)
+    @JvmStatic
+    @Provides
+    internal fun rxPreferences(sharedPreferences: SharedPreferences) = RxPreferences(sharedPreferences)
 }
