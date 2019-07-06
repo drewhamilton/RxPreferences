@@ -182,7 +182,7 @@ class RxPreferencesExtensionsTest {
   //region get preference stream
   @Test
   fun `getEnumStream emits on listener update`() {
-    val testKey = "Test PreferenceType key"
+    val testKey = "Test enum key"
     val testValue = PreferenceType.INT
     val testDefault = PreferenceType.BOOLEAN
     mockGet(PreferenceType.STRING, testKey, testValue.name)
@@ -210,7 +210,7 @@ class RxPreferencesExtensionsTest {
 
   @Test
   fun `getEnumStream emits current value on subscribe`() {
-    val testKey = "Test PreferenceType key"
+    val testKey = "Test enum key"
     val testValue = PreferenceType.INT
     val testDefault = PreferenceType.BOOLEAN
     mockGet(PreferenceType.STRING, testKey, testValue.name)
@@ -228,7 +228,7 @@ class RxPreferencesExtensionsTest {
 
   @Test
   fun `getEnumStream unregisters listener on unsubscribe`() {
-    val testKey = "Test PreferenceType key"
+    val testKey = "Test enum key"
     val testValue = PreferenceType.INT
     val testDefault = PreferenceType.BOOLEAN
     mockGet(PreferenceType.STRING, testKey, testValue.name)
@@ -250,7 +250,7 @@ class RxPreferencesExtensionsTest {
 
   @Test
   fun `getEnumByOrdinalStream emits on listener update`() {
-    val testKey = "Test PreferenceType key"
+    val testKey = "Test enum ordinal key"
     val testValue = PreferenceType.STRING
     val testDefault = PreferenceType.LONG
     mockGet(PreferenceType.INT, testKey, testValue.ordinal)
@@ -278,7 +278,7 @@ class RxPreferencesExtensionsTest {
 
   @Test
   fun `getEnumByOrdinalStream emits current value on subscribe`() {
-    val testKey = "Test PreferenceType key"
+    val testKey = "Test enum ordinal key"
     val testValue = PreferenceType.STRING
     val testDefault = PreferenceType.BOOLEAN
     mockGet(PreferenceType.INT, testKey, testValue.ordinal)
@@ -296,7 +296,7 @@ class RxPreferencesExtensionsTest {
 
   @Test
   fun `getEnumByOrdinalStream unregisters listener on unsubscribe`() {
-    val testKey = "Test PreferenceType key"
+    val testKey = "Test enum ordinal key"
     val testValue = PreferenceType.FLOAT
     val testDefault = PreferenceType.STRING
     mockGet(PreferenceType.INT, testKey, testValue.ordinal)
