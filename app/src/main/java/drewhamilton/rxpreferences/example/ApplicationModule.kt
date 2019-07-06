@@ -7,7 +7,6 @@ import dagger.Provides
 @Module
 object ApplicationModule {
 
-  @JvmStatic
-  @Provides
-  fun applicationContext(application: ExampleApplication): Context = application.applicationContext
+    @Provides
+    @JvmStatic fun applicationContext(application: ExampleApplication): Context = application.applicationContext
 }

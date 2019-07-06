@@ -1,90 +1,90 @@
 apply from: '../publish.gradle'
 
 ext {
-  bintrayName = 'RxPreferences'
-  libraryName = 'RxPreferences'
-  artifact = 'rxpreferences'
+    bintrayName = 'RxPreferences'
+    libraryName = 'RxPreferences'
+    artifact = 'rxpreferences'
 
-  libraryDescription = 'An RxJava wrapper for Android\'s SharedPreferences.'
+    libraryDescription = 'An RxJava wrapper for Android\'s SharedPreferences.'
 }
 
 group = publishedGroupId
 version = libraryVersion
 
 install {
-  repositories.mavenInstaller {
-    pom.project {
-      packaging 'aar'
-      groupId publishedGroupId
-      artifactId artifact
+    repositories.mavenInstaller {
+        pom.project {
+            packaging 'aar'
+            groupId publishedGroupId
+            artifactId artifact
 
-      name libraryName
-      description libraryDescription
-      url siteUrl
+            name libraryName
+            description libraryDescription
+            url siteUrl
 
-      licenses {
-        license {
-          name licenseName
-          url licenseUrl
+            licenses {
+                license {
+                    name licenseName
+                    url licenseUrl
+                }
+            }
+            developers {
+                developer {
+                    id developerId
+                    name developerName
+                    email developerEmail
+                }
+            }
+            scm {
+                connection gitUrl
+                developerConnection gitUrl
+                url siteUrl
+            }
         }
-      }
-      developers {
-        developer {
-          id developerId
-          name developerName
-          email developerEmail
-        }
-      }
-      scm {
-        connection gitUrl
-        developerConnection gitUrl
-        url siteUrl
-      }
     }
-  }
 }
 
 task sourcesJar(type: Jar) {
-  archiveClassifier = 'sources'
-  from android.sourceSets.main.java.srcDirs
+    archiveClassifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
 }
 
 task javadoc(type: Javadoc) {
-  source = android.sourceSets.main.java.srcDirs
-  classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-  android.libraryVariants.all { variant ->
-    classpath += variant.javaCompileProvider.get().classpath
-  }
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    android.libraryVariants.all { variant ->
+        classpath += variant.javaCompileProvider.get().classpath
+    }
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-  archiveClassifier = 'javadoc'
-  from javadoc.destinationDir
+    archiveClassifier = 'javadoc'
+    from javadoc.destinationDir
 }
 
 artifacts {
-  archives javadocJar
-  archives sourcesJar
+    archives javadocJar
+    archives sourcesJar
 }
 
 bintray {
-  user = bintrayUser
-  key = bintrayKey
+    user = bintrayUser
+    key = bintrayKey
 
-  configurations = ['archives']
-  pkg {
-    repo = bintrayRepo
-    name = bintrayName
-    desc = libraryDescription
-    websiteUrl = siteUrl
-    vcsUrl = gitUrl
-    licenses = allLicenses
-    dryRun = false
-    publish = true
-    override = false
-    publicDownloadNumbers = true
-    version {
-      desc = libraryDescription
+    configurations = ['archives']
+    pkg {
+        repo = bintrayRepo
+        name = bintrayName
+        desc = libraryDescription
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = allLicenses
+        dryRun = false
+        publish = true
+        override = false
+        publicDownloadNumbers = true
+        version {
+            desc = libraryDescription
+        }
     }
-  }
 }

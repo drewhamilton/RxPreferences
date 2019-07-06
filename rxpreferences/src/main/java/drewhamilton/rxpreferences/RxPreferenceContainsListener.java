@@ -6,12 +6,12 @@ import io.reactivex.annotations.NonNull;
 
 final class RxPreferenceContainsListener extends RxPreferenceListener<Boolean> {
 
-  RxPreferenceContainsListener(@NonNull String key, @NonNull ObservableEmitter<Boolean> emitter) {
-    super(key, emitter);
-  }
+    RxPreferenceContainsListener(@NonNull String key, @NonNull ObservableEmitter<Boolean> emitter) {
+        super(key, emitter);
+    }
 
-  @Override
-  Boolean getCurrentValue(SharedPreferences preferences) {
-    return preferences.contains(key);
-  }
+    @Override
+    Boolean getCurrentValue(SharedPreferences preferences) {
+        return preferences.contains(key);
+    }
 }

@@ -6,20 +6,21 @@ import drewhamilton.rxpreferences.example.edit.EditingFragment
 import drewhamilton.rxpreferences.example.observe.ObservationFragment
 
 @Component(modules = [
-  ApplicationModule::class,
-  PersistenceModule::class
+    ApplicationModule::class,
+    PersistenceModule::class
 ])
 interface ApplicationComponent {
 
-  fun inject(editingFragment: EditingFragment)
+    fun inject(editingFragment: EditingFragment)
 
-  fun inject(observationFragment: ObservationFragment)
+    fun inject(observationFragment: ObservationFragment)
 
-  @Component.Factory interface Factory {
-    fun create(@BindsInstance application: ExampleApplication): ApplicationComponent
-  }
+    @Component.Factory
+    interface Factory {
+        fun create(@BindsInstance application: ExampleApplication): ApplicationComponent
+    }
 
-  companion object {
-    fun create(application: ExampleApplication) = DaggerApplicationComponent.factory().create(application)
-  }
+    companion object {
+        fun create(application: ExampleApplication) = DaggerApplicationComponent.factory().create(application)
+    }
 }

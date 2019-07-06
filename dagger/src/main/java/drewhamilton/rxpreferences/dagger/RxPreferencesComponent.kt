@@ -11,28 +11,28 @@ import drewhamilton.rxpreferences.RxPreferences
 @Component(modules = [RxPreferencesModule::class])
 interface RxPreferencesComponent {
 
-  /**
-   * @return an [RxPreferences] wrapping the [SharedPreferences] instance given to the [Factory]
-   */
-  fun rxPreferences(): RxPreferences
-
-  /**
-   * A factory for this component.
-   */
-  @Component.Factory interface Factory {
+    /**
+     * @return an [RxPreferences] wrapping the [SharedPreferences] instance given to the [Factory]
+     */
+    fun rxPreferences(): RxPreferences
 
     /**
-     * @return a new [RxPreferencesComponent]
+     * A factory for this component.
      */
-    fun create(@BindsInstance sharedPreferences: SharedPreferences): RxPreferencesComponent
-  }
+    @Component.Factory interface Factory {
 
-  companion object {
+        /**
+         * @return a new [RxPreferencesComponent]
+         */
+        fun create(@BindsInstance sharedPreferences: SharedPreferences): RxPreferencesComponent
+    }
 
-    /**
-     * @return a concrete [RxPreferencesComponent] instance
-     */
-    @JvmStatic fun create(sharedPreferences: SharedPreferences): RxPreferencesComponent =
-        DaggerRxPreferencesComponent.factory().create(sharedPreferences)
-  }
+    companion object {
+
+        /**
+         * @return a concrete [RxPreferencesComponent] instance
+         */
+        @JvmStatic fun create(sharedPreferences: SharedPreferences): RxPreferencesComponent =
+            DaggerRxPreferencesComponent.factory().create(sharedPreferences)
+    }
 }

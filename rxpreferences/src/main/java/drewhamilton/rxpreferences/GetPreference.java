@@ -5,6 +5,6 @@ import io.reactivex.annotations.NonNull;
 
 interface GetPreference<T> {
 
-  @NonNull
-  T invoke(@NonNull SharedPreferences preferences, @NonNull String key, @NonNull T defaultValue);
+    @NonNull
+    T invoke(@NonNull SharedPreferences preferences, @NonNull String key, @NonNull T defaultValue);
 }

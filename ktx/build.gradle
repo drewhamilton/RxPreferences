@@ -5,51 +5,51 @@ apply plugin: 'kotlin-kapt'
 apply from: 'publish.gradle'
 
 android {
-  compileSdkVersion 28
+    compileSdkVersion 28
 
-  defaultConfig {
-    minSdkVersion 14
-    targetSdkVersion 28
-    versionCode libraryVersionCode
-    versionName libraryVersion
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 28
+        versionCode libraryVersionCode
+        versionName libraryVersion
 
-    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-  }
-
-  signingConfigs {
-    release {
-      storeFile file(keystore)
-      storePassword keystorePassword
-      keyAlias keyAlias
-      keyPassword keyPassword
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-  }
 
-  buildTypes {
-    release {
-      signingConfig signingConfigs.release
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    signingConfigs {
+        release {
+            storeFile file(keystore)
+            storePassword keystorePassword
+            keyAlias keyAlias
+            keyPassword keyPassword
+        }
     }
-  }
 
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
-  kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
 }
 
 dependencies {
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-  api project(':rxpreferences')
+    api project(':rxpreferences')
 
-  androidTestImplementation 'androidx.test:runner:1.1.1'
-  androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
-  testImplementation 'junit:junit:4.12'
-  testImplementation 'org.mockito:mockito-inline:2.23.0'
-  testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0'
-  testImplementation 'org.amshove.kluent:kluent:1.34'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-inline:2.23.0'
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0'
+    testImplementation 'org.amshove.kluent:kluent:1.34'
 }

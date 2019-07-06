@@ -1,54 +1,48 @@
 buildscript {
-  ext.kotlin_version = '1.3.40'
-  repositories {
-    google()
-    gradlePluginPortal()
-    jcenter()
-  }
-  dependencies {
-    classpath 'com.android.tools.build:gradle:3.4.1'
+    ext.kotlin_version = '1.3.40'
 
-    classpath 'me.champeau.gradle:japicmp-gradle-plugin:0.2.8'
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.4.1'
 
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:0.9.18"
+        classpath 'me.champeau.gradle:japicmp-gradle-plugin:0.2.8'
 
-    classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
-  }
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:0.9.18"
+
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
+    }
+
+    repositories {
+        google()
+        gradlePluginPortal()
+        jcenter()
+    }
 }
 
 allprojects {
-  repositories {
-    google()
-    gradlePluginPortal()
-    jcenter()
-  }
-}
-
-task clean(type: Delete) {
-  delete rootProject.buildDir
+    repositories {
+        google()
+        gradlePluginPortal()
+        jcenter()
+    }
 }
 
 ext {
-  libraryVersionCode = 12
-  libraryVersion = '1.0.0-beta2'
+    libraryVersionCode = 12
+    libraryVersion = '1.0.0-beta2'
 
-  // Version to compare compatibility with:
-  compatibleVersion = '1.0.0-beta1'
+    // Version to compare compatibility with:
+    compatibleVersion = '1.0.0-beta1'
 
-  rxJavaVersion = '2.2.8'
+    rxJavaVersion = '2.2.8'
 
-  keystore = project.hasProperty('personalKeystore') ?
-      personalKeystore :
-      System.getenv('personalKeystore')
-  keystorePassword = project.hasProperty('personalKeystorePassword') ?
-      personalKeystorePassword :
-      System.getenv('personalKeystorePassword')
-  keyAlias = project.hasProperty('personalKeyAlias') ?
-      personalKeyAlias :
-      System.getenv('personalKeyAlias')
-  keyPassword = project.hasProperty('personalKeyPassword') ?
-      personalKeyPassword :
-      System.getenv('personalKeyPassword')
+    keystore = project.hasProperty('personalKeystore') ? personalKeystore : 'dummy'
+    keystorePassword = project.hasProperty('personalKeystorePassword') ? personalKeystorePassword : 'dummy'
+    keyAlias = project.hasProperty('personalKeyAlias') ? personalKeyAlias : 'dummy'
+    keyPassword = project.hasProperty('personalKeyPassword') ? personalKeyPassword : 'dummy'
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
