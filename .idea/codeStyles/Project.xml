@@ -19,6 +19,7 @@
       </option>
     </AndroidXmlCodeStyleSettings>
     <JavaCodeStyleSettings>
+      <option name="DO_NOT_WRAP_AFTER_SINGLE_ANNOTATION" value="true" />
       <option name="CLASS_COUNT_TO_USE_IMPORT_ON_DEMAND" value="999" />
       <option name="NAMES_COUNT_TO_USE_IMPORT_ON_DEMAND" value="999" />
       <option name="PACKAGES_TO_USE_IMPORT_ON_DEMAND">
