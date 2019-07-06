@@ -35,7 +35,7 @@ ext {
     // Version to compare compatibility with:
     compatibleVersion = '1.0.0-beta1'
 
-    rxJavaVersion = '2.2.8'
+    rxJavaVersion = '2.2.10'
 
     keystore = project.hasProperty('personalKeystore') ? personalKeystore : 'dummy'
     keystorePassword = project.hasProperty('personalKeystorePassword') ? personalKeystorePassword : 'dummy'
