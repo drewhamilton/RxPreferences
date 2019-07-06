@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class ObservationViewModel @Inject constructor(private val exampleRepository: ExampleRepository) : ViewModel() {
 
-  fun observeExampleString() = exampleRepository.observeExampleString()
+  fun getExampleStringStream() = exampleRepository.getExampleStringStream()
 
-  fun observeExampleInt() = exampleRepository.observeExampleInt()
+  fun getExampleIntStream() = exampleRepository.getExampleIntStream()
 }

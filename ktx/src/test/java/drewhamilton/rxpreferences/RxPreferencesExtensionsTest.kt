@@ -60,15 +60,15 @@ class RxPreferencesExtensionsTest {
   }
 
   //region RxPreferences
-  //region get preference
+  //region get preference once
   @Test
-  fun `getEnum emits from internal preferences`() {
+  fun `getEnumOnce emits from internal preferences`() {
     val testKey = "Test PreferenceType key"
     val testValue = PreferenceType.LONG
     val testDefault = PreferenceType.BOOLEAN
     mockGet(PreferenceType.STRING, testKey, testValue.name)
 
-    val subscription = rxPreferences.getEnum(testKey, testDefault)
+    val subscription = rxPreferences.getEnumOnce(testKey, testDefault)
         .test()
         .trackUntilTearDown()
 
@@ -79,13 +79,13 @@ class RxPreferencesExtensionsTest {
   }
 
   @Test
-  fun `getEnum gets after subscribe`() {
+  fun `getEnumOnce gets after subscribe`() {
     val testKey = "Test PreferenceType key"
     val testValue = PreferenceType.LONG
     val testDefault = PreferenceType.BOOLEAN
     mockGet(PreferenceType.STRING, testKey, testValue.name)
 
-    val subscription = rxPreferences.getEnum(testKey, testDefault)
+    val subscription = rxPreferences.getEnumOnce(testKey, testDefault)
         .subscribeOn(testScheduler)
         .subscribe()
         .trackUntilTearDown()
@@ -106,13 +106,13 @@ class RxPreferencesExtensionsTest {
   }
 
   @Test
-  fun `getEnumByOrdinal emits from internal preferences`() {
+  fun `getEnumByOrdinalOnce emits from internal preferences`() {
     val testKey = "Test PreferenceType ordinal key"
     val testValue = PreferenceType.FLOAT
     val testDefault = PreferenceType.STRING
     mockGet(PreferenceType.INT, testKey, testValue.ordinal)
 
-    val subscription = rxPreferences.getEnumByOrdinal(testKey, testDefault)
+    val subscription = rxPreferences.getEnumByOrdinalOnce(testKey, testDefault)
         .test()
         .trackUntilTearDown()
 
@@ -123,13 +123,13 @@ class RxPreferencesExtensionsTest {
   }
 
   @Test
-  fun `getEnumByOrdinal gets after subscribe`() {
+  fun `getEnumByOrdinalOnce gets after subscribe`() {
     val testKey = "Test PreferenceType ordinal key"
     val testValue = PreferenceType.FLOAT
     val testDefault = PreferenceType.STRING
     mockGet(PreferenceType.INT, testKey, testValue.ordinal)
 
-    val subscription = rxPreferences.getEnumByOrdinal(testKey, testDefault)
+    val subscription = rxPreferences.getEnumByOrdinalOnce(testKey, testDefault)
         .subscribeOn(testScheduler)
         .subscribe()
         .trackUntilTearDown()
@@ -179,15 +179,15 @@ class RxPreferencesExtensionsTest {
   }
   //endregion
 
-  //region observe preference
+  //region get preference stream
   @Test
-  fun `observeEnum emits on listener update`() {
-    val testKey = "Test PreferenceType key"
+  fun `getEnumStream emits on listener update`() {
+    val testKey = "Test enum key"
     val testValue = PreferenceType.INT
     val testDefault = PreferenceType.BOOLEAN
     mockGet(PreferenceType.STRING, testKey, testValue.name)
 
-    val subscription = rxPreferences.observeEnum(testKey, testDefault)
+    val subscription = rxPreferences.getEnumStream(testKey, testDefault)
         .test()
         .trackUntilTearDown()
 
@@ -209,31 +209,31 @@ class RxPreferencesExtensionsTest {
   }
 
   @Test
-  fun `observeEnum emits current value on subscribe`() {
-    val testKey = "Test PreferenceType key"
+  fun `getEnumStream emits current value on subscribe`() {
+    val testKey = "Test enum key"
     val testValue = PreferenceType.INT
     val testDefault = PreferenceType.BOOLEAN
     mockGet(PreferenceType.STRING, testKey, testValue.name)
 
-    val subscription = rxPreferences.observeEnum(testKey, testDefault)
+    val subscription = rxPreferences.getEnumStream(testKey, testDefault)
         .subscribeOn(testScheduler)
         .subscribe()
         .trackUntilTearDown()
 
-    verifyObserveBeforeSubscribe(subscription)
+    verifyGetStreamBeforeSubscribe(subscription)
 
     advanceScheduler()
-    verifyObserveAfterSubscribe(PreferenceType.STRING, testKey, testDefault.name, subscription)
+    verifyGetStreamAfterSubscribe(PreferenceType.STRING, testKey, testDefault.name, subscription)
   }
 
   @Test
-  fun `observeEnum unregisters listener on unsubscribe`() {
-    val testKey = "Test PreferenceType key"
+  fun `getEnumStream unregisters listener on unsubscribe`() {
+    val testKey = "Test enum key"
     val testValue = PreferenceType.INT
     val testDefault = PreferenceType.BOOLEAN
     mockGet(PreferenceType.STRING, testKey, testValue.name)
 
-    val subscription = rxPreferences.observeEnum(testKey, testDefault)
+    val subscription = rxPreferences.getEnumStream(testKey, testDefault)
         .test()
         .trackUntilTearDown()
 
@@ -249,13 +249,13 @@ class RxPreferencesExtensionsTest {
   }
 
   @Test
-  fun `observeEnumByOrdinal emits on listener update`() {
-    val testKey = "Test PreferenceType key"
+  fun `getEnumByOrdinalStream emits on listener update`() {
+    val testKey = "Test enum ordinal key"
     val testValue = PreferenceType.STRING
     val testDefault = PreferenceType.LONG
     mockGet(PreferenceType.INT, testKey, testValue.ordinal)
 
-    val subscription = rxPreferences.observeEnumByOrdinal(testKey, testDefault)
+    val subscription = rxPreferences.getEnumByOrdinalStream(testKey, testDefault)
         .test()
         .trackUntilTearDown()
 
@@ -277,31 +277,31 @@ class RxPreferencesExtensionsTest {
   }
 
   @Test
-  fun `observeEnumByOrdinal emits current value on subscribe`() {
-    val testKey = "Test PreferenceType key"
+  fun `getEnumByOrdinalStream emits current value on subscribe`() {
+    val testKey = "Test enum ordinal key"
     val testValue = PreferenceType.STRING
     val testDefault = PreferenceType.BOOLEAN
     mockGet(PreferenceType.INT, testKey, testValue.ordinal)
 
-    val subscription = rxPreferences.observeEnumByOrdinal(testKey, testDefault)
+    val subscription = rxPreferences.getEnumByOrdinalStream(testKey, testDefault)
         .subscribeOn(testScheduler)
         .subscribe()
         .trackUntilTearDown()
 
-    verifyObserveBeforeSubscribe(subscription)
+    verifyGetStreamBeforeSubscribe(subscription)
 
     advanceScheduler()
-    verifyObserveAfterSubscribe(PreferenceType.INT, testKey, testDefault.ordinal, subscription)
+    verifyGetStreamAfterSubscribe(PreferenceType.INT, testKey, testDefault.ordinal, subscription)
   }
 
   @Test
-  fun `observeEnumByOrdinal unregisters listener on unsubscribe`() {
-    val testKey = "Test PreferenceType key"
+  fun `getEnumByOrdinalStream unregisters listener on unsubscribe`() {
+    val testKey = "Test enum ordinal key"
     val testValue = PreferenceType.FLOAT
     val testDefault = PreferenceType.STRING
     mockGet(PreferenceType.INT, testKey, testValue.ordinal)
 
-    val subscription = rxPreferences.observeEnumByOrdinal(testKey, testDefault)
+    val subscription = rxPreferences.getEnumByOrdinalStream(testKey, testDefault)
         .test()
         .trackUntilTearDown()
 
@@ -316,14 +316,14 @@ class RxPreferencesExtensionsTest {
     verify(mockSharedPreferences).unregisterOnSharedPreferenceChangeListener(listener)
   }
 
-  private fun verifyObserveBeforeSubscribe(subscription: Disposable) {
+  private fun verifyGetStreamBeforeSubscribe(subscription: Disposable) {
     // Before subscribing, there are no interactions with the internal preferences:
     verifyNoMoreInteractions(mockSharedPreferences)
     verifyNoMoreInteractions(mockSharedPreferencesEditor)
     assertFalse(subscription.isDisposed)
   }
 
-  private fun verifyObserveAfterSubscribe(
+  private fun verifyGetStreamAfterSubscribe(
       type: PreferenceType,
       key: String,
       defaultValue: Any,

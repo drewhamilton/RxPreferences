@@ -5,9 +5,9 @@ import javax.inject.Inject
 
 class EditingViewModel @Inject constructor(private val exampleRepository: MutableExampleRepository) : ViewModel() {
 
-  fun getExampleString() = exampleRepository.getExampleString()
+  fun getExampleStringOnce() = exampleRepository.getExampleStringOnce()
 
-  fun getExampleInteger() = exampleRepository.getExampleInt()
+  fun getExampleIntegerOnce() = exampleRepository.getExampleIntOnce()
 
   fun setExampleValues(string: String, int: Int) = exampleRepository.changeExampleValues(string, int)
 

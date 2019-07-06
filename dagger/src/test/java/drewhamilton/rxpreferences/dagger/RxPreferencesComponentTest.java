@@ -17,12 +17,12 @@ public final class RxPreferencesComponentTest {
 
   @Test
   public void factory_createsExpectedRxPreferencesInstance() {
-    final RxPreferencesComponent component = RxPreferencesComponent.Companion.create(mockSharedPreferences);
+    final RxPreferencesComponent component = RxPreferencesComponent.create(mockSharedPreferences);
     final RxPreferences rxPreferences = component.rxPreferences();
 
     final String testKey = "Test key";
     //noinspection ResultOfMethodCallIgnored: function return values are tested in main module
-    rxPreferences.contains(testKey).blockingGet();
+    rxPreferences.containsOnce(testKey).blockingGet();
 
     verify(mockSharedPreferences).contains(testKey);
     verifyNoMoreInteractions(mockSharedPreferences);

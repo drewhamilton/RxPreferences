@@ -9,16 +9,16 @@ open class ExampleRepository @Inject constructor(protected val preferences: RxPr
   protected val scheduler
     get() = Schedulers.single()
 
-  fun getExampleString() = preferences.getString(Keys.EXAMPLE_STRING, Defaults.STRING)
+  fun getExampleStringOnce() = preferences.getStringOnce(Keys.EXAMPLE_STRING, Defaults.STRING)
       .subscribeOn(scheduler)
 
-  fun observeExampleString() = preferences.observeString(Keys.EXAMPLE_STRING, Defaults.STRING)
+  fun getExampleStringStream() = preferences.getStringStream(Keys.EXAMPLE_STRING, Defaults.STRING)
       .subscribeOn(scheduler)!!
 
-  fun getExampleInt() = preferences.getInt(Keys.EXAMPLE_INT, Defaults.INT)
+  fun getExampleIntOnce() = preferences.getIntOnce(Keys.EXAMPLE_INT, Defaults.INT)
       .subscribeOn(scheduler)
 
-  fun observeExampleInt() = preferences.observeInt(Keys.EXAMPLE_INT, Defaults.INT)
+  fun getExampleIntStream() = preferences.getIntStream(Keys.EXAMPLE_INT, Defaults.INT)
       .subscribeOn(scheduler)!!
 
   protected object Keys {
