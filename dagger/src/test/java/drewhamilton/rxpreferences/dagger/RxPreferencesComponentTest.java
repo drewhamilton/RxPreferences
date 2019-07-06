@@ -13,18 +13,18 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 @RunWith(MockitoJUnitRunner.class)
 public final class RxPreferencesComponentTest {
 
-  @Mock private SharedPreferences mockSharedPreferences;
+    @Mock private SharedPreferences mockSharedPreferences;
 
-  @Test
-  public void factory_createsExpectedRxPreferencesInstance() {
-    final RxPreferencesComponent component = RxPreferencesComponent.create(mockSharedPreferences);
-    final RxPreferences rxPreferences = component.rxPreferences();
+    @Test
+    public void factory_createsExpectedRxPreferencesInstance() {
+        final RxPreferencesComponent component = RxPreferencesComponent.create(mockSharedPreferences);
+        final RxPreferences rxPreferences = component.rxPreferences();
 
-    final String testKey = "Test key";
-    //noinspection ResultOfMethodCallIgnored: function return values are tested in main module
-    rxPreferences.containsOnce(testKey).blockingGet();
+        final String testKey = "Test key";
+        //noinspection ResultOfMethodCallIgnored: function return values are tested in main module
+        rxPreferences.containsOnce(testKey).blockingGet();
 
-    verify(mockSharedPreferences).contains(testKey);
-    verifyNoMoreInteractions(mockSharedPreferences);
-  }
+        verify(mockSharedPreferences).contains(testKey);
+        verifyNoMoreInteractions(mockSharedPreferences);
+    }
 }
