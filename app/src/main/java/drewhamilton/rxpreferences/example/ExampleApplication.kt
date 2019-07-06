@@ -4,17 +4,17 @@ import android.app.Application
 
 class ExampleApplication : Application() {
 
-  override fun onCreate() {
-    super.onCreate()
+    override fun onCreate() {
+        super.onCreate()
 
-    _applicationComponent = ApplicationComponent.create(this)
-  }
+        _applicationComponent = ApplicationComponent.create(this)
+    }
 
-  companion object {
-    val applicationComponent: ApplicationComponent
-      get() = _applicationComponent
+    companion object {
+        val applicationComponent: ApplicationComponent
+            get() = _applicationComponent
 
-    @Suppress("ObjectPropertyName")
-    private lateinit var _applicationComponent: ApplicationComponent
-  }
+        @Suppress("ObjectPropertyName")
+        private lateinit var _applicationComponent: ApplicationComponent
+    }
 }

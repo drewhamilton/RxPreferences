@@ -6,12 +6,12 @@ import io.reactivex.disposables.Disposable
 
 abstract class RxFragment : Fragment() {
 
-  private val subscriptionsOnViewCreated: CompositeDisposable = CompositeDisposable()
+    private val subscriptionsOnViewCreated: CompositeDisposable = CompositeDisposable()
 
-  override fun onDestroyView() {
-    subscriptionsOnViewCreated.clear()
-    super.onDestroyView()
-  }
+    override fun onDestroyView() {
+        subscriptionsOnViewCreated.clear()
+        super.onDestroyView()
+    }
 
-  protected fun Disposable.trackUntilDestroyView() = subscriptionsOnViewCreated.add(this)
+    protected fun Disposable.trackUntilDestroyView() = subscriptionsOnViewCreated.add(this)
 }

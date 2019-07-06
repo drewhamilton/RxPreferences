@@ -10,18 +10,18 @@ import drewhamilton.rxpreferences.dagger.RxPreferencesComponent
 @Module
 object PersistenceModule {
 
-  private const val sharedPreferencesName = "drewhamilton.rxpreferences.example.SharedPreferences"
+    private const val sharedPreferencesName = "drewhamilton.rxpreferences.example.SharedPreferences"
 
-  private val ExampleApplication.sharedPreferences
-    get() = getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+    private val ExampleApplication.sharedPreferences
+        get() = getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
-  @JvmStatic
-  @Provides
-  fun preferencesComponent(application: ExampleApplication) =
-      RxPreferencesComponent.create(application.sharedPreferences)
+    @JvmStatic
+    @Provides
+    fun preferencesComponent(application: ExampleApplication) =
+        RxPreferencesComponent.create(application.sharedPreferences)
 
-  @JvmStatic
-  @Provides
-  @Reusable
-  fun preferences(preferencesComponent: RxPreferencesComponent): RxPreferences = preferencesComponent.rxPreferences()
+    @JvmStatic
+    @Provides
+    @Reusable
+    fun preferences(preferencesComponent: RxPreferencesComponent): RxPreferences = preferencesComponent.rxPreferences()
 }
