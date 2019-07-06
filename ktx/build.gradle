@@ -5,11 +5,11 @@ apply plugin: 'kotlin-kapt'
 apply from: 'publish.gradle'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion targetSdk
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 28
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
         versionCode libraryVersionCode
         versionName libraryVersion
 
