@@ -29,8 +29,7 @@ allprojects {
 }
 
 ext {
-    libraryVersionCode = 12
-    libraryVersion = '1.0.0-beta2'
+    libraryVersion = '1.0.0-beta3'
 
     // Version to compare compatibility with:
     compatibleVersion = '1.0.0-beta1'

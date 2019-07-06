@@ -10,7 +10,7 @@ android {
         applicationId "drewhamilton.rxpreferences.example"
         minSdkVersion minSdk
         targetSdkVersion targetSdk
-        versionCode libraryVersionCode
+        versionCode 13
         versionName libraryVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
