@@ -13,7 +13,7 @@ import io.reactivex.Single
  */
 inline fun <reified E : Enum<E>> RxPreferences.getEnumOnce(key: String, defaultValue: E) =
     getStringOnce(key, defaultValue.name)
-        .map { enumValueOf<E>(it) }
+        .map { name -> enumValueOf<E>(name) }
 
 /**
  * Observe enum values associated with [key]. The returned [Observable] emits [defaultValue] if the preference does not
@@ -25,7 +25,7 @@ inline fun <reified E : Enum<E>> RxPreferences.getEnumOnce(key: String, defaultV
  */
 inline fun <reified E : Enum<E>> RxPreferences.getEnumStream(key: String, defaultValue: E) =
     getStringStream(key, defaultValue.name)
-        .map { enumValueOf<E>(it) }!!
+        .map { name -> enumValueOf<E>(name) }!!
 
 /**
  * Get a [Single] that will emit the enum value associated with [key] once. If there is no value associated with [key],
@@ -37,7 +37,7 @@ inline fun <reified E : Enum<E>> RxPreferences.getEnumStream(key: String, defaul
  */
 inline fun <reified E : Enum<E>> RxPreferences.getEnumByOrdinalOnce(key: String, defaultValue: E) =
     getIntOnce(key, defaultValue.ordinal)
-        .map { enumValues<E>()[it] }
+        .map { ordinal -> enumValues<E>()[ordinal] }
 
 /**
  * Observe enum values associated with [key]. The returned [Observable] emits [defaultValue] if the preference does not
@@ -49,7 +49,7 @@ inline fun <reified E : Enum<E>> RxPreferences.getEnumByOrdinalOnce(key: String,
  */
 inline fun <reified E : Enum<E>> RxPreferences.getEnumByOrdinalStream(key: String, defaultValue: E) =
     getIntStream(key, defaultValue.ordinal)
-        .map { enumValues<E>()[it] }!!
+        .map { ordinal -> enumValues<E>()[ordinal] }!!
 
 /**
  * Apply a series of edits to [this] and then commit them.
