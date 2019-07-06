@@ -1,48 +1,48 @@
 apply plugin: 'com.android.library'
 
 android {
-  compileSdkVersion 28
+    compileSdkVersion 28
 
-  defaultConfig {
-    minSdkVersion 14
-    targetSdkVersion 28
-    versionCode libraryVersionCode
-    versionName libraryVersion
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 28
+        versionCode libraryVersionCode
+        versionName libraryVersion
 
-    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-  }
-
-  signingConfigs {
-    release {
-      storeFile file(keystore)
-      storePassword keystorePassword
-      keyAlias keyAlias
-      keyPassword keyPassword
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-  }
 
-  buildTypes {
-    release {
-      signingConfig signingConfigs.release
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    signingConfigs {
+        release {
+            storeFile file(keystore)
+            storePassword keystorePassword
+            keyAlias keyAlias
+            keyPassword keyPassword
+        }
     }
-  }
 
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 apply from: 'publish.gradle'
 
 dependencies {
-  api "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    api "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
 
-  androidTestImplementation 'androidx.test:runner:1.1.1'
-  androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
-  testImplementation 'junit:junit:4.12'
-  testImplementation 'org.mockito:mockito-inline:2.23.0'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-inline:2.23.0'
 }

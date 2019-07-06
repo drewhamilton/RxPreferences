@@ -1,40 +1,40 @@
 configurations {
-  baseline
-  latest
+    baseline
+    latest
 }
 
 def module = ':ktx'
 def artifact = 'rxpreferences-ktx'
 
 dependencies {
-  baseline("drewhamilton.rxpreferences:$artifact:$compatibleVersion") {
-    transitive = false
-    force = true
-  }
-  latest project(path: module, configuration: 'releaseRuntimeElements')
+    baseline("drewhamilton.rxpreferences:$artifact:$compatibleVersion") {
+        transitive = false
+        force = true
+    }
+    latest project(path: module, configuration: 'releaseRuntimeElements')
 }
 
 // FIXME Not working for multiple modules
 //task japicmp(type: JapicmpTask) {
-//  oldClasspath = configurations.baseline.incoming.artifactView { config ->
-//    config.attributes { container ->
-//      container.attribute(Attribute.of("artifactType", String.class), "jar")
-//    }
-//  }.artifacts.artifactFiles
+//    oldClasspath = configurations.baseline.incoming.artifactView { config ->
+//        config.attributes { container ->
+//            container.attribute(Attribute.of("artifactType", String.class), "jar")
+//        }
+//    }.artifacts.artifactFiles
 //
-//  newClasspath = configurations.latest.incoming.artifactView { config ->
-//    config.attributes { container ->
-//      container.attribute(Attribute.of("artifactType", String.class), "jar")
-//    }
-//  }.artifacts.artifactFiles
+//    newClasspath = configurations.latest.incoming.artifactView { config ->
+//        config.attributes { container ->
+//            container.attribute(Attribute.of("artifactType", String.class), "jar")
+//        }
+//    }.artifacts.artifactFiles
 //
-//  onlyBinaryIncompatibleModified = true
-//  failOnModification = true
-//  txtOutputFile = file("$buildDir/reports/japi.txt")
-//  ignoreMissingClasses = true
-//  includeSynthetic = true
+//    onlyBinaryIncompatibleModified = true
+//    failOnModification = true
+//    txtOutputFile = file("$buildDir/reports/japi.txt")
+//    ignoreMissingClasses = true
+//    includeSynthetic = true
 //
-//  dependsOn("$module:assembleRelease")
+//    dependsOn("$module:assembleRelease")
 //}
 //
 //def check = tasks.create('check')

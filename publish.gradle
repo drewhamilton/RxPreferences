@@ -2,24 +2,20 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 ext {
-  bintrayRepo = 'RxPreferences'
-  bintrayUser = project.hasProperty('personalBintrayUsername') ?
-      personalBintrayUsername :
-      System.getenv('personalBintrayUsername')
-  bintrayKey = project.hasProperty('personalBintrayApiKey') ?
-      personalBintrayApiKey :
-      System.getenv('personalBintrayApiKey')
+    bintrayRepo = 'RxPreferences'
+    bintrayUser = project.hasProperty('personalBintrayUsername') ? personalBintrayUsername : 'dummy'
+    bintrayKey = project.hasProperty('personalBintrayApiKey') ? personalBintrayApiKey : 'dummy'
 
-  publishedGroupId = 'drewhamilton.rxpreferences'
+    publishedGroupId = 'drewhamilton.rxpreferences'
 
-  siteUrl = 'https://github.com/drewhamilton/rxpreferences'
-  gitUrl = 'https://github.com/drewhamilton/rxpreferences'
+    siteUrl = 'https://github.com/drewhamilton/rxpreferences'
+    gitUrl = 'https://github.com/drewhamilton/rxpreferences'
 
-  developerId = 'drewhamilton'
-  developerName = 'Drew Hamilton'
-  developerEmail = 'drew.hamilton.0+android@gmail.com'
+    developerId = 'drewhamilton'
+    developerName = 'Drew Hamilton'
+    developerEmail = 'drew.hamilton.0+android@gmail.com'
 
-  licenseName = 'The Apache Software License, Version 2.0'
-  licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-  allLicenses = ["Apache-2.0"]
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
 }
