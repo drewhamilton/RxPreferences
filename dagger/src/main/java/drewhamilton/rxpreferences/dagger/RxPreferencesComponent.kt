@@ -32,6 +32,7 @@ interface RxPreferencesComponent {
     /**
      * @return a concrete [RxPreferencesComponent] instance
      */
-    fun create(sharedPreferences: SharedPreferences) = DaggerRxPreferencesComponent.factory().create(sharedPreferences)
+    @JvmStatic fun create(sharedPreferences: SharedPreferences): RxPreferencesComponent =
+        DaggerRxPreferencesComponent.factory().create(sharedPreferences)
   }
 }
