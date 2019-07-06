@@ -93,6 +93,7 @@
       <option name="KEEP_BLANK_LINES_BEFORE_RBRACE" value="1" />
       <option name="ALIGN_MULTILINE_PARAMETERS" value="false" />
       <option name="METHOD_ANNOTATION_WRAP" value="1" />
+      <option name="CLASS_ANNOTATION_WRAP" value="1" />
       <option name="FIELD_ANNOTATION_WRAP" value="1" />
     </codeStyleSettings>
   </code_scheme>
