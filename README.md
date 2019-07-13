@@ -18,43 +18,68 @@ implementation "drewhamilton.rxpreferences:rxpreferences-dagger:$version"
 ```
 
 ## Usage
+
+### RxPreferences
 Get the current value of any preference:
 ```java
-rxPreferences.getIntOnce("Number of examples", 0)
-        .subscribeOn(Schedulers.single())
-        .map(size -> newListOfExamples(size))
+rxPreferences.getIntOnce("Language count", 0)
+        .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(list -> display(list));
+        .subscribe(count -> displayCount(count));
 ```
 
 Observe the initial value plus any changes to a preference:
 ```java
-rxPreferences.getStringStream("Type of second example", "Float")
-        .subscribeOn(Schedulers.single())
-        .map(type -> toActualExample(type))
+rxPreferences.getStringStream("Favorite language", "None")
+        .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(example -> updateSecondExample(example));
+        .subscribe(name -> displayBestFriend(name));
 ```
 
 Edit preferences and monitor the completion of committing those changes:
 ```java
 rxPreferences.edit()
-        .putInt("Number of examples", 4)
-        .putString("Second example type", "String")
+        .putInt("Language count", 1)
+        .putString("Favorite language", "Java")
         .commit()
-        .subscribeOn(Schedulers.single())
+        .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(() -> updateAllExamples(), error -> displayError(error));
+        .subscribe(() -> showSavedIndicator(), error -> displayError(error));
 ```
 
+### Kotlin extensions
 With Kotlin extensions, use the `Editor` as a receiver:
 ```kotlin
 rxPreferences.edit {
-    putInt("Number of examples", 4)
-    putString("Second example type", "String")
-}.subscribeOn(Schedulers.single())
+    putInt("Language count", 2)
+    putString("Favorite language", "Kotlin")
+}.subscribeOn(Schedulers.io())
     .observeOn(AndroidSchedulers.mainThread())
-    .subscribe({ updateAllExamples() }, { displayError(it) })
+    .subscribe({ showSavedIndicator() }, { error -> displayError(error) })
+```
+
+### Dagger component
+Easily provide and access `RxPreferences` instances using `RxPreferencesComponent`:
+```kotlin
+@Module
+object PersistenceModule {
+
+    private const val sharedPreferencesName = "example.SharedPreferences"
+
+    private val ExampleApplication.sharedPreferences
+        get() = getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
+
+    @JvmStatic
+    @Provides
+    fun preferencesComponent(application: ExampleApplication) =
+        RxPreferencesComponent.create(application.sharedPreferences)
+
+    @JvmStatic
+    @Provides
+    @Reusable
+    fun preferences(preferencesComponent: RxPreferencesComponent) =
+        preferencesComponent.rxPreferences()
+}
 ```
 
 ## License
