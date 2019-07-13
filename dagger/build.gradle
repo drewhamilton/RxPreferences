@@ -2,6 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
+ext.artifact = 'rxpreferences-dagger'
+
 android {
     compileSdkVersion targetSdk
 
@@ -53,3 +55,48 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
+
+// TODO WORKAROUND: Get this to work in its own file
+//region Compatibility
+configurations {
+    baseline
+    latest
+}
+
+dependencies {
+    baseline("drewhamilton.rxpreferences:$artifact:$compatibleVersion") {
+        transitive false
+        force true
+        exclude module: 'rxpreferences'
+    }
+    latest(project(path: ":$project.name", configuration: 'releaseRuntimeElements')) {
+        exclude module: 'rxpreferences'
+    }
+}
+
+apply plugin: 'me.champeau.gradle.japicmp'
+//noinspection UnnecessaryQualifiedReference
+task japicmp(type: me.champeau.gradle.japicmp.JapicmpTask) {
+    oldClasspath = configurations.baseline.incoming.artifactView { config ->
+        config.attributes { container ->
+            container.attribute(Attribute.of("artifactType", String.class), "jar")
+        }
+    }.artifacts.artifactFiles
+
+    newClasspath = configurations.latest.incoming.artifactView { config ->
+        config.attributes { container ->
+            container.attribute(Attribute.of("artifactType", String.class), "jar")
+        }
+    }.artifacts.artifactFiles
+
+    onlyBinaryIncompatibleModified true
+    failOnModification failIfIncompatible
+    txtOutputFile = file("$buildDir/reports/japi.txt")
+
+    // TODO WORKAROUND: JApiCmp can't find dagger.internal.Factory for some reason
+    ignoreMissingClasses true
+}
+
+check.dependsOn(japicmp)
+build.dependsOn(check)
+//endregion

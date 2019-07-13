@@ -3,7 +3,6 @@ apply from: '../publish.gradle'
 ext {
     bintrayName = 'RxPreferences-Dagger'
     libraryName = 'RxPreferences-Dagger'
-    artifact = 'rxpreferences-dagger'
 
     libraryDescription = 'A Dagger component for RxPreferences.'
 }
