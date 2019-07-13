@@ -3,7 +3,6 @@ apply from: '../publish.gradle'
 ext {
     bintrayName = 'RxPreferences'
     libraryName = 'RxPreferences'
-    artifact = 'rxpreferences'
 
     libraryDescription = 'An RxJava wrapper for Android\'s SharedPreferences.'
 }

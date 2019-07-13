@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
 
+ext.artifact = 'rxpreferences'
+
 android {
     compileSdkVersion targetSdk
 
@@ -45,3 +47,45 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-inline:2.28.2'
 }
+
+// TODO WORKAROUND: Get this to work in its own file
+//region Compatibility
+configurations {
+    baseline
+    latest
+}
+
+dependencies {
+    baseline("drewhamilton.rxpreferences:$artifact:$compatibleVersion") {
+        transitive = false
+        force = true
+    }
+    latest project(path: ":$project.name", configuration: 'releaseRuntimeElements')
+}
+
+apply plugin: 'me.champeau.gradle.japicmp'
+//noinspection UnnecessaryQualifiedReference
+task japicmp(type: me.champeau.gradle.japicmp.JapicmpTask) {
+    oldClasspath = configurations.baseline.incoming.artifactView { config ->
+        config.attributes { container ->
+            container.attribute(Attribute.of("artifactType", String.class), "jar")
+        }
+    }.artifacts.artifactFiles
+
+    newClasspath = configurations.latest.incoming.artifactView { config ->
+        config.attributes { container ->
+            container.attribute(Attribute.of("artifactType", String.class), "jar")
+        }
+    }.artifacts.artifactFiles
+
+    onlyBinaryIncompatibleModified = true
+    failOnModification = true
+    txtOutputFile = file("$buildDir/reports/japi.txt")
+
+    // TODO WORKAROUND: JApiCmp can't find SharedPreferences$OnSharedPreferenceChangeListener for some reason
+    ignoreMissingClasses true
+}
+
+check.dependsOn(japicmp)
+build.dependsOn(check)
+//endregion

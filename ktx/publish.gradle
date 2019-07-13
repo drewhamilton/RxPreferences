@@ -3,7 +3,6 @@ apply from: '../publish.gradle'
 ext {
     bintrayName = 'RxPreferences-KTX'
     libraryName = 'RxPreferences-KTX'
-    artifact = 'rxpreferences-ktx'
 
     libraryDescription = 'Kotlin extensions for RxPreferences.'
 }
