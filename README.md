@@ -77,7 +77,8 @@ object PersistenceModule {
     @JvmStatic
     @Provides
     @Reusable
-    fun preferences(preferencesComponent: RxPreferencesComponent): RxPreferences = preferencesComponent.rxPreferences()
+    fun preferences(preferencesComponent: RxPreferencesComponent) =
+        preferencesComponent.rxPreferences()
 }
 ```
 

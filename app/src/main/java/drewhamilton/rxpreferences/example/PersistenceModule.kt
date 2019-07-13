@@ -4,7 +4,6 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
-import drewhamilton.rxpreferences.RxPreferences
 import drewhamilton.rxpreferences.dagger.RxPreferencesComponent
 
 @Module
@@ -23,5 +22,5 @@ object PersistenceModule {
     @JvmStatic
     @Provides
     @Reusable
-    fun preferences(preferencesComponent: RxPreferencesComponent): RxPreferences = preferencesComponent.rxPreferences()
+    fun preferences(preferencesComponent: RxPreferencesComponent) = preferencesComponent.rxPreferences()
 }
