@@ -57,8 +57,8 @@ configurations {
 
 dependencies {
     baseline("drewhamilton.rxpreferences:$artifact:$compatibleVersion") {
-        transitive = false
-        force = true
+        transitive false
+        force true
     }
     latest project(path: ":$project.name", configuration: 'releaseRuntimeElements')
 }
@@ -79,7 +79,7 @@ task japicmp(type: me.champeau.gradle.japicmp.JapicmpTask) {
     }.artifacts.artifactFiles
 
     onlyBinaryIncompatibleModified true
-    failOnModification false
+    failOnModification failIfIncompatible
     txtOutputFile = file("$buildDir/reports/japi.txt")
 
     // TODO WORKAROUND: JApiCmp can't find SharedPreferences$OnSharedPreferenceChangeListener for some reason

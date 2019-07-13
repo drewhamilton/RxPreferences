@@ -53,3 +53,48 @@ dependencies {
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0'
     testImplementation 'org.amshove.kluent:kluent:1.34'
 }
+
+// TODO WORKAROUND: Get this to work in its own file
+//region Compatibility
+configurations {
+    baseline
+    latest
+}
+
+dependencies {
+    baseline("drewhamilton.rxpreferences:$artifact:$compatibleVersion") {
+        transitive false
+        force true
+        exclude module: 'rxpreferences'
+    }
+    latest(project(path: ":$project.name", configuration: 'releaseRuntimeElements')) {
+        exclude module: 'rxpreferences'
+    }
+}
+
+apply plugin: 'me.champeau.gradle.japicmp'
+//noinspection UnnecessaryQualifiedReference
+task japicmp(type: me.champeau.gradle.japicmp.JapicmpTask) {
+    oldClasspath = configurations.baseline.incoming.artifactView { config ->
+        config.attributes { container ->
+            container.attribute(Attribute.of("artifactType", String.class), "jar")
+        }
+    }.artifacts.artifactFiles
+
+    newClasspath = configurations.latest.incoming.artifactView { config ->
+        config.attributes { container ->
+            container.attribute(Attribute.of("artifactType", String.class), "jar")
+        }
+    }.artifacts.artifactFiles
+
+    onlyBinaryIncompatibleModified true
+    failOnModification failIfIncompatible
+    txtOutputFile = file("$buildDir/reports/japi.txt")
+
+    // TODO WORKAROUND: JApiCmp can't find io.reactivex.functions.Function for some reason
+    ignoreMissingClasses true
+}
+
+check.dependsOn(japicmp)
+build.dependsOn(check)
+//endregion
