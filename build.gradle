@@ -31,7 +31,7 @@ allprojects { project ->
     project.plugins.withType(com.android.build.gradle.LibraryPlugin) {
         project.android.libraryVariants.all { variant ->
             // TODO replace with https://issuetracker.google.com/issues/72050365 once released.
-            variant.generateBuildConfig.enabled = false
+            variant.generateBuildConfigProvider.get().enabled = false
         }
     }
 }
