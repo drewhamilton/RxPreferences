@@ -78,8 +78,8 @@ task japicmp(type: me.champeau.gradle.japicmp.JapicmpTask) {
         }
     }.artifacts.artifactFiles
 
-    onlyBinaryIncompatibleModified = true
-    failOnModification = true
+    onlyBinaryIncompatibleModified true
+    failOnModification false
     txtOutputFile = file("$buildDir/reports/japi.txt")
 
     // TODO WORKAROUND: JApiCmp can't find SharedPreferences$OnSharedPreferenceChangeListener for some reason

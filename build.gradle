@@ -40,7 +40,7 @@ ext {
     libraryVersion = '1.0.0-beta3'
 
     // Version to compare compatibility with:
-    compatibleVersion = '1.0.0-beta1'
+    compatibleVersion = '1.0.0-beta2'
 
     targetSdk = 28
     minSdk = 14
