@@ -1,8 +1,8 @@
 buildscript {
-    ext.kotlin_version = '1.3.40'
+    ext.kotlin_version = '1.3.41'
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath 'com.android.tools.build:gradle:3.4.2'
 
         classpath 'me.champeau.gradle:japicmp-gradle-plugin:0.2.8'
 
@@ -20,11 +20,19 @@ buildscript {
     }
 }
 
-allprojects {
+allprojects { project ->
     repositories {
         google()
         gradlePluginPortal()
         jcenter()
+    }
+
+    //noinspection UnnecessaryQualifiedReference
+    project.plugins.withType(com.android.build.gradle.LibraryPlugin) {
+        project.android.libraryVariants.all { variant ->
+            // TODO replace with https://issuetracker.google.com/issues/72050365 once released.
+            variant.generateBuildConfig.enabled = false
+        }
     }
 }
 
