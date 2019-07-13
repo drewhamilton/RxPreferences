@@ -1,5 +1,5 @@
-include ':rxpreferences', ':rxpreferences:compatibility'
-include ':ktx', ':ktx:compatibility'
-include ':dagger', ':dagger:compatibility'
+include ':rxpreferences'
+include ':ktx'
+include ':dagger'
 include ':app'
 rootProject.name = 'RxPreferences'
