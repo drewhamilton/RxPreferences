@@ -2,7 +2,7 @@ buildscript {
     ext.kotlin_version = '1.3.41'
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath 'com.android.tools.build:gradle:3.4.2'
 
         classpath 'me.champeau.gradle:japicmp-gradle-plugin:0.2.8'
 
