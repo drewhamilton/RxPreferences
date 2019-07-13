@@ -1,7 +1,7 @@
 # RxPreferences
-An RxJava wrapper for Android's SharedPreferences.
+[ ![Build status](https://travis-ci.org/drewhamilton/RxPreferences.svg?branch=master) ](https://travis-ci.org/drewhamilton/RxPreferences)
 
-Written in Java, with Kotlin extensions added in the `ktx` module.
+An RxJava wrapper for Android's SharedPreferences.
 
 ## Download
 [ ![Download](https://api.bintray.com/packages/drewhamilton/RxPreferences/RxPreferences/images/download.svg) ](https://bintray.com/drewhamilton/RxPreferences)
