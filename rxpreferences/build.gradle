@@ -56,7 +56,7 @@ configurations {
 }
 
 dependencies {
-    baseline("drewhamilton.rxpreferences:$artifact:$compatibleVersion") {
+    baseline("$publishedGroupId:$artifact:$compatibleVersion") {
         transitive false
         force true
     }
