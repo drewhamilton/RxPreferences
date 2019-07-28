@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 
 ext.artifact = 'rxpreferences'
+apply from: 'publish.gradle'
 
 android {
     compileSdkVersion targetSdk
@@ -35,8 +36,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
-
-apply from: 'publish.gradle'
 
 dependencies {
     api "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
