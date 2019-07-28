@@ -37,16 +37,16 @@ allprojects { project ->
 }
 
 ext {
-    libraryVersion = '2.0.0'
+    libraryVersion = '3.0.0-alpha01'
 
     // Version to compare compatibility with. Must be different than libraryVersion:
-    compatibleVersion = '2.0.0-beta6'
+    compatibleVersion = '2.0.0'
     failIfIncompatible = true
 
     targetSdk = 28
     minSdk = 14
 
-    rxJavaVersion = '2.2.10'
+    rxJavaVersion = '3.0.0-RC1'
 
     keystore = project.hasProperty('personalKeystore') ? personalKeystore : 'dummy'
     keystorePassword = project.hasProperty('personalKeystorePassword') ? personalKeystorePassword : 'dummy'
