@@ -1,8 +1,8 @@
 apply from: '../publish.gradle'
 
 ext {
-    bintrayName = 'RxPreferences'
-    libraryName = 'RxPreferences'
+    bintrayName = 'RxPreferences3'
+    libraryName = 'RxPreferences3'
 
     libraryDescription = 'An RxJava wrapper for Android\'s SharedPreferences.'
 }

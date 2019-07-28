@@ -1,8 +1,8 @@
 apply from: '../publish.gradle'
 
 ext {
-    bintrayName = 'RxPreferences-KTX'
-    libraryName = 'RxPreferences-KTX'
+    bintrayName = 'RxPreferences3-KTX'
+    libraryName = 'RxPreferences3-KTX'
 
     libraryDescription = 'Kotlin extensions for RxPreferences.'
 }

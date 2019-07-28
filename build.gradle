@@ -37,7 +37,7 @@ allprojects { project ->
 }
 
 ext {
-    libraryVersion = '3.0.0-alpha01'
+    libraryVersion = '3.0.0-alphaX'
 
     // Version to compare compatibility with. Must be different than libraryVersion:
     compatibleVersion = '2.0.0'

@@ -1,8 +1,8 @@
 apply from: '../publish.gradle'
 
 ext {
-    bintrayName = 'RxPreferences-Dagger'
-    libraryName = 'RxPreferences-Dagger'
+    bintrayName = 'RxPreferences3-Dagger'
+    libraryName = 'RxPreferences3-Dagger'
 
     libraryDescription = 'A Dagger component for RxPreferences.'
 }

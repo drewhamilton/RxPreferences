@@ -1,20 +1,20 @@
 # RxPreferences
-[ ![Build status](https://travis-ci.org/drewhamilton/RxPreferences.svg?branch=master) ](https://travis-ci.org/drewhamilton/RxPreferences)
+[ ![Build status](https://travis-ci.org/drewhamilton/RxPreferences.svg?branch=3.x) ](https://travis-ci.org/drewhamilton/RxPreferences)
 
 An RxJava wrapper for Android's SharedPreferences.
 
 ## Download
-[ ![Download](https://api.bintray.com/packages/drewhamilton/RxPreferences/RxPreferences/images/download.svg) ](https://bintray.com/drewhamilton/RxPreferences)
+[ ![Download](https://api.bintray.com/packages/drewhamilton/RxPreferences/RxPreferences3/images/download.svg) ](https://bintray.com/drewhamilton/RxPreferences)
 
 RxPreferences is available in JCenter.
 
 ```groovy
 // RxPreferences:
-implementation "drewhamilton.rxpreferences:rxpreferences:$version"
+implementation "drewhamilton.rxpreferences3:rxpreferences:$version"
 // With Kotlin extensions:
-implementation "drewhamilton.rxpreferences:rxpreferences-ktx:$version"
+implementation "drewhamilton.rxpreferences3:rxpreferences-ktx:$version"
 // Dagger component:
-implementation "drewhamilton.rxpreferences:rxpreferences-dagger:$version"
+implementation "drewhamilton.rxpreferences3:rxpreferences-dagger:$version"
 ```
 
 ## Usage
