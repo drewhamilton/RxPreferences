@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 ext.artifact = 'rxpreferences-dagger'
+apply from: 'publish.gradle'
 
 android {
     compileSdkVersion targetSdk
@@ -38,8 +39,6 @@ android {
     }
     kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
 }
-
-apply from: 'publish.gradle'
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"

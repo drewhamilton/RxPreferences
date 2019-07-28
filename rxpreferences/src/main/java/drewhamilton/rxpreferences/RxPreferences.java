@@ -28,6 +28,8 @@ public final class RxPreferences {
         this.preferences = preferences;
     }
 
+    //region Single
+
     /**
      * Retrieve all values from the preferences.
      * <p>
@@ -40,6 +42,101 @@ public final class RxPreferences {
     public Single<Map<String, ?>> getAllOnce() {
         return Single.fromCallable(preferences::getAll);
     }
+
+    /**
+     * Retrieve a string value from the preferences.
+     *
+     * @param key The name of the preference to retrieve.
+     * @param defaultValue Value to return if this preference does not exist.
+     * @return the preference value if it exists, otherwise the given default value.
+     * @throws ClassCastException if there is a preference with this name that is not a String.
+     */
+    @NonNull
+    public Single<String> getStringOnce(@NonNull String key, @NonNull String defaultValue) {
+        return Single.fromCallable(() -> preferences.getString(key, defaultValue));
+    }
+
+    /**
+     * Retrieve a set of String values from the preferences.
+     * <p>
+     * Note that you must not modify the set instance returned by this call. The consistency of the stored data is not
+     * guaranteed if you do, nor is your ability to modify the instance at all.
+     *
+     * @param key The name of the preference to retrieve.
+     * @param defaultValues Values to return if this preference does not exist.
+     * @return the preference value if it exists, otherwise the given default value.
+     * @throws ClassCastException if there is a preference with this name that is not a {@link Set}.
+     */
+    @NonNull
+    public Single<Set<String>> getStringSetOnce(@NonNull String key, @NonNull Set<String> defaultValues) {
+        return Single.fromCallable(() -> preferences.getStringSet(key, defaultValues));
+    }
+
+    /**
+     * Retrieve an int value from the preferences.
+     *
+     * @param key The name of the preference to retrieve.
+     * @param defaultValue Value to return if this preference does not exist.
+     * @return the preference value if it exists, otherwise the given default value.
+     * @throws ClassCastException if there is a preference with this name that is not an int.
+     */
+    @NonNull
+    public Single<Integer> getIntOnce(@NonNull String key, int defaultValue) {
+        return Single.fromCallable(() -> preferences.getInt(key, defaultValue));
+    }
+
+    /**
+     * Retrieve a long value from the preferences.
+     *
+     * @param key The name of the preference to retrieve.
+     * @param defaultValue Value to return if this preference does not exist.
+     * @return the preference value if it exists, otherwise the given default value.
+     * @throws ClassCastException if there is a preference with this name that is not a long.
+     */
+    @NonNull
+    public Single<Long> getLongOnce(@NonNull String key, long defaultValue) {
+        return Single.fromCallable(() -> preferences.getLong(key, defaultValue));
+    }
+
+    /**
+     * Retrieve a float value from the preferences.
+     *
+     * @param key The name of the preference to retrieve.
+     * @param defaultValue Value to return if this preference does not exist.
+     * @return the preference value if it exists, otherwise the given default value.
+     * @throws ClassCastException if there is a preference with this name that is not a float.
+     */
+    @NonNull
+    public Single<Float> getFloatOnce(@NonNull String key, float defaultValue) {
+        return Single.fromCallable(() -> preferences.getFloat(key, defaultValue));
+    }
+
+    /**
+     * Retrieve a boolean value from the preferences.
+     *
+     * @param key The name of the preference to retrieve.
+     * @param defaultValue Value to return if this preference does not exist.
+     * @return the preference value if it exists, otherwise the given default value.
+     * @throws ClassCastException if there is a preference with this name that is not a boolean.
+     */
+    @NonNull
+    public Single<Boolean> getBooleanOnce(@NonNull String key, boolean defaultValue) {
+        return Single.fromCallable(() -> preferences.getBoolean(key, defaultValue));
+    }
+
+    /**
+     * Check whether the preferences contains a preference.
+     *
+     * @param key The name of the preference to check.
+     * @return true if the preference exists in the preferences, otherwise false.
+     */
+    @NonNull
+    public Single<Boolean> containsOnce(@NonNull String key) {
+        return Single.fromCallable(() -> preferences.contains(key));
+    }
+    //endregion
+
+    //region Observable
 
     /**
      * Observe all values from the preferences.
@@ -61,19 +158,6 @@ public final class RxPreferences {
     }
 
     /**
-     * Retrieve a string value from the preferences.
-     *
-     * @param key The name of the preference to retrieve.
-     * @param defaultValue Value to return if this preference does not exist.
-     * @return the preference value if it exists, otherwise the given default value.
-     * @throws ClassCastException if there is a preference with this name that is not a String.
-     */
-    @NonNull
-    public Single<String> getStringOnce(@NonNull String key, @NonNull String defaultValue) {
-        return Single.fromCallable(() -> preferences.getString(key, defaultValue));
-    }
-
-    /**
      * Observe a string value from the preferences.
      *
      * @param key The name of the preference to retrieve.
@@ -88,22 +172,6 @@ public final class RxPreferences {
         return getStringOnce(key, defaultValue)
                 .toObservable()
                 .mergeWith(createPreferenceObservable(key, defaultValue, SharedPreferences::getString));
-    }
-
-    /**
-     * Retrieve a set of String values from the preferences.
-     * <p>
-     * Note that you must not modify the set instance returned by this call. The consistency of the stored data is not
-     * guaranteed if you do, nor is your ability to modify the instance at all.
-     *
-     * @param key The name of the preference to retrieve.
-     * @param defaultValues Values to return if this preference does not exist.
-     * @return the preference value if it exists, otherwise the given default value.
-     * @throws ClassCastException if there is a preference with this name that is not a {@link Set}.
-     */
-    @NonNull
-    public Single<Set<String>> getStringSetOnce(@NonNull String key, @NonNull Set<String> defaultValues) {
-        return Single.fromCallable(() -> preferences.getStringSet(key, defaultValues));
     }
 
     /**
@@ -124,19 +192,6 @@ public final class RxPreferences {
     }
 
     /**
-     * Retrieve an int value from the preferences.
-     *
-     * @param key The name of the preference to retrieve.
-     * @param defaultValue Value to return if this preference does not exist.
-     * @return the preference value if it exists, otherwise the given default value.
-     * @throws ClassCastException if there is a preference with this name that is not an int.
-     */
-    @NonNull
-    public Single<Integer> getIntOnce(@NonNull String key, int defaultValue) {
-        return Single.fromCallable(() -> preferences.getInt(key, defaultValue));
-    }
-
-    /**
      * Observe an int value from the preferences.
      *
      * @param key The name of the preference to retrieve.
@@ -151,19 +206,6 @@ public final class RxPreferences {
         return getIntOnce(key, defaultValue)
                 .toObservable()
                 .mergeWith(createPreferenceObservable(key, defaultValue, SharedPreferences::getInt));
-    }
-
-    /**
-     * Retrieve a long value from the preferences.
-     *
-     * @param key The name of the preference to retrieve.
-     * @param defaultValue Value to return if this preference does not exist.
-     * @return the preference value if it exists, otherwise the given default value.
-     * @throws ClassCastException if there is a preference with this name that is not a long.
-     */
-    @NonNull
-    public Single<Long> getLongOnce(@NonNull String key, long defaultValue) {
-        return Single.fromCallable(() -> preferences.getLong(key, defaultValue));
     }
 
     /**
@@ -184,19 +226,6 @@ public final class RxPreferences {
     }
 
     /**
-     * Retrieve a float value from the preferences.
-     *
-     * @param key The name of the preference to retrieve.
-     * @param defaultValue Value to return if this preference does not exist.
-     * @return the preference value if it exists, otherwise the given default value.
-     * @throws ClassCastException if there is a preference with this name that is not a float.
-     */
-    @NonNull
-    public Single<Float> getFloatOnce(@NonNull String key, float defaultValue) {
-        return Single.fromCallable(() -> preferences.getFloat(key, defaultValue));
-    }
-
-    /**
      * Observe a float value from the preferences.
      *
      * @param key The name of the preference to retrieve.
@@ -211,19 +240,6 @@ public final class RxPreferences {
         return getFloatOnce(key, defaultValue)
                 .toObservable()
                 .mergeWith(createPreferenceObservable(key, defaultValue, SharedPreferences::getFloat));
-    }
-
-    /**
-     * Retrieve a boolean value from the preferences.
-     *
-     * @param key The name of the preference to retrieve.
-     * @param defaultValue Value to return if this preference does not exist.
-     * @return the preference value if it exists, otherwise the given default value.
-     * @throws ClassCastException if there is a preference with this name that is not a boolean.
-     */
-    @NonNull
-    public Single<Boolean> getBooleanOnce(@NonNull String key, boolean defaultValue) {
-        return Single.fromCallable(() -> preferences.getBoolean(key, defaultValue));
     }
 
     /**
@@ -244,17 +260,6 @@ public final class RxPreferences {
     }
 
     /**
-     * Check whether the preferences contains a preference.
-     *
-     * @param key The name of the preference to check.
-     * @return true if the preference exists in the preferences, otherwise false.
-     */
-    @NonNull
-    public Single<Boolean> containsOnce(@NonNull String key) {
-        return Single.fromCallable(() -> preferences.contains(key));
-    }
-
-    /**
      * Observe whether the preferences contains a preference.
      *
      * @param key The name of the preference to check.
@@ -272,6 +277,17 @@ public final class RxPreferences {
                 }));
     }
 
+    @NonNull
+    private <T> Observable<T> createPreferenceObservable(@NonNull String key, @NonNull T defaultValue,
+            @NonNull GetPreference<T> getPreference) {
+        return Observable.create(emitter -> {
+            final RxPreferenceChangeListener<T> listener =
+                    new RxPreferenceChangeListener<>(key, emitter, defaultValue, getPreference);
+            registerRxPreferenceListener(listener, emitter);
+        });
+    }
+    //endregion
+
     /**
      * Create a new Editor for these preferences, through which you can make modifications to the data in the
      * preferences and atomically commit those changes back to the SharedPreferences object.
@@ -284,16 +300,6 @@ public final class RxPreferences {
     @NonNull
     public Editor edit() {
         return new Editor(preferences.edit());
-    }
-
-    @NonNull
-    private <T> Observable<T> createPreferenceObservable(@NonNull String key, @NonNull T defaultValue,
-            @NonNull GetPreference<T> getPreference) {
-        return Observable.create(emitter -> {
-            final RxPreferenceChangeListener<T> listener =
-                    new RxPreferenceChangeListener<>(key, emitter, defaultValue, getPreference);
-            registerRxPreferenceListener(listener, emitter);
-        });
     }
 
     private <T> void registerRxPreferenceListener(@NonNull RxPreferenceListener<T> listener,
