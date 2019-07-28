@@ -1,7 +1,8 @@
 # Only build master branch (leave other branch builds up to PRs)
 branches:
   only:
-    - master
+    - 2.x
+    - 3.x
 
 language: android
 
