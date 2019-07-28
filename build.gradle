@@ -30,17 +30,17 @@ allprojects { project ->
     //noinspection UnnecessaryQualifiedReference
     project.plugins.withType(com.android.build.gradle.LibraryPlugin) {
         project.android.libraryVariants.all { variant ->
-            // TODO replace with https://issuetracker.google.com/issues/72050365 once released.
+            // TODO WORKAROUND: replace with https://issuetracker.google.com/issues/72050365 once released.
             variant.generateBuildConfigProvider.get().enabled = false
         }
     }
 }
 
 ext {
-    libraryVersion = '2.0.0-beta5'
+    libraryVersion = '2.0.0-beta6'
 
     // Version to compare compatibility with. Must be different than libraryVersion:
-    compatibleVersion = '1.0.0-beta4'
+    compatibleVersion = '2.0.0-beta5'
     failIfIncompatible = true
 
     targetSdk = 28
