@@ -1,4 +1,4 @@
-package drewhamilton.rxpreferences.example.edit
+package drewhamilton.rxpreferences3.example.edit
 
 import android.os.Bundle
 import android.text.Editable
@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.get
-import drewhamilton.rxpreferences.example.ExampleApplication
-import drewhamilton.rxpreferences.example.R
-import drewhamilton.rxpreferences.example.base.ui.GenericViewModelFactory
-import drewhamilton.rxpreferences.example.base.ui.RxFragment
+import drewhamilton.rxpreferences3.example.ExampleApplication
+import drewhamilton.rxpreferences3.example.R
+import drewhamilton.rxpreferences3.example.base.ui.GenericViewModelFactory
+import drewhamilton.rxpreferences3.example.base.ui.RxFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.edit.*
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package drewhamilton.rxpreferences.example.observe
+package drewhamilton.rxpreferences3.example.observe
 
 import androidx.lifecycle.ViewModel
 import javax.inject.Inject

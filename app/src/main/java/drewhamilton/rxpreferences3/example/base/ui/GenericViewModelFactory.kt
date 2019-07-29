@@ -1,4 +1,4 @@
-package drewhamilton.rxpreferences.example.base.ui
+package drewhamilton.rxpreferences3.example.base.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

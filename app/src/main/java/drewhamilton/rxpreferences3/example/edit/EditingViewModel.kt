@@ -1,4 +1,4 @@
-package drewhamilton.rxpreferences.example.edit
+package drewhamilton.rxpreferences3.example.edit
 
 import androidx.lifecycle.ViewModel
 import javax.inject.Inject

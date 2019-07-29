@@ -1,6 +1,6 @@
-package drewhamilton.rxpreferences.example.observe
+package drewhamilton.rxpreferences3.example.observe
 
-import drewhamilton.rxpreferences.RxPreferences
+import drewhamilton.rxpreferences3.RxPreferences
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 

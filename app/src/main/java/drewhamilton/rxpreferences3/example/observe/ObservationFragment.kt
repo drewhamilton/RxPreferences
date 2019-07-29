@@ -1,4 +1,4 @@
-package drewhamilton.rxpreferences.example.observe
+package drewhamilton.rxpreferences3.example.observe
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.get
-import drewhamilton.rxpreferences.example.ExampleApplication
-import drewhamilton.rxpreferences.example.R
-import drewhamilton.rxpreferences.example.base.ui.GenericViewModelFactory
-import drewhamilton.rxpreferences.example.base.ui.RxFragment
+import drewhamilton.rxpreferences3.example.ExampleApplication
+import drewhamilton.rxpreferences3.example.R
+import drewhamilton.rxpreferences3.example.base.ui.GenericViewModelFactory
+import drewhamilton.rxpreferences3.example.base.ui.RxFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.observe.*
 import javax.inject.Inject
