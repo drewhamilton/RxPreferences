@@ -37,11 +37,11 @@ allprojects { project ->
 }
 
 ext {
-    libraryVersion = '3.0.0-alphaX'
+    libraryVersion = '3.0.0-alpha01'
 
     // Version to compare compatibility with. Must be different than libraryVersion:
     compatibleVersion = '2.0.0'
-    failIfIncompatible = true
+    failIfIncompatible = false
 
     targetSdk = 28
     minSdk = 14

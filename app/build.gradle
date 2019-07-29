@@ -33,7 +33,7 @@ android {
 // TODO WORKAROUND: Remove this when RxAndroid 3 is released
 configurations.all {
     resolutionStrategy.dependencySubstitution {
-        substitute module('io.reactivex.rxjava2:rxjava') with module('io.reactivex.rxjava3:rxjava:3.0.0-RC1')
+        substitute module('io.reactivex.rxjava2:rxjava') with module("io.reactivex.rxjava3:rxjava:$rxJavaVersion")
     }
 }
 

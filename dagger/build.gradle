@@ -63,7 +63,7 @@ configurations {
 }
 
 dependencies {
-    baseline("$publishedGroupId:$artifact:$compatibleVersion") {
+    baseline("drewhamilton.rxpreferences:$artifact:$compatibleVersion") {
         transitive false
         force true
         exclude module: 'rxpreferences'
