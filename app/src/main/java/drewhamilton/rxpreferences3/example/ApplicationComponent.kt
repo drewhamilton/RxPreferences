@@ -1,9 +1,9 @@
-package drewhamilton.rxpreferences.example
+package drewhamilton.rxpreferences3.example
 
 import dagger.BindsInstance
 import dagger.Component
-import drewhamilton.rxpreferences.example.edit.EditingFragment
-import drewhamilton.rxpreferences.example.observe.ObservationFragment
+import drewhamilton.rxpreferences3.example.edit.EditingFragment
+import drewhamilton.rxpreferences3.example.observe.ObservationFragment
 
 @Component(modules = [
     ApplicationModule::class,

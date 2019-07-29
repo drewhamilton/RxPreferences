@@ -1,7 +1,7 @@
-package drewhamilton.rxpreferences.dagger;
+package drewhamilton.rxpreferences3.dagger;
 
 import android.content.SharedPreferences;
-import drewhamilton.rxpreferences.RxPreferences;
+import drewhamilton.rxpreferences3.RxPreferences;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;

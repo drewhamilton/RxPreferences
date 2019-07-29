@@ -1,9 +1,9 @@
-package drewhamilton.rxpreferences.dagger
+package drewhamilton.rxpreferences3.dagger
 
 import android.content.SharedPreferences
 import dagger.BindsInstance
 import dagger.Component
-import drewhamilton.rxpreferences.RxPreferences
+import drewhamilton.rxpreferences3.RxPreferences
 
 /**
  * A Dagger component that provides an [RxPreferences] instance for a given [SharedPreferences] instance.

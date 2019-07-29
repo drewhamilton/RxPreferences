@@ -1,4 +1,4 @@
-package drewhamilton.rxpreferences.example
+package drewhamilton.rxpreferences3.example
 
 import android.app.Application
 

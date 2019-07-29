@@ -1,4 +1,4 @@
-package drewhamilton.rxpreferences
+package drewhamilton.rxpreferences3
 
 enum class PreferenceType(val valueClass: Class<*>) {
     STRING(String::class.java),

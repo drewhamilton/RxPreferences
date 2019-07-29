@@ -1,10 +1,10 @@
-package drewhamilton.rxpreferences.example
+package drewhamilton.rxpreferences3.example
 
 import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
-import drewhamilton.rxpreferences.dagger.RxPreferencesComponent
+import drewhamilton.rxpreferences3.dagger.RxPreferencesComponent
 
 @Module
 object PersistenceModule {

@@ -1,9 +1,9 @@
-package drewhamilton.rxpreferences.dagger
+package drewhamilton.rxpreferences3.dagger
 
 import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
-import drewhamilton.rxpreferences.RxPreferences
+import drewhamilton.rxpreferences3.RxPreferences
 
 @Module
 internal object RxPreferencesModule {

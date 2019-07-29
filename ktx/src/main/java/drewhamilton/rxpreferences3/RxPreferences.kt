@@ -1,4 +1,4 @@
-package drewhamilton.rxpreferences
+package drewhamilton.rxpreferences3
 
 import io.reactivex.Observable
 import io.reactivex.Single

@@ -1,4 +1,4 @@
-package drewhamilton.rxpreferences.example
+package drewhamilton.rxpreferences3.example
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

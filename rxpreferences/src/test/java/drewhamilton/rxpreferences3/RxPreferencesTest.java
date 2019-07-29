@@ -1,4 +1,4 @@
-package drewhamilton.rxpreferences;
+package drewhamilton.rxpreferences3;
 
 import android.content.SharedPreferences;
 import io.reactivex.Observable;

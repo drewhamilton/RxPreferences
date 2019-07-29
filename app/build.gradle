@@ -7,7 +7,7 @@ android {
     compileSdkVersion targetSdk
 
     defaultConfig {
-        applicationId "drewhamilton.rxpreferences.example"
+        applicationId "drewhamilton.rxpreferences3.example"
         minSdkVersion minSdk
         targetSdkVersion targetSdk
         versionCode 13
