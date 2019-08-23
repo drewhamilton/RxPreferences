@@ -6,6 +6,6 @@
       android:color="@color/white_30_percent" />
 
   <item
-      android:color="@color/black_87_percent" />
+      android:color="@color/white" />
 
 </selector>

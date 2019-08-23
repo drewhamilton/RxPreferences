@@ -7,7 +7,7 @@ android {
     compileSdkVersion targetSdk
 
     defaultConfig {
-        applicationId "drewhamilton.rxpreferences.example"
+        applicationId "drewhamilton.rxpreferences3.example"
         minSdkVersion minSdk
         targetSdkVersion targetSdk
         versionCode 13
@@ -30,6 +30,13 @@ android {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
 }
 
+// TODO WORKAROUND: Remove this when RxAndroid 3 is released
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute module('io.reactivex.rxjava2:rxjava') with module("io.reactivex.rxjava3:rxjava:$rxJavaVersion")
+    }
+}
+
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
@@ -43,10 +50,11 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.google.android.material:material:1.0.0'
 
+    // TODO: Update to RxAndroid 3 when released
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
-    implementation 'com.google.dagger:dagger:2.22.1'
-    kapt 'com.google.dagger:dagger-compiler:2.22.1'
+    implementation 'com.google.dagger:dagger:2.24'
+    kapt 'com.google.dagger:dagger-compiler:2.24'
     implementation project(':dagger')
 
     testImplementation 'junit:junit:4.12'

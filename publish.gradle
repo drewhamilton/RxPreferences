@@ -3,7 +3,7 @@ ext {
     bintrayUser = project.hasProperty('personalBintrayUsername') ? personalBintrayUsername : 'x'
     bintrayKey = project.hasProperty('personalBintrayApiKey') ? personalBintrayApiKey : 'x'
 
-    publishedGroupId = 'drewhamilton.rxpreferences'
+    publishedGroupId = 'drewhamilton.rxpreferences3'
 
     siteUrl = 'https://github.com/drewhamilton/rxpreferences'
     gitUrl = 'https://github.com/drewhamilton/rxpreferences'

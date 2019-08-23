@@ -20,7 +20,7 @@
 
   <fragment
       android:id="@+id/observation"
-      android:name="drewhamilton.rxpreferences.example.observe.ObservationFragment"
+      android:name="drewhamilton.rxpreferences3.example.observe.ObservationFragment"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
 
@@ -33,7 +33,7 @@
 
   <fragment
       android:id="@+id/editing"
-      android:name="drewhamilton.rxpreferences.example.edit.EditingFragment"
+      android:name="drewhamilton.rxpreferences3.example.edit.EditingFragment"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
 
