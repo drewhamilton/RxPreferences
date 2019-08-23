@@ -2,8 +2,13 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
-ext.artifact = 'rxpreferences-dagger'
-apply from: 'publish.gradle'
+ext {
+    artifact = 'rxpreferences-dagger'
+    bintrayName = 'RxPreferences-Dagger'
+    libraryName = 'RxPreferences-Dagger'
+
+    libraryDescription = 'A Dagger component for RxPreferences.'
+}
 
 android {
     compileSdkVersion targetSdk

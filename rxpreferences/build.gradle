@@ -1,7 +1,12 @@
 apply plugin: 'com.android.library'
 
-ext.artifact = 'rxpreferences'
-apply from: 'publish.gradle'
+ext {
+    artifact = 'rxpreferences'
+    bintrayName = 'RxPreferences'
+    libraryName = 'RxPreferences'
+
+    libraryDescription = 'An RxJava wrapper for Android\'s SharedPreferences.'
+}
 
 android {
     compileSdkVersion targetSdk

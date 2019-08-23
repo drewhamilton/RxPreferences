@@ -2,8 +2,13 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
-ext.artifact = 'rxpreferences-ktx'
-apply from: 'publish.gradle'
+ext {
+    artifact = 'rxpreferences-ktx'
+    bintrayName = 'RxPreferences-KTX'
+    libraryName = 'RxPreferences-KTX'
+
+    libraryDescription = 'Kotlin extensions for RxPreferences.'
+}
 
 android {
     compileSdkVersion targetSdk
