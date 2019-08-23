@@ -1,10 +1,7 @@
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
-
 ext {
     bintrayRepo = 'RxPreferences'
-    bintrayUser = project.hasProperty('personalBintrayUsername') ? personalBintrayUsername : 'dummy'
-    bintrayKey = project.hasProperty('personalBintrayApiKey') ? personalBintrayApiKey : 'dummy'
+    bintrayUser = project.hasProperty('personalBintrayUsername') ? personalBintrayUsername : 'x'
+    bintrayKey = project.hasProperty('personalBintrayApiKey') ? personalBintrayApiKey : 'x'
 
     publishedGroupId = 'drewhamilton.rxpreferences3'
 
@@ -18,4 +15,95 @@ ext {
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
     allLicenses = ["Apache-2.0"]
+}
+
+subprojects { subproject ->
+    afterEvaluate {
+        if (!subproject.hasProperty('artifact'))
+            return
+
+        subproject.group = publishedGroupId
+        subproject.version = libraryVersion
+        def javadocDestinationDir = "$subproject.buildDir/docs/javadoc"
+
+        subproject.apply plugin: 'com.github.dcendents.android-maven'
+        install {
+            repositories.mavenInstaller {
+                pom.project {
+                    packaging 'aar'
+                    groupId publishedGroupId
+                    artifactId artifact
+
+                    name libraryName
+                    description libraryDescription
+                    url siteUrl
+
+                    licenses {
+                        license {
+                            name licenseName
+                            url licenseUrl
+                        }
+                    }
+                    developers {
+                        developer {
+                            id developerId
+                            name developerName
+                            email developerEmail
+                        }
+                    }
+                    scm {
+                        connection gitUrl
+                        developerConnection gitUrl
+                        url siteUrl
+                    }
+                }
+            }
+        }
+
+        task sourcesJar(type: Jar) {
+            archiveClassifier = 'sources'
+            from android.sourceSets.main.java.srcDirs
+        }
+
+        subproject.apply plugin: 'org.jetbrains.dokka-android'
+        task dokkaJavadoc(type: dokka.class) {
+            outputFormat = 'javadoc'
+            outputDirectory = javadocDestinationDir
+            inputs.dir android.sourceSets.main.java.srcDirs[0]
+        }
+
+        task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
+            archiveClassifier = 'javadoc'
+            from javadocDestinationDir
+        }
+
+        subproject.apply plugin: 'com.jfrog.bintray'
+        artifacts {
+            archives javadocJar
+            archives sourcesJar
+        }
+
+        bintray {
+            user = bintrayUser
+            key = bintrayKey
+
+            configurations = ['archives']
+            pkg {
+                repo = bintrayRepo
+                name = bintrayName
+                desc = libraryDescription
+                websiteUrl = siteUrl
+                vcsUrl = gitUrl
+                licenses = allLicenses
+                dryRun = false
+                publish = true
+                override = false
+                publicDownloadNumbers = true
+                version {
+                    desc = libraryDescription
+                }
+            }
+        }
+        return
+    }
 }

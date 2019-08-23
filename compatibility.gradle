@@ -1,0 +1,62 @@
+import me.champeau.gradle.japicmp.JapicmpTask
+
+buildscript {
+    dependencies {
+        classpath "me.champeau.gradle:japicmp-gradle-plugin:$japicmp_version"
+    }
+    repositories {
+        gradlePluginPortal()
+    }
+}
+
+def compatibleVersion = '2.0.0'
+def failIfIncompatible = false
+subprojects { subproject ->
+    afterEvaluate {
+        if (!subproject.hasProperty('artifact'))
+            return
+
+        configurations {
+            baseline
+            latest
+        }
+
+        dependencies {
+            // TODO: Replace with $publishedGroupId when baseline is bumped up to 3.0.0-+
+            baseline("drewhamilton.rxpreferences:$artifact:$compatibleVersion") {
+                transitive false
+                force true
+                for (module in subproject.ext.compatibility.excludedModules)
+                    exclude module: module
+            }
+            latest(project(path: ":$project.name", configuration: 'releaseRuntimeElements')) {
+                for (module in subproject.ext.compatibility.excludedModules)
+                    exclude module: module
+            }
+        }
+
+        subproject.apply plugin: 'me.champeau.gradle.japicmp'
+        task japicmp(type: JapicmpTask) {
+            oldClasspath = configurations.baseline.incoming.artifactView { config ->
+                config.attributes { container ->
+                    container.attribute(Attribute.of("artifactType", String.class), "jar")
+                }
+            }.artifacts.artifactFiles
+
+            newClasspath = configurations.latest.incoming.artifactView { config ->
+                config.attributes { container ->
+                    container.attribute(Attribute.of("artifactType", String.class), "jar")
+                }
+            }.artifacts.artifactFiles
+
+            onlyBinaryIncompatibleModified true
+            failOnModification failIfIncompatible
+            txtOutputFile = file("$buildDir/reports/japi.txt")
+
+            ignoreMissingClasses subproject.ext.compatibility.ignoreMissingClasses
+        }
+
+        check.dependsOn(japicmp)
+        build.dependsOn(check)
+    }
+}
