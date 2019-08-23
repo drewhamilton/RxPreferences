@@ -10,7 +10,7 @@ buildscript {
 }
 
 def compatibleVersion = '2.0.0'
-def failIfIncompatible = true
+def failIfIncompatible = false
 subprojects { subproject ->
     afterEvaluate {
         if (!subproject.hasProperty('artifact'))
