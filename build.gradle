@@ -48,10 +48,10 @@ ext {
 
     rxJavaVersion = '2.2.10'
 
-    keystore = project.hasProperty('personalKeystore') ? personalKeystore : 'dummy'
-    keystorePassword = project.hasProperty('personalKeystorePassword') ? personalKeystorePassword : 'dummy'
-    keyAlias = project.hasProperty('personalKeyAlias') ? personalKeyAlias : 'dummy'
-    keyPassword = project.hasProperty('personalKeyPassword') ? personalKeyPassword : 'dummy'
+    keystore = project.hasProperty('personalKeystore') ? personalKeystore : 'x'
+    keystorePassword = project.hasProperty('personalKeystorePassword') ? personalKeystorePassword : 'x'
+    keyAlias = project.hasProperty('personalKeyAlias') ? personalKeyAlias : 'x'
+    keyPassword = project.hasProperty('personalKeyPassword') ? personalKeyPassword : 'x'
 }
 
 task clean(type: Delete) {
