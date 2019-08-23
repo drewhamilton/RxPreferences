@@ -4,8 +4,8 @@ apply plugin: 'kotlin-kapt'
 
 ext {
     artifact = 'rxpreferences-dagger'
-    bintrayName = 'RxPreferences-Dagger'
-    libraryName = 'RxPreferences-Dagger'
+    bintrayName = 'RxPreferences3-Dagger'
+    libraryName = 'RxPreferences3-Dagger'
 
     libraryDescription = 'A Dagger component for RxPreferences.'
 
