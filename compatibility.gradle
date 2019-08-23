@@ -22,7 +22,8 @@ subprojects { subproject ->
         }
 
         dependencies {
-            baseline("$publishedGroupId:$artifact:$compatibleVersion") {
+            // TODO: Replace with $publishedGroupId when baseline is bumped up to 3.0.0-+
+            baseline("drewhamilton.rxpreferences:$artifact:$compatibleVersion") {
                 transitive false
                 force true
                 for (module in subproject.ext.compatibility.excludedModules)
