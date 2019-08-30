@@ -30,13 +30,6 @@ android {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
 }
 
-// TODO WORKAROUND: Remove this when RxAndroid 3 is released
-configurations.all {
-    resolutionStrategy.dependencySubstitution {
-        substitute module('io.reactivex.rxjava2:rxjava') with module("io.reactivex.rxjava3:rxjava:$rxJavaVersion")
-    }
-}
-
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
@@ -52,6 +45,7 @@ dependencies {
 
     // TODO: Update to RxAndroid 3 when released
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation "com.github.akarnokd:rxjava3-bridge:$rxJavaVersion"
 
     implementation 'com.google.dagger:dagger:2.24'
     kapt 'com.google.dagger:dagger-compiler:2.24'

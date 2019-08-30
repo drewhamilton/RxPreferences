@@ -1,6 +1,7 @@
 package drewhamilton.rxpreferences3.example.observe
 
 import drewhamilton.rxpreferences3.RxPreferences
+import drewhamilton.rxpreferences3.example.subscribeOn
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -13,13 +14,13 @@ open class ExampleRepository @Inject constructor(protected val preferences: RxPr
         .subscribeOn(scheduler)
 
     fun getExampleStringStream() = preferences.getStringStream(Keys.EXAMPLE_STRING, Defaults.STRING)
-        .subscribeOn(scheduler)!!
+        .subscribeOn(scheduler)
 
     fun getExampleIntOnce() = preferences.getIntOnce(Keys.EXAMPLE_INT, Defaults.INT)
         .subscribeOn(scheduler)
 
     fun getExampleIntStream() = preferences.getIntStream(Keys.EXAMPLE_INT, Defaults.INT)
-        .subscribeOn(scheduler)!!
+        .subscribeOn(scheduler)
 
     protected object Keys {
         const val EXAMPLE_STRING = "Example string"

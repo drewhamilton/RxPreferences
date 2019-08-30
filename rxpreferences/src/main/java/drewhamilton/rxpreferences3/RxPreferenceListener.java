@@ -1,8 +1,8 @@
 package drewhamilton.rxpreferences3;
 
 import android.content.SharedPreferences;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.annotations.NonNull;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.ObservableEmitter;
 
 abstract class RxPreferenceListener<T> implements SharedPreferences.OnSharedPreferenceChangeListener {
 
