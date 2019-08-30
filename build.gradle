@@ -43,12 +43,12 @@ allprojects { project ->
 }
 
 ext {
-    libraryVersion = '3.0.0-alpha01'
+    libraryVersion = '3.0.0-alpha02'
 
     targetSdk = 28
     minSdk = 14
 
-    rxJavaVersion = '3.0.0-RC1'
+    rxJavaVersion = '3.0.0-RC2'
 
     keystore = project.hasProperty('personalKeystore') ? personalKeystore : 'x'
     keystorePassword = project.hasProperty('personalKeystorePassword') ? personalKeystorePassword : 'x'

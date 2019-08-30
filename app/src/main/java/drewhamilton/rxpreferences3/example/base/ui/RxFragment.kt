@@ -1,8 +1,8 @@
 package drewhamilton.rxpreferences3.example.base.ui
 
 import androidx.fragment.app.Fragment
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 
 abstract class RxFragment : Fragment() {
 

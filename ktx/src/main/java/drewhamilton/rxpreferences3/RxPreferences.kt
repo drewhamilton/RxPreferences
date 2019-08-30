@@ -1,7 +1,8 @@
 package drewhamilton.rxpreferences3
 
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
 /**
  * Get a [Single] that will emit the enum value associated with [key] once. If there is no value associated with [key],
@@ -11,7 +12,7 @@ import io.reactivex.Single
  * was used to save the enum. Throws [IllegalArgumentException] if the stored string does not resolve to a valid name
  * for a value of type [E].
  */
-inline fun <reified E : Enum<E>> RxPreferences.getEnumOnce(key: String, defaultValue: E) =
+inline fun <reified E : Enum<E>> RxPreferences.getEnumOnce(key: String, defaultValue: E): Single<E> =
     getStringOnce(key, defaultValue.name)
         .map { name -> enumValueOf<E>(name) }
 
@@ -23,7 +24,7 @@ inline fun <reified E : Enum<E>> RxPreferences.getEnumOnce(key: String, defaultV
  * was used to save the enum. Throws [IllegalArgumentException] if the stored string does not resolve to a valid
  * name for a value of type [E].
  */
-inline fun <reified E : Enum<E>> RxPreferences.getEnumStream(key: String, defaultValue: E) =
+inline fun <reified E : Enum<E>> RxPreferences.getEnumStream(key: String, defaultValue: E): Observable<E> =
     getStringStream(key, defaultValue.name)
         .map { name -> enumValueOf<E>(name) }!!
 
@@ -35,7 +36,7 @@ inline fun <reified E : Enum<E>> RxPreferences.getEnumStream(key: String, defaul
  * save the enum instead of [putEnumByOrdinal]. Throws [IndexOutOfBoundsException] if the stored int does not resolve to
  * a valid ordinal for a value of type [E].
  */
-inline fun <reified E : Enum<E>> RxPreferences.getEnumByOrdinalOnce(key: String, defaultValue: E) =
+inline fun <reified E : Enum<E>> RxPreferences.getEnumByOrdinalOnce(key: String, defaultValue: E): Single<E> =
     getIntOnce(key, defaultValue.ordinal)
         .map { ordinal -> enumValues<E>()[ordinal] }
 
@@ -47,7 +48,7 @@ inline fun <reified E : Enum<E>> RxPreferences.getEnumByOrdinalOnce(key: String,
  * save the enum instead of [putEnumByOrdinal]. Throws [IndexOutOfBoundsException] if the stored int does not resolve to
  * a valid ordinal for a value of type [E].
  */
-inline fun <reified E : Enum<E>> RxPreferences.getEnumByOrdinalStream(key: String, defaultValue: E) =
+inline fun <reified E : Enum<E>> RxPreferences.getEnumByOrdinalStream(key: String, defaultValue: E): Observable<E> =
     getIntStream(key, defaultValue.ordinal)
         .map { ordinal -> enumValues<E>()[ordinal] }!!
 
@@ -57,7 +58,7 @@ inline fun <reified E : Enum<E>> RxPreferences.getEnumByOrdinalStream(key: Strin
  * Note that calls to [RxPreferences.Editor.remove] and [RxPreferences.Editor.clear] are executed first, regardless of
  * what order they appear in the series of edits.
  */
-inline fun RxPreferences.edit(edits: RxPreferences.Editor.() -> RxPreferences.Editor) =
+inline fun RxPreferences.edit(edits: RxPreferences.Editor.() -> RxPreferences.Editor): Completable =
     edits.invoke(this.edit()).commit()
 
 /**
@@ -66,7 +67,8 @@ inline fun RxPreferences.edit(edits: RxPreferences.Editor.() -> RxPreferences.Ed
  *
  * Returns a reference to the same [RxPreferences.Editor] object, so you can chain calls together.
  */
-inline fun <reified E : Enum<E>> RxPreferences.Editor.putEnum(key: String, value: E) = putString(key, value.name)
+inline fun <reified E : Enum<E>> RxPreferences.Editor.putEnum(key: String, value: E): RxPreferences.Editor =
+    putString(key, value.name)
 
 /**
  * Set an enum [value] in the preferences editor, to be written as an ordinal int and associated with [key] once
@@ -74,5 +76,5 @@ inline fun <reified E : Enum<E>> RxPreferences.Editor.putEnum(key: String, value
  *
  * Returns a reference to the same [RxPreferences.Editor] object, so you can chain calls together.
  */
-inline fun <reified E : Enum<E>> RxPreferences.Editor.putEnumByOrdinal(key: String, value: E) =
+inline fun <reified E : Enum<E>> RxPreferences.Editor.putEnumByOrdinal(key: String, value: E): RxPreferences.Editor =
     putInt(key, value.ordinal)

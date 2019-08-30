@@ -1,7 +1,7 @@
 package drewhamilton.rxpreferences3;
 
 import android.content.SharedPreferences;
-import io.reactivex.annotations.NonNull;
+import io.reactivex.rxjava3.annotations.NonNull;
 
 interface GetPreference<T> {
 
