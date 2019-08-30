@@ -9,7 +9,7 @@ buildscript {
     }
 }
 
-def compatibleVersion = '2.0.0'
+def compatibleVersion = '3.0.0-alpha01'
 def failIfIncompatible = false
 subprojects { subproject ->
     afterEvaluate {
@@ -22,8 +22,7 @@ subprojects { subproject ->
         }
 
         dependencies {
-            // TODO: Replace with $publishedGroupId when baseline is bumped up to 3.0.0-+
-            baseline("drewhamilton.rxpreferences:$artifact:$compatibleVersion") {
+            baseline("$publishedGroupId:$artifact:$compatibleVersion") {
                 transitive false
                 force true
                 for (module in subproject.ext.compatibility.excludedModules)
