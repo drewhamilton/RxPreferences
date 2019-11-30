@@ -2,7 +2,7 @@ import me.champeau.gradle.japicmp.JapicmpTask
 
 buildscript {
     dependencies {
-        classpath "me.champeau.gradle:japicmp-gradle-plugin:$japicmp_version"
+        classpath "me.champeau.gradle:japicmp-gradle-plugin:$versions.jApiCmp"
     }
     repositories {
         gradlePluginPortal()

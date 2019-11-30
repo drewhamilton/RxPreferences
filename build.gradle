@@ -1,15 +1,18 @@
 buildscript {
     ext {
-        kotlin_version = '1.3.61'
-        japicmp_version = '0.2.8'
+        versions = [
+                jApiCmp: '0.2.8',
+                kotlin: '1.3.60',
+                rxJava: '3.0.0-RC5'
+        ]
     }
 
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.2'
 
-        classpath "me.champeau.gradle:japicmp-gradle-plugin:$japicmp_version"
+        classpath "me.champeau.gradle:japicmp-gradle-plugin:$versions.jApiCmp"
 
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
         classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:0.9.18"
 
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
@@ -46,8 +49,6 @@ ext {
 
     targetSdk = 28
     minSdk = 14
-
-    rxJavaVersion = '3.0.0-RC2'
 
     keystore = project.hasProperty('personalKeystore') ? personalKeystore : 'x'
     keystorePassword = project.hasProperty('personalKeystorePassword') ? personalKeystorePassword : 'x'
