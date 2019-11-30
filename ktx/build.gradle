@@ -16,6 +16,7 @@ ext {
             ]
     ]
 }
+apply from: '../publish.gradle'
 
 android {
     compileSdkVersion targetSdk

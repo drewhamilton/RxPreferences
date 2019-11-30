@@ -23,7 +23,6 @@ buildscript {
     }
 }
 
-apply from: 'publish.gradle'
 apply from: 'compatibility.gradle'
 
 allprojects { project ->
