@@ -33,6 +33,7 @@ allprojects { project ->
         google()
         gradlePluginPortal()
         jcenter()
+        maven { url 'https://oss.jfrog.org/libs-snapshot' }
     }
 
     //noinspection UnnecessaryQualifiedReference

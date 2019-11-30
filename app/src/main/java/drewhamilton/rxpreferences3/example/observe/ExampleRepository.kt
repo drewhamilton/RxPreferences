@@ -1,8 +1,8 @@
 package drewhamilton.rxpreferences3.example.observe
 
 import drewhamilton.rxpreferences3.RxPreferences
-import drewhamilton.rxpreferences3.example.subscribeOn
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
+
 import javax.inject.Inject
 
 open class ExampleRepository @Inject constructor(protected val preferences: RxPreferences) {
