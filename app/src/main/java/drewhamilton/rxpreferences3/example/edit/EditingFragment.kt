@@ -12,9 +12,11 @@ import drewhamilton.rxpreferences3.example.ExampleApplication
 import drewhamilton.rxpreferences3.example.R
 import drewhamilton.rxpreferences3.example.base.ui.GenericViewModelFactory
 import drewhamilton.rxpreferences3.example.base.ui.RxFragment
-import drewhamilton.rxpreferences3.example.observeOn
-import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.android.synthetic.main.edit.*
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import kotlinx.android.synthetic.main.edit.integerValue
+import kotlinx.android.synthetic.main.edit.putButton
+import kotlinx.android.synthetic.main.edit.removeButton
+import kotlinx.android.synthetic.main.edit.stringValue
 import javax.inject.Inject
 
 class EditingFragment : RxFragment() {

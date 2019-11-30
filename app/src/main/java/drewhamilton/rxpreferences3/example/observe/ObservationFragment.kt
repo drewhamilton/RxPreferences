@@ -10,8 +10,7 @@ import drewhamilton.rxpreferences3.example.ExampleApplication
 import drewhamilton.rxpreferences3.example.R
 import drewhamilton.rxpreferences3.example.base.ui.GenericViewModelFactory
 import drewhamilton.rxpreferences3.example.base.ui.RxFragment
-import drewhamilton.rxpreferences3.example.observeOn
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.observe.integerValue
 import kotlinx.android.synthetic.main.observe.stringValue
 import javax.inject.Inject

@@ -49,7 +49,7 @@ android {
 }
 
 dependencies {
-    api "io.reactivex.rxjava3:rxjava:$rxJavaVersion"
+    api "io.reactivex.rxjava3:rxjava:$versions.rxJava"
 
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
