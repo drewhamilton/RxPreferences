@@ -9,7 +9,7 @@ buildscript {
     }
 }
 
-def compatibleVersion = '3.0.0-alpha02'
+def compatibleVersion = '3.0.0-alpha03'
 def failIfIncompatible = true
 subprojects { subproject ->
     afterEvaluate {
