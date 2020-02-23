@@ -3,11 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 ext {
-    artifact = 'rxpreferences-ktx'
-    bintrayName = 'RxPreferences3-KTX'
-    libraryName = 'RxPreferences3-KTX'
-
-    libraryDescription = 'Kotlin extensions for RxPreferences.'
+    artifactName = 'rxpreferences-ktx'
+    publishedDescription = 'Kotlin extensions for RxPreferences.'
 
     compatibility = [
             ignoreMissingClasses: true,
@@ -16,6 +13,7 @@ ext {
             ]
     ]
 }
+version = libraryVersion
 apply from: '../publish.gradle'
 
 android {
@@ -24,7 +22,7 @@ android {
     defaultConfig {
         minSdkVersion minSdk
         targetSdkVersion targetSdk
-        versionName libraryVersion
+        versionName version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

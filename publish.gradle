@@ -1,72 +1,20 @@
-// Applied *per published project* (rather than at the root project level)
+// Applied per published module
+//  The module must define ext.artifactName, version, and ext.publishedDescription
 
-ext {
-    bintrayRepo = 'RxPreferences'
-    bintrayUser = project.hasProperty('personalBintrayUsername') ? personalBintrayUsername : 'x'
-    bintrayKey = project.hasProperty('personalBintrayApiKey') ? personalBintrayApiKey : 'x'
-
-    publishedGroupId = 'drewhamilton.rxpreferences3'
-
-    siteUrl = 'https://github.com/drewhamilton/rxpreferences'
-    gitUrl = 'https://github.com/drewhamilton/rxpreferences'
-
-    developerId = 'drewhamilton'
-    developerName = 'Drew Hamilton'
-    developerEmail = 'drew.hamilton.0+android@gmail.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
-
-group = publishedGroupId
-version = libraryVersion
-def javadocDestinationDir = "$buildDir/docs/javadoc"
-
-apply plugin: 'com.github.dcendents.android-maven'
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            packaging 'aar'
-            groupId publishedGroupId
-            artifactId artifact
-
-            name libraryName
-            description libraryDescription
-            url siteUrl
-
-            licenses {
-                license {
-                    name licenseName
-                    url licenseUrl
-                }
-            }
-            developers {
-                developer {
-                    id developerId
-                    name developerName
-                    email developerEmail
-                }
-            }
-            scm {
-                connection gitUrl
-                developerConnection gitUrl
-                url siteUrl
-            }
-        }
-    }
-}
+group = 'dev.drewhamilton.rxpreferences'
+def projectName = name
 
 task sourcesJar(type: Jar) {
     archiveClassifier.set 'sources'
     from android.sourceSets.main.java.srcDirs
 }
 
+def javadocDestinationDir = "$buildDir/docs/javadoc"
 apply plugin: 'org.jetbrains.dokka-android'
 task dokkaJavadoc(type: dokka.class) {
     outputFormat = 'javadoc'
     outputDirectory = javadocDestinationDir
-    inputs.dir android.sourceSets.main.java.srcDirs[0]
+    inputs.dir 'src/main/java'
 }
 
 task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
@@ -74,32 +22,126 @@ task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
     from javadocDestinationDir
 }
 
-apply plugin: 'com.jfrog.bintray'
 artifacts {
     archives javadocJar
     archives sourcesJar
 }
 
-bintray {
-    user = bintrayUser
-    key = bintrayKey
+apply plugin: 'maven-publish'
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId group
+            artifactId artifactName
+            version version
 
-    configurations = ['archives']
+            artifact artifact("$buildDir/outputs/aar/$projectName-release.aar")
+            artifact sourcesJar
+            artifact javadocJar
 
-    dryRun = false
-    publish = true
-    override = false
-    pkg {
-        logger.lifecycle "name = $bintrayName"
-        repo = bintrayRepo
-        name = bintrayName
-        desc = libraryDescription
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = allLicenses
-        publicDownloadNumbers = true
-        version {
-            desc = libraryDescription
+            pom {
+                name = artifactName
+                description = publishedDescription
+
+                url = 'https://github.com/drewhamilton/RxPreferences'
+                licenses {
+                    license {
+                        name = 'The Apache Software License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'drewhamilton'
+                        name = 'Drew Hamilton'
+                        email = 'drew.hamilton.0+android@gmail.com'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:github.com/drewhamilton/RxPreferences.git'
+                    developerConnection = 'scm:git:ssh://github.com/drewhamilton/RxPreferences.git'
+                    url = 'https://github.com/drewhamilton/RxPreferences'
+                }
+
+                // TODO WORKAROUND: Figure out why OkHttp doesn't have to write this block
+                withXml {
+                    def dependenciesNode = asNode().appendNode('dependencies')
+
+                    def addDependency = { Dependency dep, String scope ->
+                        if (!isValid(dep)) return
+
+                        logger.info "$name dependency: $dep"
+
+                        final dependencyNode = dependenciesNode.appendNode('dependency')
+                                .appendNode('groupId', dep.group).parent()
+                                .appendNode('artifactId', extractDependencyArtifactId(dep)).parent()
+                                .appendNode('version', dep.version).parent()
+                                .appendNode('scope', scope).parent()
+
+                        if (isLocalDependency(dep))
+                            dependencyNode.appendNode('type', 'aar').parent()
+                    }
+
+                    configurations.api.getDependencies().each { dep -> addDependency(dep, 'compile') }
+                    configurations.implementation.getDependencies().each { dep -> addDependency(dep, 'runtime') }
+                    configurations.compile.getDependencies().each { dep -> addDependency(dep, 'compile') }
+                }
+            }
         }
     }
+
+    repositories {
+        maven {
+            name = 'MavenCentral'
+
+            def releasesRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+            def snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+            def sonatypeIssuesUsername = project.hasProperty('personalSonatypeIssuesUsername')
+                    ? personalSonatypeIssuesUsername
+                    : 'x'
+            def sonatypeIssuesPassword = project.hasProperty('personalSonatypeIssuesPassword')
+                    ? personalSonatypeIssuesPassword
+                    : 'x'
+            credentials {
+                username sonatypeIssuesUsername
+                password sonatypeIssuesPassword
+            }
+        }
+    }
+}
+
+apply plugin: 'signing'
+ext.'signing.keyId' = hasProperty('personalGpgKeyId') ? personalGpgKeyId : 'x'
+ext.'signing.password' = hasProperty('personalGpgPassword') ? personalGpgPassword : 'x'
+ext.'signing.secretKeyRingFile' = hasProperty('personalGpgKeyringFile') ? personalGpgKeyringFile : 'x'
+signing {
+    sign publishing.publications
+}
+
+private static boolean isValid(Dependency dep) {
+    String artifactId = extractDependencyArtifactId(dep)
+    String version = dep.version
+    return dep.group != null &&
+            version != null && version != 'unspecified' &&
+            artifactId != null && artifactId != 'unspecified'
+}
+
+private static String extractDependencyArtifactId(dependency) {
+    def depArtifactId = dependency.name
+
+    // If ext.artifactName is explicitly defined, use that over the module name:
+    if (isLocalDependency(dependency)) {
+        def depProject = dependency.dependencyProject
+        if (depProject.hasProperty('artifactName'))
+            depArtifactId = depProject.artifactName
+    }
+    return depArtifactId
+}
+
+private static boolean isLocalDependency(dependency) {
+    return dependency.hasProperty('dependencyProject')
 }

@@ -1,17 +1,15 @@
 apply plugin: 'com.android.library'
 
 ext {
-    artifact = 'rxpreferences'
-    bintrayName = 'RxPreferences3'
-    libraryName = 'RxPreferences3'
-
-    libraryDescription = 'An RxJava wrapper for Android\'s SharedPreferences.'
+    artifactName = 'rxpreferences'
+    publishedDescription = "An RxJava wrapper for Android's SharedPreferences."
 
     compatibility = [
             ignoreMissingClasses: true,
             excludedModules: []
     ]
 }
+version = libraryVersion
 apply from: '../publish.gradle'
 
 android {
@@ -20,7 +18,7 @@ android {
     defaultConfig {
         minSdkVersion minSdk
         targetSdkVersion targetSdk
-        versionName libraryVersion
+        versionName version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
