@@ -4,17 +4,17 @@
 An RxJava wrapper for Android's SharedPreferences.
 
 ## Download
-[ ![Download](https://api.bintray.com/packages/drewhamilton/RxPreferences/RxPreferences3/images/download.svg) ](https://bintray.com/drewhamilton/RxPreferences)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/dev.drewhamilton.rxpreferences/rxpreferences/badge.svg)](https://maven-badges.herokuapp.com/maven-central/dev.drewhamilton.rxpreferences/rxpreferences)
 
-RxPreferences is available in JCenter.
+RxPreferences is available in Maven Central.
 
 ```groovy
 // RxPreferences:
-implementation "drewhamilton.rxpreferences3:rxpreferences:$version"
+implementation "dev.drewhamilton.rxpreferences:rxpreferences:$version"
 // With Kotlin extensions:
-implementation "drewhamilton.rxpreferences3:rxpreferences-ktx:$version"
+implementation "dev.drewhamilton.rxpreferences:rxpreferences-ktx:$version"
 // Dagger component:
-implementation "drewhamilton.rxpreferences3:rxpreferences-dagger:$version"
+implementation "dev.drewhamilton.rxpreferences:rxpreferences-dagger:$version"
 ```
 
 ## Usage

@@ -43,9 +43,9 @@ allprojects { project ->
 }
 
 ext {
-    libraryVersion = '3.0.0-alpha04'
+    libraryVersion = '3.0.0-beta01'
 
-    targetSdk = 28
+    targetSdk = 29
     minSdk = 14
 
     keystore = project.hasProperty('personalKeystore') ? personalKeystore : 'x'
