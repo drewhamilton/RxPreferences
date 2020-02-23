@@ -1,5 +1,5 @@
 # RxPreferences
-[ ![Build status](https://travis-ci.org/drewhamilton/RxPreferences.svg?branch=3.x) ](https://travis-ci.org/drewhamilton/RxPreferences)
+![](https://github.com/drewhamilton/RxPreferences/workflows/CI/badge.svg?branch=3.x)
 
 An RxJava wrapper for Android's SharedPreferences.
 
