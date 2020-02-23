@@ -4,11 +4,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 ext {
-    artifact = 'rxpreferences-dagger'
-    bintrayName = 'RxPreferences3-Dagger'
-    libraryName = 'RxPreferences3-Dagger'
-
-    libraryDescription = 'A Dagger component for RxPreferences.'
+    artifactName = 'rxpreferences-dagger'
+    publishedDescription = 'A Dagger component for RxPreferences.'
 
     compatibility = [
             ignoreMissingClasses: true,
@@ -17,6 +14,7 @@ ext {
             ]
     ]
 }
+version = libraryVersion
 apply from: '../publish.gradle'
 
 android {
@@ -25,7 +23,7 @@ android {
     defaultConfig {
         minSdkVersion minSdk
         targetSdkVersion targetSdk
-        versionName libraryVersion
+        versionName version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

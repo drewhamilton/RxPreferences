@@ -1,72 +1,20 @@
-// Applied *per published project* (rather than at the root project level)
+// Applied per published module
+//  The module must define ext.artifactName, version, and ext.publishedDescription
 
-ext {
-    bintrayRepo = 'RxPreferences'
-    bintrayUser = project.hasProperty('personalBintrayUsername') ? personalBintrayUsername : 'x'
-    bintrayKey = project.hasProperty('personalBintrayApiKey') ? personalBintrayApiKey : 'x'
-
-    publishedGroupId = 'drewhamilton.rxpreferences3'
-
-    siteUrl = 'https://github.com/drewhamilton/rxpreferences'
-    gitUrl = 'https://github.com/drewhamilton/rxpreferences'
-
-    developerId = 'drewhamilton'
-    developerName = 'Drew Hamilton'
-    developerEmail = 'drew.hamilton.0+android@gmail.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
-
-group = publishedGroupId
-version = libraryVersion
-def javadocDestinationDir = "$buildDir/docs/javadoc"
-
-apply plugin: 'com.github.dcendents.android-maven'
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            packaging 'aar'
-            groupId publishedGroupId
-            artifactId artifact
-
-            name libraryName
-            description libraryDescription
-            url siteUrl
-
-            licenses {
-                license {
-                    name licenseName
-                    url licenseUrl
-                }
-            }
-            developers {
-                developer {
-                    id developerId
-                    name developerName
-                    email developerEmail
-                }
-            }
-            scm {
-                connection gitUrl
-                developerConnection gitUrl
-                url siteUrl
-            }
-        }
-    }
-}
+group = 'dev.drewhamilton.rxpreferences'
+def projectName = name
 
 task sourcesJar(type: Jar) {
     archiveClassifier.set 'sources'
     from android.sourceSets.main.java.srcDirs
 }
 
+def javadocDestinationDir = "$buildDir/docs/javadoc"
 apply plugin: 'org.jetbrains.dokka-android'
 task dokkaJavadoc(type: dokka.class) {
     outputFormat = 'javadoc'
     outputDirectory = javadocDestinationDir
-    inputs.dir android.sourceSets.main.java.srcDirs[0]
+    inputs.dir 'src/main/java'
 }
 
 task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
@@ -74,32 +22,89 @@ task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
     from javadocDestinationDir
 }
 
-apply plugin: 'com.jfrog.bintray'
 artifacts {
     archives javadocJar
     archives sourcesJar
 }
 
-bintray {
-    user = bintrayUser
-    key = bintrayKey
+apply plugin: 'maven-publish'
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId group
+            artifactId artifactName
+            version version
 
-    configurations = ['archives']
+            artifact artifact("$buildDir/outputs/aar/$projectName-release.aar")
+            artifact sourcesJar
+            artifact javadocJar
 
-    dryRun = false
-    publish = true
-    override = false
-    pkg {
-        logger.lifecycle "name = $bintrayName"
-        repo = bintrayRepo
-        name = bintrayName
-        desc = libraryDescription
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = allLicenses
-        publicDownloadNumbers = true
-        version {
-            desc = libraryDescription
+            pom {
+                name = artifactName
+                description = publishedDescription
+
+                url = 'https://github.com/drewhamilton/RxPreferences'
+                licenses {
+                    license {
+                        name = 'The Apache Software License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'drewhamilton'
+                        name = 'Drew Hamilton'
+                        email = 'drew.hamilton.0+android@gmail.com'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:github.com/drewhamilton/RxPreferences.git'
+                    developerConnection = 'scm:git:ssh://github.com/drewhamilton/RxPreferences.git'
+                    url = 'https://github.com/drewhamilton/RxPreferences/tree/master'
+                }
+
+                withXml {
+                    def dependenciesNode = asNode().appendNode('dependencies')
+
+                    project.configurations.implementation.allDependencies.each {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                    }
+                }
+            }
         }
     }
+
+    repositories {
+        maven {
+            name = "MavenCentral"
+
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+            def sonatypeIssuesUsername = project.hasProperty('personalSonatypeIssuesUsername')
+                    ? personalSonatypeIssuesUsername
+                    : 'x'
+            def sonatypeIssuesPassword = project.hasProperty('personalSonatypeIssuesPassword')
+                    ? personalSonatypeIssuesPassword
+                    : 'x'
+            credentials {
+                username sonatypeIssuesUsername
+                password sonatypeIssuesPassword
+            }
+        }
+    }
+}
+
+apply plugin: 'signing'
+ext.'signing.keyId' = hasProperty('personalGpgKeyId') ? personalGpgKeyId : 'x'
+ext.'signing.password' = hasProperty('personalGpgPassword') ? personalGpgPassword : 'x'
+ext.'signing.secretKeyRingFile' = hasProperty('personalGpgKeyringFile') ? personalGpgKeyringFile : 'x'
+signing {
+    sign publishing.publications
 }
