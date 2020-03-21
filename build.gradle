@@ -3,12 +3,12 @@ buildscript {
         versions = [
                 jApiCmp: '0.2.8',
                 kotlin: '1.3.61',
-                rxJava: '3.0.0'
+                rxJava: '3.0.1'
         ]
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build:gradle:3.6.1'
 
         classpath "me.champeau.gradle:japicmp-gradle-plugin:$versions.jApiCmp"
 
@@ -43,7 +43,7 @@ allprojects { project ->
 }
 
 ext {
-    libraryVersion = '3.0.0-beta01'
+    libraryVersion = '3.0.0'
 
     targetSdk = 29
     minSdk = 14
