@@ -18,6 +18,7 @@ buildscript {
 
     repositories {
         google()
+        mavenCentral()
         gradlePluginPortal()
         jcenter()
     }
@@ -28,9 +29,8 @@ apply from: 'compatibility.gradle'
 allprojects { project ->
     repositories {
         google()
-        gradlePluginPortal()
+        mavenCentral()
         jcenter()
-        maven { url 'https://oss.jfrog.org/libs-snapshot' }
     }
 
     //noinspection UnnecessaryQualifiedReference
