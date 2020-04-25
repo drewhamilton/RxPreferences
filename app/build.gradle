@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'org.jetbrains.kotlin.kapt'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion targetSdk
