@@ -19,6 +19,8 @@
       </option>
     </AndroidXmlCodeStyleSettings>
     <GroovyCodeStyleSettings>
+      <option name="ALIGN_MULTILINE_LIST_OR_MAP" value="false" />
+      <option name="ALIGN_NAMED_ARGS_IN_MAP" value="false" />
       <option name="CLASS_COUNT_TO_USE_IMPORT_ON_DEMAND" value="99" />
       <option name="NAMES_COUNT_TO_USE_IMPORT_ON_DEMAND" value="99" />
       <option name="PACKAGES_TO_USE_IMPORT_ON_DEMAND">
@@ -65,6 +67,9 @@
       <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="1" />
       <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
       <option name="KEEP_BLANK_LINES_BEFORE_RBRACE" value="1" />
+      <indentOptions>
+        <option name="CONTINUATION_INDENT_SIZE" value="4" />
+      </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="JAVA">
       <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="1" />
@@ -85,6 +90,9 @@
           </group>
         </groups>
       </arrangement>
+    </codeStyleSettings>
+    <codeStyleSettings language="Markdown">
+      <option name="RIGHT_MARGIN" value="100" />
     </codeStyleSettings>
     <codeStyleSettings language="XML">
       <indentOptions>
