@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'org.jetbrains.kotlin.kapt'
 
 ext {
     artifactName = 'rxpreferences-dagger'
@@ -63,5 +63,4 @@ dependencies {
     testImplementation 'org.mockito:mockito-inline:2.28.2'
 
     androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
